@@ -6,12 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="fileServer" />
         <module name="musicweb" />
-        <module name="fileUploadServer" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="fileUploadServer" target="1.5" />
+      <module name="fileServer" target="1.7" />
+      <module name="fileUploadServer" target="1.7" />
       <module name="musicweb" target="1.7" />
     </bytecodeTargetLevel>
   </component>

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/fileUploadServer/fileUploadServer.iml" filepath="$PROJECT_DIR$/fileUploadServer/fileUploadServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fileServer/fileServer.iml" filepath="$PROJECT_DIR$/fileServer/fileServer.iml" />
       <module fileurl="file://$PROJECT_DIR$/lexur_ssm_musicweb.iml" filepath="$PROJECT_DIR$/lexur_ssm_musicweb.iml" />
       <module fileurl="file://$PROJECT_DIR$/musicweb/musicweb.iml" filepath="$PROJECT_DIR$/musicweb/musicweb.iml" />
     </modules>

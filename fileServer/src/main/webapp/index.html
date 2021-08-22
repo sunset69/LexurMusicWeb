@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:input="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文件上传服务器</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+</head>
+<body>
+    <h1>hello</h1>
+    <form action="javascript:;"  method="POST" enctype="multipart/form-data">
+        <input type="file" id="file">
+        <button  id="submit">上传</button>
+    </form>
+<script>
+    $(function () {
+
+        $("#submit").click(function () {
+            let file = $("#file")[0].files[0];
+            var formData = new FormData();
+            formData.append("file",file);
+            $.ajax({
+                url: "/upload",
+                type: "POST",
+                data: formData,
+                // datatype: "json",
+                cache: false,
+                processData: false,
+                contentType : false,
+                success: function (result) {
+                    console.log(result);
+                },
+                error: function (result) {
+                    console.log(result);
+                }
+
+            });
+        });
+    });
+</script>
+</body>
+</html>

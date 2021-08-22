@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/fileServer" />
+    <file type="web" url="file://$PROJECT_DIR$/fileServer/fileServer" />
     <file type="web" url="file://$PROJECT_DIR$/musicweb" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/musicweb/pom.xml" />
-        <option value="$PROJECT_DIR$/fileUploadServer/pom.xml" />
+        <option value="$PROJECT_DIR$/fileServer/fileServer/pom.xml" />
+        <option value="$PROJECT_DIR$/fileServer/pom.xml" />
       </list>
     </option>
   </component>
