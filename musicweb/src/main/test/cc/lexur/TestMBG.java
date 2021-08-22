@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 自动生成mapper文件
  * @Auther: lexur
  * @Date: 2021/8/22
  * @Description: cc.lexur

@@ -1,0 +1,12 @@
+#show_player {
+    position: fixed;
+    bottom: 10vh;
+    right: 10px;
+    z-index: 999;
+}
+.song_title {
+    width: 10em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
