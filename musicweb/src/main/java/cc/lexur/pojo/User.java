@@ -3,7 +3,7 @@ package cc.lexur.pojo;
 public class User {
     private Integer id;
 
-    private String mobile;
+    private String phone;
 
     private String mail;
 
@@ -23,12 +23,12 @@ public class User {
         this.id = id;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile == null ? null : mobile.trim();
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
     }
 
     public String getMail() {
