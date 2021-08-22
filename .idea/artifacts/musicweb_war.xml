@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="musicweb:war">
+    <output-path>$PROJECT_DIR$/musicweb/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>musicweb</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="musicweb-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="musicweb:war exploded" />
+    </root>
+  </artifact>
+</component>

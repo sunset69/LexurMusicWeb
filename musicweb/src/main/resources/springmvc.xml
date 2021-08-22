@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       https://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--1. 注解驱动-->
+    <mvc:annotation-driven/>
+
+    <!-- 2.静态资源过滤 -->
+    <mvc:default-servlet-handler/>
+
+    <!--3.扫描包：controller-->
+    <context:component-scan base-package="cc.lexur.controller"/>
+
+    <!--4.视图解析器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          id="internalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <!-- 前缀 -->
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <!-- 后缀 -->
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!--配置文件解析器-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!--防止中文乱码-->
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="maxUploadSize" value="20971520"/>
+    </bean>
+
+    <!--配置异常处理器-->
+    <!--<bean id="sysExceptionResolver" class="cc.lexur.exception.SysExceptionResolver"/>-->
+
+    <!-- 资源映射 -->
+    <!--<mvc:resources location="/WEB-INF/resources/bootstrap" mapping="/resources/bootstrap/"/>-->
+    <!--<mvc:resources location="/WEB-INF/resources/js/" mapping="/resources/js/"/>-->
+    <!--<mvc:resources location="/WEB-INF/resources/css/" mapping="/resources/css/"/>-->
+    <!--<mvc:resources location="/WEB-INF/resources/img/" mapping="/resources/img/"/>-->
+
+</beans>

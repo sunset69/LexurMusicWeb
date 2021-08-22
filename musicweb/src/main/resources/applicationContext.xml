@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--扫描包-->
+    <context:component-scan base-package="cc.lexur"/>
+    <!--aop扫描-->
+    <aop:aspectj-autoproxy/>
+
+    <!--数据库连接-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/songweb2?characterEncoding=utf-8"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+    </bean>
+    <!--配置sessionFactoryBean，管理数据源，别名，映射文件-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="mapperLocations" value="classpath:cc/lexur/mapper/*.xml"></property>
+        <property name="typeAliasesPackage" value="cc.lexur.pojo"></property>
+
+        <!--PageHalper分页查询插件,添加在sqlsession中-->
+        <property name="plugins">
+            <array>
+                <!--传入插件对象-->
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <props>
+                            <!--自动检测数据库类型-->
+                            <prop key="helperDialect">mysql</prop>
+                            <!--分页查询不合理自动修改（小于0查询第一页或大于总页数查询最后一页），默认false-->
+                            <prop key="reasonable">true</prop>
+                        </props>
+                    </property>
+                </bean>
+            </array>
+        </property>
+
+    </bean>
+    <!-- 自动生成Mapper的代理类 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="cc.lexur.mapper"></property>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!-- 启用事务注解 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+
+</beans>
