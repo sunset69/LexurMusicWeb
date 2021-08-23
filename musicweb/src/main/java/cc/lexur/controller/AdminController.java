@@ -30,6 +30,12 @@ public class AdminController {
     @Autowired
     UserService userService;
 
+    /**
+     * 控制台登录
+     * @param username
+     * @param password
+     * @return
+     */
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public String login(@RequestParam String username,@RequestParam String password){
         if (adminService.login(username,password)){
@@ -38,12 +44,43 @@ public class AdminController {
         return "error";
     }
 
+    /**
+     * 获取用户分页
+     * @param pn
+     * @param size
+     * @return
+     */
     @RequestMapping("/page")
     @ResponseBody
     public Msg getPage(@RequestParam(name = "pn", defaultValue = "-1") int pn, @RequestParam(name = "size", defaultValue = "8") int size){
         List<User> list = userService.getUserList(pn, size);
         PageInfo pageInfo = new PageInfo(list);
         return Msg.success().add("pageInfo",pageInfo);
+    }
+
+    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
+    @ResponseBody
+    public Msg addUser(@RequestParam String  mail,@RequestParam String password,String nickname,String phone,String avatar,String birth){
+        User user = new User();
+
+        // 检查邮箱与密码是否为空
+        if (user.getMail() == "" || user.getPassword() == ""){
+            return Msg.fail();
+        }
+        user.setMail(mail);
+        user.setPassword(password);
+
+        // 如果未上传用户名则使用邮箱作为用户名
+        if (nickname == null || nickname == ""){
+            user.setNickname(mail);
+        }else {
+            user.setNickname(nickname);
+        }
+        user.setPhone(phone);
+        user.setAvatar(avatar);
+        System.out.println(user.toString());
+
+        return Msg.success().add("user",user);
     }
 
 }

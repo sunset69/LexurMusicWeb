@@ -13,6 +13,19 @@ public class User {
 
     private String avatar;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", phone='" + phone + '\'' +
+                ", mail='" + mail + '\'' +
+                ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", locked='" + locked + '\'' +
+                '}';
+    }
+
     private String locked;
 
     public Integer getId() {

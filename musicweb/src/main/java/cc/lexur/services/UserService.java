@@ -15,4 +15,10 @@ public interface UserService {
     public boolean login(String mail, String password);
 
     public List<User> getUserList(int pn,int size);
+
+    public boolean addUser(User user);//添加 id不需要
+
+    public boolean deleteUser(int id);//删除 id必须
+
+    public boolean updateUser(User user);//修改 id必须
 }

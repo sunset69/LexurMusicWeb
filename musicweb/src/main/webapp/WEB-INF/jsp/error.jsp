@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% pageContext.setAttribute("APP_PATH", request.getContextPath()); %>
 <html>
+<%--实现自动跳转至登录页面--%>
 <meta http-equiv="Refresh" content="5;url=${APP_PATH}/index.html ">
 <head>
     <title>Title</title>

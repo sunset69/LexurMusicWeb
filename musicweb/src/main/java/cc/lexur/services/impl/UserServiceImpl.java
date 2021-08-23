@@ -7,6 +7,7 @@ import cc.lexur.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.channels.MulticastChannel;
 import java.util.List;
 
 /**
@@ -52,4 +53,34 @@ public class UserServiceImpl implements UserService {
         List<User> list = userMapper.selectByExample(null);
         return list;
     }
+
+    @Override
+    public boolean addUser(User user) {
+        userMapper.insert(user);
+        return false;
+    }
+
+    @Override
+    public boolean deleteUser(int id) {
+        User user = userMapper.selectByPrimaryKey(id);
+        if (user == null){
+            return false;
+        }
+        userMapper.deleteByPrimaryKey(id);
+        return true;
+    }
+
+    @Override
+    public boolean updateUser(User record) {
+        if (record.getId() == null || record.getId() < 0){
+            return false;
+        }
+        User user = userMapper.selectByPrimaryKey(record.getId());
+        if (user == null){
+            return false;
+        }
+        userMapper.insert(record);
+        return true;
+    }
+
 }
