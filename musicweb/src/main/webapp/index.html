@@ -14,75 +14,77 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3 h1">lexur-music</div>
-        </div>
-        <div class="row">
-            <div class="col-md-1 col-md-offset-11"><a href="admin.html">控制台</a></div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                <h1 class="center">登录</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 h1">lexur-music</div>
+    </div>
+    <div class="row">
+        <div class="col-md-1 col-md-offset-11"><a href="admin.html">控制台</a></div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <h1 class="center">登录</h1>
+            <form action="/user/login" method="post">
                 <div class="form-group">
                     <label>账号</label>
-                    <input type="email" class="form-control" id="InputEmail1" placeholder="Email">
+                    <input type="email" class="form-control" id="InputEmail1" placeholder="Email" name="mail">
                 </div>
                 <div class="form-group">
                     <label>密码</label>
-                    <input type="password" class="form-control" id="InputPassword" placeholder="Password">
+                    <input type="password" class="form-control" id="InputPassword" placeholder="Password" name="password">
                 </div>
                 <div class="register">
                     <a onclick="show_register_modal()">注册</a>
                 </div>
                 <button type="submit" class="btn btn-success btn-lg btn-block">登录</button>
-            </div>
+            </form>
         </div>
-
-        <!-- 注册模态框 -->
-        <div class="modal fade" id="registerModal" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">注册</h4>
-                    </div>
-                    <div class="modal-body">
-
-                        <form>
-                            <div class="form-group">
-                                <label>邮箱</label>
-                                <input type="email" class="form-control" id="registerMailForm" placeholder="Email">
-                            </div>
-                            <div class="form-group">
-                                <label>昵称</label>
-                                <input type="email" class="form-control" id="registerNicknameForm" placeholder="Email">
-                            </div>
-                            <div class="form-group">
-                                <label>密码</label>
-                                <input type="password" class="form-control" id="registerPasswordForm" placeholder="密码至少6位">
-                            </div>
-                            <div class="form-group">
-                                <label>手机</label>
-                                <input type="tel" class="form-control" id="registerPhoneForm" placeholder="手机号码">
-                            </div>
-                            <!-- 将图片上传至图片服务器，获取链接后注册用户 -->
-                            <div class="form-group">
-                                <label>头像</label>
-                                <input type="file" class="form-control" id="registercAvatarForm" accept=".png, .jpg, .jpeg">
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-success">注册</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-
     </div>
+
+    <!-- 注册模态框 -->
+    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">注册</h4>
+                </div>
+                <div class="modal-body">
+
+                    <form>
+                        <div class="form-group">
+                            <label>邮箱</label>
+                            <input type="email" class="form-control" id="registerMailForm" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <label>昵称</label>
+                            <input type="email" class="form-control" id="registerNicknameForm" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <label>密码</label>
+                            <input type="password" class="form-control" id="registerPasswordForm" placeholder="密码至少6位">
+                        </div>
+                        <div class="form-group">
+                            <label>手机</label>
+                            <input type="tel" class="form-control" id="registerPhoneForm" placeholder="手机号码">
+                        </div>
+                        <!-- 将图片上传至图片服务器，获取链接后注册用户 -->
+                        <div class="form-group">
+                            <label>头像</label>
+                            <input type="file" class="form-control" id="registercAvatarForm" accept=".png, .jpg, .jpeg">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success">注册</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+</div>
 </body>
 
 </html>

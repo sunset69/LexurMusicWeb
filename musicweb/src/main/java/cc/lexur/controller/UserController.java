@@ -1,8 +1,8 @@
 package cc.lexur.controller;
 
-import cc.lexur.services.AdminService;
+import cc.lexur.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,17 +13,17 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @Description: cc.lexur.controller
  * @version: 1.0
  */
-@Controller
-@RequestMapping(value = "/admin")
-public class AdminController {
+@Service
+@RequestMapping("/user")
+public class UserController {
 
     @Autowired
-    AdminService adminService;
+    UserService userService;
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public String login(@RequestParam String username,@RequestParam String password){
-        if (adminService.login(username,password)){
-            return "musicweb-admin";
+    public String login(@RequestParam String mail, @RequestParam String password){
+        if (userService.login(mail,password)){
+            return "music";
         }
         return "error";
     }
