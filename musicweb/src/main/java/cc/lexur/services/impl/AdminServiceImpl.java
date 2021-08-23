@@ -34,7 +34,6 @@ public class AdminServiceImpl implements AdminService {
         criteria.andUsernameEqualTo(username);
         criteria.andPasswordEqualTo(password);
         List<Admin> admins = adminMapper.selectByExample(example);
-        System.out.println(admins.toString());
         if (admins.isEmpty()){
             System.out.println(username+"登录失败！");
             return false;
