@@ -3,10 +3,7 @@ package cc.lexur.controller;
 import cc.lexur.pojo.Msg;
 import cc.lexur.utils.SaveMultipartFile;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +19,7 @@ import java.util.UUID;
  * @version: 1.0
  */
 @Controller
+@CrossOrigin(allowCredentials = "true") //允许跨域请求
 public class UploadController {
 
     /**
@@ -32,6 +30,7 @@ public class UploadController {
      * @throws IOException
      */
     @RequestMapping(value = "/upload",method = RequestMethod.POST)
+    //@CrossOrigin(origins = "192.168.0.1") //只允许指定ip跨域
     @ResponseBody
     public Msg upload(@RequestParam MultipartFile file, HttpServletRequest request) throws IOException {
         // 1. 检测上传文件夹

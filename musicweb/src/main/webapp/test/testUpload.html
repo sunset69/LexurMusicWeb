@@ -3,11 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>upload</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
 </head>
 <body>
-    <form action="localhost:2000/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="file">
-        <button type="submit">提交</button>
+    <form action="javascript:;" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" id="file"/>
+        <button type="submit" id="submit">提交</button>
     </form>
+<script>
+    $(function () {
+        $("#submit").click(function () {
+            var file = $("#file")[0].files[0];
+            var formData = new FormData();
+            formData.append("file", file);
+            $.ajax({
+                url: "http://127.0.0.1:2000/upload", //必须使用http协议且使用ip或域名访问，不能使用localhost
+                type: "POST",
+                data: formData,
+                datatype: "json",
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function (result) {
+                    console.log(result);
+                },
+                error: function (result) {
+                    console.log(result);
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

@@ -36,4 +36,13 @@
         <property name="maxUploadSize" value="20971520"/>
     </bean>
 
+    <!-- 接口跨域配置 -->
+    <mvc:cors>
+        <!-- allowed-methods="*" --> <!-- 表示所有请求都有效 -->
+        <mvc:mapping path="/**" allowed-origins="*"
+                     allowed-methods="POST, GET, OPTIONS, DELETE, PUT"
+                     allowed-headers="Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
+                     allow-credentials="true" />
+    </mvc:cors>
+
 </beans>

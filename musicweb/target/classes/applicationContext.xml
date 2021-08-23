@@ -12,7 +12,7 @@
 
     <!--数据库连接-->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
-        <property name="url" value="jdbc:mysql://127.0.0.1:3306/songweb2?characterEncoding=utf-8"/>
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/lexurmusic?characterEncoding=utf-8"/>
         <property name="username" value="root"/>
         <property name="password" value="root"/>
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
