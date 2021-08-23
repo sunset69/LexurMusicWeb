@@ -28,6 +28,12 @@ public class SongController {
     @Autowired
     SongService songService;
 
+    /**
+     * 获取音乐分页
+     * @param pn
+     * @param size
+     * @return
+     */
     @RequestMapping("/page")
     @ResponseBody
     public Msg getPage(@RequestParam(name = "pn", defaultValue = "0") int pn, @RequestParam(name = "size", defaultValue = "8") int size) {

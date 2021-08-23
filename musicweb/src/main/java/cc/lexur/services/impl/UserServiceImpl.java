@@ -40,4 +40,16 @@ public class UserServiceImpl implements UserService {
         System.out.println(mail +"登录成功！");
         return true;
     }
+
+    /**
+     * 获取用户数据
+     * @param pn
+     * @param size
+     * @return
+     */
+    @Override
+    public List<User> getUserList(int pn, int size) {
+        List<User> list = userMapper.selectByExample(null);
+        return list;
+    }
 }
