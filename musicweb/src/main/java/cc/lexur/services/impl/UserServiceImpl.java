@@ -107,7 +107,8 @@ public class UserServiceImpl implements UserService {
         if (user == null){
             return false;
         }
-        userMapper.insert(record);
+        int i = userMapper.updateByPrimaryKeySelective(record);
+        System.out.println("update result:"+i);
         return true;
     }
 

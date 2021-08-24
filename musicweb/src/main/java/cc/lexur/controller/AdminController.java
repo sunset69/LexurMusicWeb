@@ -101,6 +101,11 @@ public class AdminController {
         return Msg.success().add("user",user);
     }
 
+    /**
+     * 删除用户，通过Locked来实现逻辑删除
+     * @param id
+     * @return
+     */
     @RequestMapping("/deleteUser")
     @ResponseBody
     public Msg deleteUser(@RequestParam int id){
@@ -112,5 +117,45 @@ public class AdminController {
             return Msg.fail();
         }
         return Msg.success().add("deleteUser",user);
+    }
+
+    @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+    @ResponseBody
+    public Msg updateUser(@RequestParam int id, String  mail, String password, String nickname, String phone, String avatar, Date birth, Boolean locked){
+        // 封装user
+        User user = new User();
+        user.setId(id);
+        if (mail != null && mail != ""){
+            user.setMail(mail);
+        }
+        if (password!=null && password != ""){
+            user.setPassword(password);
+        }
+        if (nickname!= null&&nickname!=""){
+            user.setNickname(nickname);
+        }
+        if (phone!=null&&phone!=""){
+            user.setPhone(phone);
+        }
+        if (avatar!= null&&avatar!=""){
+            user.setAvatar(avatar);
+        }
+        if (birth!=null){
+            user.setBirth(birth);
+        }
+        if (locked != null){
+            if (locked){
+                user.setLocked("Y");
+            }else {
+                user.setLocked("N");
+            }
+        }
+        System.out.println(user.toString());
+
+        if(!userService.updateUser(user)){
+            return Msg.fail();
+        }
+
+        return Msg.success().add("user",user);
     }
 }
