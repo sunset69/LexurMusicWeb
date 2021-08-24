@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -60,12 +61,12 @@ public class AdminController {
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     @ResponseBody
-    public Msg addUser(@RequestParam String  mail,@RequestParam String password,String nickname,String phone,String avatar,String birth){
+    public Msg addUser(@RequestParam String  mail, @RequestParam String password, String nickname, String phone, String avatar, Date birth){
         User user = new User();
 
         // 检查邮箱与密码是否为空
         if (user.getMail() == "" || user.getPassword() == ""){
-            return Msg.fail();
+            return Msg.fail().setMsg("密码或邮箱不能为空");
         }
         user.setMail(mail);
         user.setPassword(password);
@@ -78,6 +79,10 @@ public class AdminController {
         }
         user.setPhone(phone);
         user.setAvatar(avatar);
+        user.setBirth(birth);
+        if(!userService.addUser(user)){
+            return Msg.fail().setMsg("用户已存在");
+        }
         System.out.println(user.toString());
 
         return Msg.success().add("user",user);

@@ -1,5 +1,7 @@
 package cc.lexur.pojo;
 
+import java.util.Date;
+
 public class User {
     private Integer id;
 
@@ -13,6 +15,8 @@ public class User {
 
     private String avatar;
 
+    private String locked = "N";
+
     @Override
     public String toString() {
         return "User{" +
@@ -23,10 +27,11 @@ public class User {
                 ", nickname='" + nickname + '\'' +
                 ", avatar='" + avatar + '\'' +
                 ", locked='" + locked + '\'' +
+                ", birth=" + birth +
                 '}';
     }
 
-    private String locked;
+    private Date birth;
 
     public Integer getId() {
         return id;
@@ -82,5 +87,13 @@ public class User {
 
     public void setLocked(String locked) {
         this.locked = locked == null ? null : locked.trim();
+    }
+
+    public Date getBirth() {
+        return birth;
+    }
+
+    public void setBirth(Date birth) {
+        this.birth = birth;
     }
 }

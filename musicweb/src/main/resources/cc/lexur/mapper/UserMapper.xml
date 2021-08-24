@@ -9,6 +9,7 @@
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
     <result column="avatar" jdbcType="VARCHAR" property="avatar" />
     <result column="locked" jdbcType="CHAR" property="locked" />
+    <result column="birth" jdbcType="TIMESTAMP" property="birth" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, phone, mail, password, nickname, avatar, locked
+    id, phone, mail, password, nickname, avatar, locked, birth
   </sql>
   <select id="selectByExample" parameterType="cc.lexur.pojo.UserExample" resultMap="BaseResultMap">
     select
@@ -104,10 +105,10 @@
   <insert id="insert" parameterType="cc.lexur.pojo.User">
     insert into user (id, phone, mail, 
       password, nickname, avatar, 
-      locked)
+      locked, birth)
     values (#{id,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
-      #{locked,jdbcType=CHAR})
+      #{locked,jdbcType=CHAR}, #{birth,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="cc.lexur.pojo.User">
     insert into user
@@ -133,6 +134,9 @@
       <if test="locked != null">
         locked,
       </if>
+      <if test="birth != null">
+        birth,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -155,6 +159,9 @@
       </if>
       <if test="locked != null">
         #{locked,jdbcType=CHAR},
+      </if>
+      <if test="birth != null">
+        #{birth,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -188,6 +195,9 @@
       <if test="record.locked != null">
         locked = #{record.locked,jdbcType=CHAR},
       </if>
+      <if test="record.birth != null">
+        birth = #{record.birth,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -201,7 +211,8 @@
       password = #{record.password,jdbcType=VARCHAR},
       nickname = #{record.nickname,jdbcType=VARCHAR},
       avatar = #{record.avatar,jdbcType=VARCHAR},
-      locked = #{record.locked,jdbcType=CHAR}
+      locked = #{record.locked,jdbcType=CHAR},
+      birth = #{record.birth,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -227,6 +238,9 @@
       <if test="locked != null">
         locked = #{locked,jdbcType=CHAR},
       </if>
+      <if test="birth != null">
+        birth = #{birth,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -237,7 +251,8 @@
       password = #{password,jdbcType=VARCHAR},
       nickname = #{nickname,jdbcType=VARCHAR},
       avatar = #{avatar,jdbcType=VARCHAR},
-      locked = #{locked,jdbcType=CHAR}
+      locked = #{locked,jdbcType=CHAR},
+      birth = #{birth,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

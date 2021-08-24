@@ -100,6 +100,7 @@ api:
 | nickname | String | 否       | 昵称 |
 | phone    | String | 否       | 电话 |
 | avatar   | String | 否       | 头像 |
+| birth    | Date   | 否       | 生日 |
 
 ##### 响应元素
 

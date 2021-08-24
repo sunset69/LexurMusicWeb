@@ -14,7 +14,7 @@ public interface UserService {
 
     public boolean login(String mail, String password);
 
-    public List<User> getUserList(int pn,int size);
+    public List<User> getUserList(int pn, int size);
 
     public boolean addUser(User user);//添加 id不需要
 

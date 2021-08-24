@@ -47,12 +47,12 @@
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
         <!-- 指定数据库中的表 -->
-        <table tableName="admin"/>
+        <!--<table tableName="admin"/>-->
         <table tableName="user"/>
-        <table tableName="genre"/>
-        <table tableName="song"/>
-        <table tableName="collect"/>
-        <table tableName="comment"/>
+        <!--<table tableName="genre"/>-->
+        <!--<table tableName="song"/>-->
+        <!--<table tableName="collect"/>-->
+        <!--<table tableName="comment"/>-->
 
     </context>
 </generatorConfiguration>

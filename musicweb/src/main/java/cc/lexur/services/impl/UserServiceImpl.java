@@ -7,7 +7,6 @@ import cc.lexur.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.nio.channels.MulticastChannel;
 import java.util.List;
 
 /**
@@ -56,8 +55,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean addUser(User user) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andMailEqualTo(user.getMail());
+        if (!userMapper.selectByExample(example).isEmpty()){
+            System.out.println(user.getMail()+"已存在，插入失败!");
+            return false;
+        }
         userMapper.insert(user);
-        return false;
+        System.out.println(user.getMail()+"插入成功!");
+        return true;
     }
 
     @Override
