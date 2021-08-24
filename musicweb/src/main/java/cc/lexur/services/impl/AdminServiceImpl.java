@@ -33,6 +33,7 @@ public class AdminServiceImpl implements AdminService {
         AdminExample.Criteria criteria = example.createCriteria();
         criteria.andUsernameEqualTo(username);
         criteria.andPasswordEqualTo(password);
+        criteria.andEnableEqualTo("Y");
         List<Admin> admins = adminMapper.selectByExample(example);
         if (admins.isEmpty()){
             System.out.println(username+"登录失败！");

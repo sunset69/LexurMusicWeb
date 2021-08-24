@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService {
         UserExample.Criteria criteria = example.createCriteria();
         criteria.andMailEqualTo(mail);
         criteria.andPasswordEqualTo(password);
+        criteria.andLockedEqualTo("N");
         List<User> admins = userMapper.selectByExample(example);
         if (admins.isEmpty()){
             System.out.println(mail +"登录失败！");
@@ -54,14 +55,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean addUser(User user) {
+    public User selectById(int id) {
+        User user = userMapper.selectByPrimaryKey(id);
+        return user;
+    }
+
+    @Override
+    public List<User> selectByMail(String mail) {
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
-        criteria.andMailEqualTo(user.getMail());
-        if (!userMapper.selectByExample(example).isEmpty()){
-            System.out.println(user.getMail()+"已存在，插入失败!");
-            return false;
-        }
+        criteria.andMailEqualTo(mail);
+        List<User> userList = userMapper.selectByExample(example);
+        return userList;
+    }
+
+    @Override
+    public boolean addUser(User user) {
+        //UserExample example = new UserExample();
+        //UserExample.Criteria criteria = example.createCriteria();
+        //criteria.andMailEqualTo(user.getMail());
+        //if (!userMapper.selectByExample(example).isEmpty()){
+        //    System.out.println(user.getMail()+"已存在，插入失败!");
+        //    return false;
+        //}
         userMapper.insert(user);
         System.out.println(user.getMail()+"插入成功!");
         return true;
@@ -73,7 +89,12 @@ public class UserServiceImpl implements UserService {
         if (user == null){
             return false;
         }
-        userMapper.deleteByPrimaryKey(id);
+        //userMapper.deleteByPrimaryKey(id);
+        //User record = new User();
+        //record.setId(id);
+        //record.setLocked("Y");
+        user.setLocked("Y");
+        userMapper.updateByPrimaryKey(user);
         return true;
     }
 

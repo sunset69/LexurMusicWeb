@@ -16,9 +16,14 @@ public interface UserService {
 
     public List<User> getUserList(int pn, int size);
 
+    public User selectById(int id);
+
+    public List<User> selectByMail(String mail);
+
     public boolean addUser(User user);//添加 id不需要
 
     public boolean deleteUser(int id);//删除 id必须
 
     public boolean updateUser(User user);//修改 id必须
+
 }

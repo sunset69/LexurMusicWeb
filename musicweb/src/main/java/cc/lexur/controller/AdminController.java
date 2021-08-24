@@ -1,5 +1,6 @@
 package cc.lexur.controller;
 
+import cc.lexur.mapper.UserMapper;
 import cc.lexur.pojo.Msg;
 import cc.lexur.pojo.User;
 import cc.lexur.services.AdminService;
@@ -59,6 +60,16 @@ public class AdminController {
         return Msg.success().add("pageInfo",pageInfo);
     }
 
+    /**
+     * 添加用户
+     * @param mail 必须
+     * @param password 必须
+     * @param nickname 可选，默认使用邮箱代替
+     * @param phone 可选
+     * @param avatar 可选，web端使用默认图片
+     * @param birth 可选
+     * @return
+     */
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     @ResponseBody
     public Msg addUser(@RequestParam String  mail, @RequestParam String password, String nickname, String phone, String avatar, Date birth){
@@ -80,12 +91,26 @@ public class AdminController {
         user.setPhone(phone);
         user.setAvatar(avatar);
         user.setBirth(birth);
-        if(!userService.addUser(user)){
-            return Msg.fail().setMsg("用户已存在");
+        if(!userService.selectByMail(mail).isEmpty()){
+            return Msg.fail().setMsg("该邮箱已注册！");
         }
+        userService.addUser(user);
+        user = userService.selectByMail(mail).get(0);
         System.out.println(user.toString());
 
         return Msg.success().add("user",user);
     }
 
+    @RequestMapping("/deleteUser")
+    @ResponseBody
+    public Msg deleteUser(@RequestParam int id){
+        User user = userService.selectById(id);
+        if (user == null){
+            return Msg.fail().setMsg("用户不存在");
+        }
+        if(!userService.deleteUser(id)){
+            return Msg.fail();
+        }
+        return Msg.success().add("deleteUser",user);
+    }
 }

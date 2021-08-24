@@ -106,15 +106,72 @@ api:
 
 >   说明：返回为json数据
 
+【1】添加成功:code=100
+
 ```json
 {
     "code": 100,
     "msg": "处理成功!",
     "extend": {
-        "pageInfo": {}
+        "user": {
+            "id": 6,
+            "phone": "",
+            "mail": "",
+            "password": "",
+            "nickname": "",
+            "avatar": "",
+            "locked": "N",
+            "birth": 
+        }
     }
 }
 ```
 
+【2】添加失败:code=200
 
+```json
+{
+    "code": 200,
+    "msg": "该邮箱已注册！",
+    "extend": {}
+}
+```
+
+
+
+#### 1.4 删除用户
+
+##### 请求参数
+
+>   请求网址：localhost:2001/admin/deleteUser
+>
+>   方法：GET/POST
+
+| 名称 | 类型 | 是否必需 | 描述 |
+| :--- | :--- | :------- | :--- |
+| id   | int  | 是       | id   |
+
+##### 响应元素
+
+>   说明：返回为json数据
+
+【1】删除成功:code=100
+
+```json
+{
+    "code": 100,
+    "msg": "处理成功!",
+    "extend": {}
+}
+```
+
+【2】删除失败:code=200
+
+```json
+{
+    "code": 200,
+    "msg": "该邮箱已注册！",
+    "extend": {}
+}
+```
 
