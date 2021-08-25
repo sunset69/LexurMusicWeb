@@ -8,11 +8,13 @@
         <outputRelativeToContentRoot value="true" />
         <module name="fileServer" />
         <module name="musicweb" />
+        <module name="mappers" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="fileServer" target="1.7" />
       <module name="fileUploadServer" target="1.7" />
+      <module name="mappers" target="1.7" />
       <module name="musicweb" target="1.7" />
     </bytecodeTargetLevel>
   </component>

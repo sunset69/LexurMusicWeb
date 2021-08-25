@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/fileServer/fileServer.iml" filepath="$PROJECT_DIR$/fileServer/fileServer.iml" />
       <module fileurl="file://$PROJECT_DIR$/lexur_ssm_musicweb.iml" filepath="$PROJECT_DIR$/lexur_ssm_musicweb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mappers/mappers.iml" filepath="$PROJECT_DIR$/mappers/mappers.iml" />
       <module fileurl="file://$PROJECT_DIR$/musicweb/musicweb.iml" filepath="$PROJECT_DIR$/musicweb/musicweb.iml" />
     </modules>
   </component>

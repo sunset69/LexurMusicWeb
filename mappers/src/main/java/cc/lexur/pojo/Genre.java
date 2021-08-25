@@ -5,16 +5,7 @@ public class Genre {
 
     private String name;
 
-    private String desc;
-
-    @Override
-    public String toString() {
-        return "Genre{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", desc='" + desc + '\'' +
-                '}';
-    }
+    private String description;
 
     public Integer getId() {
         return id;
@@ -32,11 +23,11 @@ public class Genre {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc == null ? null : desc.trim();
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
     }
 }

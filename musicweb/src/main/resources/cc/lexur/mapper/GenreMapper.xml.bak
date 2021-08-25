@@ -98,13 +98,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cc.lexur.pojo.Genre">
---     insert into genre (id, name, desc
---       )
---     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR}
---       )
---     insert into genre (id,name,desc)
---     values(null ,#{name,jdbcType=VARCHAR},#{desc,jdbcType=VARCHAR})
-    INSERT INTO genre (name, `desc`) VALUES('test', 'test');
+    insert into genre (id, name, desc
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cc.lexur.pojo.Genre">
     insert into genre

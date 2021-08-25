@@ -3,6 +3,7 @@
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/fileServer" />
     <file type="web" url="file://$PROJECT_DIR$/fileServer/fileServer" />
+    <file type="web" url="file://$PROJECT_DIR$/mappers" />
     <file type="web" url="file://$PROJECT_DIR$/musicweb" />
   </component>
   <component name="MavenProjectsManager">
@@ -11,6 +12,7 @@
         <option value="$PROJECT_DIR$/musicweb/pom.xml" />
         <option value="$PROJECT_DIR$/fileServer/fileServer/pom.xml" />
         <option value="$PROJECT_DIR$/fileServer/pom.xml" />
+        <option value="$PROJECT_DIR$/mappers/pom.xml" />
       </list>
     </option>
   </component>

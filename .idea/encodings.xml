@@ -3,6 +3,8 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/fileServer/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/fileServer/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mappers/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mappers/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/musicweb/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/musicweb/src/main/resources" charset="UTF-8" />
   </component>

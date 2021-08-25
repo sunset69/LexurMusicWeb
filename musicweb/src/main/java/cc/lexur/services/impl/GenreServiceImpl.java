@@ -2,6 +2,7 @@ package cc.lexur.services.impl;
 
 import cc.lexur.mapper.GenreMapper;
 import cc.lexur.pojo.Genre;
+import cc.lexur.pojo.GenreExample;
 import cc.lexur.pojo.User;
 import cc.lexur.services.GenreService;
 import com.github.pagehelper.PageHelper;
@@ -32,8 +33,17 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public boolean addGenre(Genre genre) {
-        genre.setId(null);
+        //genre.setId(null);
+        //GenreExample example = new GenreExample();
+        //GenreExample.Criteria criteria = example.createCriteria();
+        //criteria.andNameEqualTo(genre.getName());
+        //List<Genre> list = genreMapper.selectByExample(example);
+        //if (!list.isEmpty()){
+        //    System.out.println(genre.getName()+"已存在");
+        //    return false;
+        //}
         genreMapper.insert(genre);
+        System.out.println(genre.getName()+"插入成功");
         return true;
     }
 
