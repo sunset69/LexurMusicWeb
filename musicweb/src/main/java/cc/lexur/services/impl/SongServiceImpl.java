@@ -3,6 +3,7 @@ package cc.lexur.services.impl;
 import cc.lexur.mapper.SongMapper;
 import cc.lexur.pojo.Song;
 import cc.lexur.services.SongService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,8 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public List<Song> getSongList(int pn, int size) {
+        //进行分页查询
+        PageHelper.startPage(pn, size);
         List<Song> list = songMapper.selectByExample(null);
         return list;
     }

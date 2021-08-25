@@ -4,6 +4,7 @@ import cc.lexur.mapper.UserMapper;
 import cc.lexur.pojo.User;
 import cc.lexur.pojo.UserExample;
 import cc.lexur.services.UserService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,6 +51,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public List<User> getUserList(int pn, int size) {
+        //进行分页查询
+        PageHelper.startPage(pn, size);
         List<User> list = userMapper.selectByExample(null);
         return list;
     }

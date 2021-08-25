@@ -209,33 +209,33 @@ api:
 
 >   说明：返回为json数据
 
-【1】删除成功:code=100
+【1】更新成功:code=100
 
 ```json
 {
     "code": 100,
     "msg": "处理成功!",
     "extend": {
-        "deleteUser": {
-            "id": ,
-            "phone": "",
-            "mail": "",
-            "password": "",
-            "nickname": "",
-            "avatar": "",
+        "user": {
+            "id": 4,
+            "phone": null,
+            "mail": null,
+            "password": "456",
+            "nickname": "bbb",
+            "avatar": null,
             "locked": "N",
-            "birth": 
+            "birth": null
         }
     }
 }
 ```
 
-【2】删除失败:code=200
+【2】更新失败:code=200
 
 ```json
 {
     "code": 200,
-    "msg": "用户不存在",
+    "msg": "处理失败！",
     "extend": {}
 }
 ```
@@ -244,11 +244,103 @@ api:
 
 #### 2.1 分类添加
 
+##### 请求参数
 
+>   请求网址：localhost:2001/genre/addGenre
+>
+>   方法：POST
+
+| 名称 | 类型   | 是否必需 | 描述     |
+| :--- | :----- | :------- | :------- |
+| name | String | 是       | 分类名称 |
+| desc | String | 否       | 描述     |
+
+
+##### 响应元素
+
+>   说明：返回为json数据
+
+【1】更新成功:code=100
+
+```
+ {
+     "code": 100,
+     "msg": "处理成功!",
+     "extend": {
+         "user": {
+             "id": 4,
+             "phone": null,
+             "mail": null,
+             "password": "456",
+             "nickname": "bbb",
+             "avatar": null,
+             "locked": "N",
+             "birth": null
+         }
+     }
+ }
+```
+
+【2】更新失败:code=200
+
+```
+ {
+     "code": 200,
+     "msg": "处理失败！",
+     "extend": {}
+ }
+```
 
 #### 2.2 分类查询
 
+##### 请求参数
 
+>   请求网址：localhost:2001/genre/page
+>
+>   方法：GET
+
+| 名称 | 类型 | 是否必需 | 描述     |
+| :--- | :--- | :------- | :------- |
+| pn   | int  | 是       | 页码     |
+| size | int  | 否       | 页面大小 |
+
+
+##### 响应元素
+
+>   说明：返回为json数据
+
+【1】成功:code=100
+
+```json
+{
+    "code": 100,
+    "msg": "处理成功!",
+    "extend": {
+        "pageInfo": {
+            "total": 0,
+            "list": [],
+            "pageNum": 1,
+            "pageSize": 8,
+            "size": 0,
+            "startRow": 0,
+            "endRow": 0,
+            "pages": 0,
+            "prePage": 0,
+            "nextPage": 0,
+            "isFirstPage": true,
+            "isLastPage": true,
+            "hasPreviousPage": false,
+            "hasNextPage": false,
+            "navigatePages": 8,
+            "navigatepageNums": [],
+            "navigateFirstPage": 0,
+            "navigateLastPage": 0
+        }
+    }
+}
+```
+
+### 
 
 #### 2.3 分类删除
 
