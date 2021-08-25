@@ -48,8 +48,13 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public boolean deleteGenre(Genre genre) {
-        return false;
+    public boolean deleteGenre(int id) {
+        Genre genre = genreMapper.selectByPrimaryKey(id);
+        if (genre == null){
+            return false;
+        }
+        genreMapper.deleteByPrimaryKey(id);
+        return true;
     }
 
     @Override

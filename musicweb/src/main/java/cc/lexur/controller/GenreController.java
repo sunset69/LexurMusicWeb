@@ -4,6 +4,7 @@ import cc.lexur.pojo.Genre;
 import cc.lexur.pojo.Msg;
 import cc.lexur.services.GenreService;
 import com.github.pagehelper.PageInfo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +41,12 @@ public class GenreController {
         return Msg.success().add("pageInfo",pageInfo);
     }
 
+    /**
+     * 添加分类
+     * @param name
+     * @param description
+     * @return
+     */
     @RequestMapping(value = "/addGenre",method = RequestMethod.POST)
     @ResponseBody
     public Msg addGenre(@RequestParam String name, String description){
@@ -54,6 +61,20 @@ public class GenreController {
             return Msg.fail().setMsg("分类已存在");
         }
         return Msg.success();
+    }
+
+    /**
+     * 删除分类
+     * @param id
+     * @return
+     */
+    @RequestMapping("/deleteGenre")
+    @ResponseBody
+    public Msg deleteGenre(@RequestParam int id){
+        if(genreService.deleteGenre(id)){
+            return Msg.success();
+        }
+        return Msg.fail().setMsg("用户不存在");
     }
 
 }

@@ -16,7 +16,7 @@ public interface GenreService {
 
     public boolean addGenre(Genre genre);
 
-    public boolean deleteGenre(Genre genre);
+    public boolean deleteGenre(int id);
 
     public boolean updateGenre(Genre genre);
 
