@@ -250,45 +250,35 @@ api:
 >
 >   方法：POST
 
-| 名称 | 类型   | 是否必需 | 描述     |
-| :--- | :----- | :------- | :------- |
-| name | String | 是       | 分类名称 |
-| desc | String | 否       | 描述     |
+| 名称        | 类型   | 是否必需 | 描述     |
+| :---------- | :----- | :------- | :------- |
+| name        | String | 是       | 分类名称 |
+| description | String | 否       | 描述     |
 
+>   注意如果descrption使用缩写desc会与关键字冲突！
 
 ##### 响应元素
 
 >   说明：返回为json数据
 
-【1】更新成功:code=100
+【1】添加成功:code=100
 
 ```
- {
-     "code": 100,
-     "msg": "处理成功!",
-     "extend": {
-         "user": {
-             "id": 4,
-             "phone": null,
-             "mail": null,
-             "password": "456",
-             "nickname": "bbb",
-             "avatar": null,
-             "locked": "N",
-             "birth": null
-         }
-     }
- }
+{
+    "code": 100,
+    "msg": "处理成功!",
+    "extend": {}
+}
 ```
 
-【2】更新失败:code=200
+【2】添加失败:code=200
 
 ```
- {
-     "code": 200,
-     "msg": "处理失败！",
-     "extend": {}
- }
+{
+    "code": 200,
+    "msg": "分类已存在",
+    "extend": {}
+}
 ```
 
 #### 2.2 分类查询
