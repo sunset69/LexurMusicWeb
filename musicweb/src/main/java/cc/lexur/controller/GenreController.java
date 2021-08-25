@@ -42,13 +42,13 @@ public class GenreController {
 
     @RequestMapping(value = "/addGenre",method = RequestMethod.POST)
     @ResponseBody
-    public Msg addGenre(@RequestParam String name, String desc){
+    public Msg addGenre(@RequestParam String name, String description){
         Genre genre = new Genre();
         if (name == null || name == ""){
             return Msg.fail().setMsg("分类名不能为空");
         }
         genre.setName(name);
-        genre.setDesc(desc);
+        genre.setDescription(description);
         System.out.println(genre.toString());
         if(!genreService.addGenre(genre)){
             return Msg.fail().setMsg("分类已存在");

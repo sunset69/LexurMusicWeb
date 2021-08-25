@@ -2,8 +2,9 @@ package cc.lexur.mapper;
 
 import cc.lexur.pojo.Genre;
 import cc.lexur.pojo.GenreExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface GenreMapper {
     long countByExample(GenreExample example);

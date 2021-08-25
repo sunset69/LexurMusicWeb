@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="cc.lexur.pojo.Genre">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="desc" jdbcType="VARCHAR" property="desc" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -65,7 +65,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, desc
+    id, name, description
   </sql>
   <select id="selectByExample" parameterType="cc.lexur.pojo.GenreExample" resultMap="BaseResultMap">
     select
@@ -98,13 +98,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cc.lexur.pojo.Genre">
---     insert into genre (id, name, desc
---       )
---     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR}
---       )
---     insert into genre (id,name,desc)
---     values(null ,#{name,jdbcType=VARCHAR},#{desc,jdbcType=VARCHAR})
-    INSERT INTO genre (name, `desc`) VALUES('test', 'test');
+    insert into genre (id, name, description
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cc.lexur.pojo.Genre">
     insert into genre
@@ -115,8 +112,8 @@
       <if test="name != null">
         name,
       </if>
-      <if test="desc != null">
-        desc,
+      <if test="description != null">
+        description,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -126,8 +123,8 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="desc != null">
-        #{desc,jdbcType=VARCHAR},
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -146,8 +143,8 @@
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.desc != null">
-        desc = #{record.desc,jdbcType=VARCHAR},
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -158,7 +155,7 @@
     update genre
     set id = #{record.id,jdbcType=INTEGER},
       name = #{record.name,jdbcType=VARCHAR},
-      desc = #{record.desc,jdbcType=VARCHAR}
+      description = #{record.description,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -169,8 +166,8 @@
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="desc != null">
-        desc = #{desc,jdbcType=VARCHAR},
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -178,7 +175,7 @@
   <update id="updateByPrimaryKey" parameterType="cc.lexur.pojo.Genre">
     update genre
     set name = #{name,jdbcType=VARCHAR},
-      desc = #{desc,jdbcType=VARCHAR}
+      description = #{description,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
