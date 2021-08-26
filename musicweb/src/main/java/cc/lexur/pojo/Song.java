@@ -19,15 +19,34 @@ public class Song {
 
     private String author;
 
-    private Long collection;
+    private Long collection = Long.valueOf(0);
 
-    private Integer status;
+    private Integer status = 1;
 
     private Date publishTime;
 
     private Date offlineTime;
 
     private Date createTime;
+
+    @Override
+    public String toString() {
+        return "Song{" +
+                "id=" + id +
+                ", genreId=" + genreId +
+                ", adminId=" + adminId +
+                ", title='" + title + '\'' +
+                ", language='" + language + '\'' +
+                ", source='" + source + '\'' +
+                ", poster='" + poster + '\'' +
+                ", author='" + author + '\'' +
+                ", collection=" + collection +
+                ", status=" + status +
+                ", publishTime=" + publishTime +
+                ", offlineTime=" + offlineTime +
+                ", createTime=" + createTime +
+                '}';
+    }
 
     public Integer getId() {
         return id;

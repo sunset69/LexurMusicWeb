@@ -8,9 +8,11 @@ import cc.lexur.services.SongService;
 import cc.lexur.services.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -43,5 +45,50 @@ public class SongController {
         return Msg.success().add("pageInfo",pageInfo);
     }
 
+    /**
+     * 添加音乐
+     * @param genre_id
+     * @param admin_id 上传者ID，默认null
+     * @param title
+     * @param language
+     * @param source
+     * @param poster
+     * @param author
+     * @return
+     */
+    @RequestMapping(value = "addSong",method = RequestMethod.POST)
+    @ResponseBody
+    public Msg addSong(@RequestParam(defaultValue = "1") int genre_id,@RequestParam(defaultValue = "0") int admin_id, @RequestParam String title, String language, @RequestParam String source, String poster, String author){
+        if (title == ""){
+            return Msg.fail().setMsg("标题不能为空");
+        }
+        if (source == ""){
+            return Msg.fail().setMsg("歌曲链接有问题");
+        }
+        Song song = new Song();
+        song.setGenreId(genre_id);
+        if (admin_id == 0){
+            song.setAdminId(null);
+        }else {
+            song.setAdminId(admin_id);
+        }
+        song.setTitle(title);
+        song.setLanguage(language);
+        song.setSource(source);
+        song.setPoster(poster);
+        song.setAuthor(author);
+        System.out.println(song.toString());
+        songService.addSong(song);
+        return Msg.success().add("song",song);
+    }
 
+
+    @RequestMapping("/deleteSong")
+    @ResponseBody
+    public Msg deleteSong(@RequestParam int id){
+        if (!songService.deleteSong(id)){
+            return Msg.fail().setMsg("用户不存在");
+        }
+        return Msg.success();
+    }
 }

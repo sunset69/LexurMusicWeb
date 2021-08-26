@@ -12,4 +12,10 @@ import java.util.List;
  */
 public interface SongService {
     public List<Song> getSongList(int pn, int size);
+
+    public boolean addSong(Song song);
+
+    public boolean deleteSong(int id);
+
+    public boolean updateSong(Song song);
 }

@@ -29,9 +29,146 @@ api:
 }
 ```
 
+## 数据库分析
+
+### 一、需求分析
+
+管理员系统：
+
+用户系统：
+
+音乐系统：
+
+收藏：
+
+评论：
+
+### 二、数据库设计
+
+#### 1.1 整体设计
+
+| 表名称  |     说明      |
+| :------ | :-----------: |
+| admin   | 管理员信息表  |
+| user    |  用户信息表   |
+| genre   |   各区分类    |
+| song    |  歌曲信息表   |
+| collect |    收藏表     |
+| comment |    评论表     |
+|         | 浏览记录Redis |
+
+#### 1.2 管理员信息表
+
+表名：admin
+
+>   登录：用户名+密码
+
+| 列名       | 数据类型    | 约束     | 说明                     |
+| ---------- | ----------- | -------- | ------------------------ |
+| id         | int         | 非空唯一 | 主键                     |
+| username   | varchar(30) | 非空唯一 | 用户名                   |
+| password   | varcha(50)  | 非空     | 密码                     |
+| ~~mobile~~ | varchar(11) |          | 手机号                   |
+| email      | varchar(25) |          | 邮箱                     |
+| enable     | varchar(1)  | 非空     | Y：启用 N：禁用 默认启用 |
+
+#### 1.3 用户信息表
+
+用户名：user
+
+>   登录：邮箱+密码
+
+| 列名       | 数据类型     | 约束     | 说明                     |
+| ---------- | ------------ | -------- | ------------------------ |
+| id         | int          | 非空唯一 | 主键                     |
+| ~~mobile~~ | varchar(11)  | 唯一     |                          |
+| mail       | varchar(25)  | 非空唯一 | 邮箱最为用户登录账号     |
+| password   | varchar(50)  | 非空     | 密码                     |
+| nickname   | varchar(20)  |          | 昵称（可以使用昵称登录） |
+| avatar     | varchar(300) | 非空     | 用户头像                 |
+| locked     | char(1)      | 非空     | Y：锁定 N：正常 默认正常 |
+
+#### 1.4 音乐分类
+
+表名：genre
+
+| 列名 | 数据类型    | 约束     | 说明     |
+| ---- | ----------- | -------- | -------- |
+| id   | int         | 非空唯一 | 主键     |
+| name | varchar(20) | 非空唯一 | 名称     |
+| desc | varchar(50) |          | 分类描述 |
+
+#### 1.5 音乐信息表
+
+表名：song
+
+| 列名         | 数据类型     | 约束     | 说明                                |
+| ------------ | ------------ | -------- | ----------------------------------- |
+| id           | bigint       | 非空唯一 | 主键                                |
+| genre_id     | int          |          | 外键 分类ID                         |
+| admin_id     | int          |          | 外键 上传歌曲管理员ID               |
+| title        | varchar(255) | 非空     | 歌曲名称                            |
+| source       | varchar(300) | 非空     | 音乐链接                            |
+| poster       | varchar(300) | 非空     | 音乐图片                            |
+| author       | varchar(20)  |          | 音乐作者，使用“,”间隔               |
+| collections  | bigint       | 非空     | 音乐收藏量                          |
+| status       | int          | 非空     | 发布状态 0:未发布 1:已发布 2:已下线 |
+| publish_time | timestamp    |          | 发布时间                            |
+| offline_time | timestamp    |          | 下线时间                            |
+| create_time  | timestamp    | 非空     | 创建时间                            |
+
+#### 1.6 评论表
+
+>   1.   音乐的评论（根节点）
+>   1.   对评论的评论（树形结构）
+>
+>   方案一（多表）：评论表 回复表
+>
+>   方案二（单表）：父子表
+>
+>   ​	实现：id与parent_id
+
+表名：comment
+
+| 列名        | 数据类型  | 约束     | 说明                                                |
+| ----------- | --------- | -------- | --------------------------------------------------- |
+| id          | int       | 非空唯一 | 主键                                                |
+| song_id     | int       | 非空     | 歌曲ID                                              |
+| user_id     | int       | 非空     | 用户ID                                              |
+| parent_id   | int       |          | 指向上级评论的ID，<br/>如果是对歌曲的评论，值为null |
+| content     | text      | 非空     | 评论内容                                            |
+| create_time | timestamp | 非空     | 创建时间                                            |
+
+#### 1.7 收藏表
+
+>   一个用户收藏多首音乐，一首歌可以被多个用户收藏
+>   多对多：中间表
+
+表名：collect
+
+| 列名    | 数据类型 | 约束     | 说明   |
+| ------- | -------- | -------- | ------ |
+| id      | int      | 非空唯一 | 主键   |
+| song_id | int      | 非空     | 歌曲ID |
+| user_id | int      | 非空     | 用户ID |
 
 
-### 音乐网站服务器
+
+#### 要点总结
+
+-   一对多关系:添加外键
+-   多对多关系:中间表
+-   大文本:
+-   id很多情况：bigint
+-   树状结构：父子表
+-   删除元素：逻辑删除
+-   外键的删除更新时操作都改为no ation,使用程序来实现，不使用数据库实现
+
+
+
+
+
+## 音乐网站服务器
 
 ## API接口
 
@@ -402,29 +539,160 @@ api:
 ```
 {
     "code": 200,
-    "msg": "分类已存在",
+    "msg": "分类不存在",
     "extend": {}
 }
 ```
-
-#### 
 
 ###3. 音乐管理
 
 #### 3.1 音乐信息
 
+##### 请求参数
+
+>   请求网址：localhost:2001/song/page
+>
+>   方法：POST
+
+| 名称 | 类型 | 是否必需 | 描述     |
+| :--- | :--- | :------- | :------- |
+| pn   | int  | 否       | 页码     |
+| size | int  | 否       | 页面大小 |
+
+##### 响应元素
+
+>   说明：返回为json数据
+
+```json
+{
+    "code": 100,
+    "msg": "处理成功!",
+    "extend": {
+        "pageInfo": {
+            "total": 0,
+            "list": [],
+            "pageNum": 1,
+            "pageSize": 8,
+            "size": 0,
+            "startRow": 0,
+            "endRow": 0,
+            "pages": 0,
+            "prePage": 0,
+            "nextPage": 0,
+            "isFirstPage": true,
+            "isLastPage": true,
+            "hasPreviousPage": false,
+            "hasNextPage": false,
+            "navigatePages": 8,
+            "navigatepageNums": [],
+            "navigateFirstPage": 0,
+            "navigateLastPage": 0
+        }
+    }
+}
+```
+
 
 
 #### 3.2 添加音乐
 
+##### 请求参数
 
+>   请求网址：localhost:2001/song/addSong
+>
+>   方法：POST
+
+| 名称     | 类型   | 是否必需 | 描述       |
+| :------- | :----- | :------- | :--------- |
+| genre_id | int    | 是       | 分类id     |
+| admin_id | int    | 是       | 上传人员id |
+| title    | String | 是       | 标题       |
+| language | String | 否       | 语言       |
+| source   | String | 是       | 歌曲链接   |
+| poster   | String | 是       | 歌曲封面   |
+| author   | String | 否       | 歌曲作者   |
+
+
+##### 响应元素
+
+>   说明：返回为json数据
+
+```json
+{
+    "code": 100,
+    "msg": "处理成功!",
+    "extend": {
+        "song": {
+            "id": null,
+            "genreId": 1,
+            "adminId": null,
+            "title": "",
+            "language": "",
+            "source": "",
+            "poster": "",
+            "author": "",
+            "collection": 0,
+            "status": 1,
+            "publishTime": null,
+            "offlineTime": null,
+            "createTime": null
+        }
+    }
+}
+```
 
 #### 3.3 删除音乐
+
+##### 请求参数
+
+>   请求网址：localhost:2001/song/deleteSong
+>
+>   方法：POST
+
+| 名称 | 类型 | 是否必需 | 描述 |
+| :--- | :--- | :------- | :--- |
+| id   | int  | 是       | id   |
+
+
+##### 响应元素
+
+>   说明：返回为json数据
+
+【1】处理成功
+
+```json
+{
+    "code": 100,
+    "msg": "处理成功!",
+    "extend": {}
+}
+```
+
+【2】处理失败
+
+```json
+{
+    "code": 200,
+    "msg": "用户不存在",
+    "extend": {}
+}
+```
 
 
 
 #### 3.4 修改音乐
 
+| 名称     | 类型   | 是否必需 | 描述       |
+| :------- | :----- | :------- | :--------- |
+| id       | int    | 是       | 修改音乐id |
+| genre_id | int    | 否       | 分类id     |
+| admin_id | int    | 否       | 上传人员id |
+| title    | String | 否       | 标题       |
+| language | String | 否       | 语言       |
+| source   | String | 否       | 歌曲链接   |
+| poster   | String | 否       | 歌曲封面   |
+| author   | String | 否       | 歌曲作者   |
+| status   | int    | 否       | 歌曲状态   |
 
 
 #### 3.5 按名称查询
@@ -439,11 +707,41 @@ api:
 
 #### 4.1 登录
 
+##### 请求参数
 
+>   请求网址：localhost:2001/user/login
+>
+>   方法：POST
+
+| 名称     | 类型   | 是否必需 | 描述 |
+| :------- | :----- | :------- | :--- |
+| mail     | String | 是       | 邮箱 |
+| password | String | 是       | 密码 |
+
+##### 响应元素
+
+>   说明：返回为jsp页面
+
+【1】登录成功:music.jsp
+
+【2】登录失败:error.jsp，5秒后返回登录页面
 
 #### 4.2 注册
 
+##### 请求参数
 
+>   请求网址：localhost:2001/user/register
+>
+>   方法：POST
 
-#### 4.3 收藏/取消收藏
+| 名称     | 类型   | 是否必需 | 描述 |
+| :------- | :----- | :------- | :--- |
+| mail     | String | 是       | 邮箱 |
+| password | String | 是       | 密码 |
+| nickname | String | 否       | 昵称 |
+| phone    | String | 否       | 电话 |
+| avatar   | String | 否       | 头像 |
+| birth    | Date   | 否       | 生日 |
+
+### 4.3 收藏/取消收藏
 

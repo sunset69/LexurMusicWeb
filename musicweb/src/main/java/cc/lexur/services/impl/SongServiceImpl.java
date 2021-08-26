@@ -28,4 +28,41 @@ public class SongServiceImpl implements SongService {
         List<Song> list = songMapper.selectByExample(null);
         return list;
     }
+
+    @Override
+    public boolean addSong(Song song) {
+        song.setId(null);
+        songMapper.insert(song);
+        return true;
+    }
+
+    /**
+     * 发布状态 0:未发布 1:已发布 2:已下线
+     * 删除音乐将song的status改为2
+     * @param id
+     * @return
+     */
+    @Override
+    public boolean deleteSong(int id) {
+        if( songMapper.selectByPrimaryKey(id) == null){
+            return false;
+        }
+        Song song = new Song();
+        song.setId(id);
+        song.setStatus(2);
+        songMapper.updateByPrimaryKeySelective(song);
+        return true;
+    }
+
+    @Override
+    public boolean updateSong(Song song) {
+        if (song.getId() == null){
+            return false;
+        }
+        if (songMapper.selectByPrimaryKey(song.getId()) == null){
+            return false;
+        }
+        songMapper.updateByPrimaryKeySelective(song);
+        return true;
+    }
 }
