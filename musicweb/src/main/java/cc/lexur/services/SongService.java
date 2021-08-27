@@ -18,4 +18,7 @@ public interface SongService {
     public boolean deleteSong(int id);
 
     public boolean updateSong(Song song);
+
+    public boolean checkId(int id);
+
 }

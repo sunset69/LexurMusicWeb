@@ -69,4 +69,13 @@ public class GenreServiceImpl implements GenreService {
         genreMapper.updateByPrimaryKeySelective(genre);
         return true;
     }
+
+    @Override
+    public boolean checkId(int id) {
+        Genre genre = genreMapper.selectByPrimaryKey(id);
+        if (genre == null){
+            return false;
+        }
+        return true;
+    }
 }

@@ -42,4 +42,13 @@ public class AdminServiceImpl implements AdminService {
         System.out.println(username+"登录成功！");
         return true;
     }
+
+    @Override
+    public boolean checkId(int id) {
+        Admin admin = adminMapper.selectByPrimaryKey(id);
+        if (admin != null){
+            return true;
+        }
+        return false;
+    }
 }

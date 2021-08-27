@@ -4,6 +4,7 @@ import cc.lexur.mapper.SongMapper;
 import cc.lexur.pojo.Msg;
 import cc.lexur.pojo.Song;
 import cc.lexur.pojo.SongExample;
+import cc.lexur.services.GenreService;
 import cc.lexur.services.SongService;
 import cc.lexur.services.UserService;
 import com.github.pagehelper.PageHelper;
@@ -31,6 +32,9 @@ public class SongController {
     @Autowired
     SongService songService;
 
+    @Autowired
+    GenreService genreService;
+
     /**
      * 获取音乐分页
      * @param pn
@@ -56,7 +60,7 @@ public class SongController {
      * @param author
      * @return
      */
-    @RequestMapping(value = "addSong",method = RequestMethod.POST)
+    @RequestMapping(value = "/addSong",method = RequestMethod.POST)
     @ResponseBody
     public Msg addSong(@RequestParam(defaultValue = "1") int genre_id,@RequestParam(defaultValue = "0") int admin_id, @RequestParam String title, String language, @RequestParam String source, String poster, String author){
         if (title == ""){
@@ -83,6 +87,11 @@ public class SongController {
     }
 
 
+    /**
+     * 删除歌曲，使用逻辑删除
+     * @param id
+     * @return
+     */
     @RequestMapping("/deleteSong")
     @ResponseBody
     public Msg deleteSong(@RequestParam int id){
@@ -90,5 +99,48 @@ public class SongController {
             return Msg.fail().setMsg("用户不存在");
         }
         return Msg.success();
+    }
+
+    @RequestMapping(value = "/updateSong",method = RequestMethod.POST)
+    @ResponseBody
+    public Msg updateSong(@RequestParam(required = true,defaultValue = "-1") int id,@RequestParam(defaultValue = "-1") int genre_id,String title, String language,String source, String poster, String author,@RequestParam(defaultValue = "-1") int status){
+        Song song = new Song();
+
+        if (id == -1){
+            return Msg.fail().setMsg("id问题");
+        }
+        song.setId(id);
+        if (!genreService.checkId(genre_id)){
+            return Msg.fail().setMsg("分类ID不存在");
+        }else {
+            song.setGenreId(genre_id);
+        }
+        if (title != null && title != ""){
+            song.setTitle(title);
+        }
+        if (language != null && language != ""){
+            song.setLanguage(language);
+        }
+        if (source != null && source != ""){
+            song.setSource(source);
+        }
+        if (poster != null && poster != ""){
+            song.setPoster(poster);
+        }
+        if (author != null && author != ""){
+            song.setAuthor(author);
+        }
+        if (status != -1){
+            song.setStatus(status);
+        }else {
+            song.setStatus(null);
+        }
+        //songService.updateSong(song);
+
+        System.out.println(song.toString());
+        if(!songService.updateSong(song)){
+            return Msg.fail().setMsg("用户不存在");
+        }
+        return Msg.success().add("song",song);
     }
 }

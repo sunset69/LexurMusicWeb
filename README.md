@@ -682,11 +682,16 @@ api:
 
 #### 3.4 修改音乐
 
+##### 请求参数
+
+>   请求网址：localhost:2001/song/updateSong
+>
+>   方法：POST
+
 | 名称     | 类型   | 是否必需 | 描述       |
 | :------- | :----- | :------- | :--------- |
 | id       | int    | 是       | 修改音乐id |
 | genre_id | int    | 否       | 分类id     |
-| admin_id | int    | 否       | 上传人员id |
 | title    | String | 否       | 标题       |
 | language | String | 否       | 语言       |
 | source   | String | 否       | 歌曲链接   |

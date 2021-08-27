@@ -26,4 +26,6 @@ public interface UserService {
 
     public boolean updateUser(User user);//修改 id必须
 
+    public boolean checkId(int id);
+
 }

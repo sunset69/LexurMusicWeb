@@ -65,4 +65,13 @@ public class SongServiceImpl implements SongService {
         songMapper.updateByPrimaryKeySelective(song);
         return true;
     }
+
+    @Override
+    public boolean checkId(int id) {
+        Song song = songMapper.selectByPrimaryKey(id);
+        if (song != null){
+            return true;
+        }
+        return false;
+    }
 }

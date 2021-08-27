@@ -115,4 +115,13 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+    @Override
+    public boolean checkId(int id) {
+        User user = userMapper.selectByPrimaryKey(id);
+        if (user == null){
+            return false;
+        }
+        return true;
+    }
+
 }

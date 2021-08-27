@@ -1,6 +1,7 @@
 package cc.lexur.services;
 
 import cc.lexur.pojo.Genre;
+import javafx.scene.layout.BackgroundImage;
 
 import java.util.List;
 
@@ -20,4 +21,5 @@ public interface GenreService {
 
     public boolean updateGenre(Genre genre);
 
+    public boolean checkId(int id);
 }
