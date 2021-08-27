@@ -741,11 +741,113 @@ api:
 
 #### 3.5 按名称查询
 
+##### 请求参数
 
+>   请求网址：localhost:2001/song/title
+>
+>   方法：GET
+
+| 名称  | 类型   | 是否必需 | 描述     |
+| :---- | :----- | :------- | :------- |
+| title | String | 是       | 音乐名称 |
+
+
+##### 响应元素
+
+>   说明：返回为json数据
+
+【1】处理成功
+
+```json
+{
+    "code": 100,
+    "msg": "处理成功!",
+    "extend": {
+        "song": {
+            "id": 6,
+            "genreId": 2,
+            "adminId": null,
+            "title": "test",
+            "language": "汉语",
+            "source": null,
+            "poster": null,
+            "author": "未知",
+            "collection": 0,
+            "status": 0,
+            "publishTime": null,
+            "offlineTime": null,
+            "createTime": null
+        }
+    }
+}
+```
+
+【2】处理失败
+
+```json
+{
+    "code": 200,
+    "msg": "歌曲不存在",
+    "extend": {}
+}
+```
+
+#### 
 
 #### 3.6 按分类查询
 
+##### 请求参数
 
+>   请求网址：localhost:2001/song/genre
+>
+>   方法：GET
+
+| 名称 | 类型 | 是否必需 | 描述     |
+| :--- | :--- | :------- | :------- |
+| id   | int  | 是       | 分类名称 |
+
+
+##### 响应元素
+
+>   说明：返回为json数据
+
+【1】处理成功
+
+```json
+{
+    "code": 100,
+    "msg": "处理成功!",
+    "extend": {
+        "song": {
+            "id": 6,
+            "genreId": 2,
+            "adminId": null,
+            "title": "test",
+            "language": "汉语",
+            "source": null,
+            "poster": null,
+            "author": "未知",
+            "collection": 0,
+            "status": 0,
+            "publishTime": null,
+            "offlineTime": null,
+            "createTime": null
+        }
+    }
+}
+```
+
+【2】处理失败
+
+```json
+{
+    "code": 200,
+    "msg": "歌曲不存在",
+    "extend": {}
+}
+```
+
+#### 
 
 ### 4. 用户
 

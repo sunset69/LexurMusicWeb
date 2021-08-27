@@ -1,7 +1,11 @@
 package cc.lexur.services.impl;
 
+import cc.lexur.mapper.GenreMapper;
 import cc.lexur.mapper.SongMapper;
+import cc.lexur.pojo.Genre;
+import cc.lexur.pojo.GenreExample;
 import cc.lexur.pojo.Song;
+import cc.lexur.pojo.SongExample;
 import cc.lexur.services.SongService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +25,23 @@ public class SongServiceImpl implements SongService {
     @Autowired
     SongMapper songMapper;
 
+    @Autowired
+    GenreMapper genreMapper;
+
     @Override
     public List<Song> getSongList(int pn, int size) {
+        SongExample songExample = new SongExample();
+        SongExample.Criteria criteria = songExample.createCriteria();
+        criteria.andStatusEqualTo(1);
+
+        //进行分页查询
+        PageHelper.startPage(pn, size);
+        List<Song> list = songMapper.selectByExample(songExample);
+        return list;
+    }
+
+    @Override
+    public List<Song> getAllSongList(int pn, int size) {
         //进行分页查询
         PageHelper.startPage(pn, size);
         List<Song> list = songMapper.selectByExample(null);
@@ -73,5 +92,34 @@ public class SongServiceImpl implements SongService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<Song> searchByTitle(String title) {
+        SongExample example = new SongExample();
+        SongExample.Criteria criteria = example.createCriteria();
+        title = "%" + title + "%";
+        criteria.andTitleLike(title);
+        criteria.andStatusEqualTo(1);
+        List<Song> list = songMapper.selectByExample(example);
+        return list;
+    }
+
+    @Override
+    public List<Song> searchByGenre(String name) {
+        GenreExample genreExample = new GenreExample();
+        GenreExample.Criteria genreExampleCriteria = genreExample.createCriteria();
+        genreExampleCriteria.andNameLike("%"+name+"%");
+        List<Genre> genreList = genreMapper.selectByExample(genreExample);
+        if (genreList.isEmpty()){
+            return null;
+        }
+        int id = genreList.get(0).getId();
+        SongExample songExample = new SongExample();
+        SongExample.Criteria songExampleCriteria = songExample.createCriteria();
+        songExampleCriteria.andGenreIdEqualTo(id);
+        songExampleCriteria.andStatusEqualTo(1);
+        List<Song> songList = songMapper.selectByExample(songExample);
+        return songList;
     }
 }

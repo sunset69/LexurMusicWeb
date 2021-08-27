@@ -44,7 +44,7 @@ public class SongController {
     UserService userService;
 
     /**
-     * 获取音乐分页
+     * 获取未删除音乐分页
      * @param pn
      * @param size
      * @return
@@ -53,6 +53,20 @@ public class SongController {
     @ResponseBody
     public Msg getPage(@RequestParam(name = "pn", defaultValue = "0") int pn, @RequestParam(name = "size", defaultValue = "8") int size) {
         List<Song> songList = songService.getSongList(pn, size);
+        PageInfo pageInfo = new PageInfo(songList);
+        return Msg.success().add("pageInfo",pageInfo);
+    }
+
+    /**
+     * 获取全部歌曲分页，修改歌曲信息时使用
+     * @param pn
+     * @param size
+     * @return
+     */
+    @RequestMapping("/allPage")
+    @ResponseBody
+    public Msg getAllPage(@RequestParam(name = "pn", defaultValue = "0") int pn, @RequestParam(name = "size", defaultValue = "8") int size) {
+        List<Song> songList = songService.getAllSongList(pn, size);
         PageInfo pageInfo = new PageInfo(songList);
         return Msg.success().add("pageInfo",pageInfo);
     }
@@ -118,6 +132,18 @@ public class SongController {
         return Msg.success();
     }
 
+    /**
+     * 修改音乐信息
+     * @param id
+     * @param genre_id
+     * @param title
+     * @param language
+     * @param source
+     * @param poster
+     * @param author
+     * @param status
+     * @return
+     */
     @RequestMapping(value = "/updateSong",method = RequestMethod.POST)
     @ResponseBody
     public Msg updateSong(@RequestParam(required = true,defaultValue = "-1") int id,@RequestParam(defaultValue = "-1") int genre_id,String title, String language,String source, String poster, String author,@RequestParam(defaultValue = "-1") int status){
@@ -167,5 +193,29 @@ public class SongController {
             return Msg.fail().setMsg("用户不存在");
         }
         return Msg.success().add("song",song);
+    }
+
+    /**
+     * 通过音乐名搜索
+     * @param title
+     * @return
+     */
+    @RequestMapping("/title")
+    @ResponseBody
+    public Msg searchByTitle(@RequestParam String title){
+        List<Song> list = songService.searchByTitle(title);
+        return Msg.success().add("songList",list);
+    }
+
+    /**
+     * 通过分类查询
+     * @param genre
+     * @return
+     */
+    @RequestMapping("/genre")
+    @ResponseBody
+    public Msg searchByGenre(@RequestParam String genre){
+        List<Song> list = songService.searchByGenre(genre);
+        return Msg.success().add("songList",list);
     }
 }
