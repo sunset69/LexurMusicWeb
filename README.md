@@ -699,6 +699,45 @@ api:
 | author   | String | 否       | 歌曲作者   |
 | status   | int    | 否       | 歌曲状态   |
 
+##### 响应元素
+
+>   说明：返回为json数据
+
+【1】处理成功
+
+```json
+{
+    "code": 100,
+    "msg": "处理成功!",
+    "extend": {
+        "song": {
+            "id": 6,
+            "genreId": 2,
+            "adminId": null,
+            "title": "test",
+            "language": "汉语",
+            "source": null,
+            "poster": null,
+            "author": "未知",
+            "collection": 0,
+            "status": 0,
+            "publishTime": null,
+            "offlineTime": null,
+            "createTime": null
+        }
+    }
+}
+```
+
+【2】处理失败
+
+```json
+{
+    "code": 200,
+    "msg": "歌曲不存在",
+    "extend": {}
+}
+```
 
 #### 3.5 按名称查询
 

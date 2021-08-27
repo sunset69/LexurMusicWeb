@@ -4,6 +4,8 @@ import cc.lexur.mapper.SongMapper;
 import cc.lexur.pojo.Msg;
 import cc.lexur.pojo.Song;
 import cc.lexur.pojo.SongExample;
+import cc.lexur.pojo.User;
+import cc.lexur.services.AdminService;
 import cc.lexur.services.GenreService;
 import cc.lexur.services.SongService;
 import cc.lexur.services.UserService;
@@ -35,6 +37,12 @@ public class SongController {
     @Autowired
     GenreService genreService;
 
+    //@Autowired
+    //AdminService adminService;
+
+    @Autowired
+    UserService userService;
+
     /**
      * 获取音乐分页
      * @param pn
@@ -63,14 +71,23 @@ public class SongController {
     @RequestMapping(value = "/addSong",method = RequestMethod.POST)
     @ResponseBody
     public Msg addSong(@RequestParam(defaultValue = "1") int genre_id,@RequestParam(defaultValue = "0") int admin_id, @RequestParam String title, String language, @RequestParam String source, String poster, String author){
-        if (title == ""){
+        Song song = new Song();
+
+        if (!songService.checkId(genre_id)) {
+            return Msg.fail().setMsg("分类不存在");
+        }else {
+            song.setGenreId(genre_id);
+        }
+
+        if (title == null || title == ""){
             return Msg.fail().setMsg("标题不能为空");
         }
-        if (source == ""){
+        if (source == null || source == ""){
             return Msg.fail().setMsg("歌曲链接有问题");
         }
-        Song song = new Song();
-        song.setGenreId(genre_id);
+        if (!userService.checkId(admin_id)){
+            return Msg.fail().setMsg("用户不存在");
+        }
         if (admin_id == 0){
             song.setAdminId(null);
         }else {
@@ -106,30 +123,38 @@ public class SongController {
     public Msg updateSong(@RequestParam(required = true,defaultValue = "-1") int id,@RequestParam(defaultValue = "-1") int genre_id,String title, String language,String source, String poster, String author,@RequestParam(defaultValue = "-1") int status){
         Song song = new Song();
 
-        if (id == -1){
-            return Msg.fail().setMsg("id问题");
+        if (!songService.checkId(id)){
+            return Msg.fail().setMsg("歌曲不存在");
+        }else {
+            song.setId(id);
         }
-        song.setId(id);
+
         if (!genreService.checkId(genre_id)){
             return Msg.fail().setMsg("分类ID不存在");
         }else {
             song.setGenreId(genre_id);
         }
+
         if (title != null && title != ""){
             song.setTitle(title);
         }
+
         if (language != null && language != ""){
             song.setLanguage(language);
         }
+
         if (source != null && source != ""){
             song.setSource(source);
         }
+
         if (poster != null && poster != ""){
             song.setPoster(poster);
         }
+
         if (author != null && author != ""){
             song.setAuthor(author);
         }
+
         if (status != -1){
             song.setStatus(status);
         }else {
