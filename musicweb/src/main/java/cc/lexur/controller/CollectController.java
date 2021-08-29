@@ -74,5 +74,14 @@ public class CollectController {
         return Msg.success();
     }
 
+    @RequestMapping("/show")
+    @ResponseBody
+    public Msg show(@RequestParam int userId){
+        if (!userService.checkId(userId)){
+            return Msg.fail().setMsg("用户不存在");
+        }
+        collectService.show(userId);
+        return Msg.success();
+    }
 
 }
