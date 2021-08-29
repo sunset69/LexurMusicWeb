@@ -763,34 +763,34 @@ api:
     "code": 100,
     "msg": "处理成功!",
     "extend": {
-        "song": {
-            "id": 6,
-            "genreId": 2,
-            "adminId": null,
-            "title": "test",
-            "language": "汉语",
-            "source": null,
-            "poster": null,
-            "author": "未知",
-            "collection": 0,
-            "status": 0,
-            "publishTime": null,
-            "offlineTime": null,
-            "createTime": null
-        }
+        "songList": [
+            {
+                "id": 2,
+                "genreId": 1,
+                "adminId": null,
+                "title": "again",
+                "language": "日语",
+                "source": "",
+                "poster": "",
+                "author": "",
+                "collection": 0,
+                "status": 1,
+                "publishTime": null,
+                "offlineTime": null,
+                "createTime": 1629990189000
+            },
+            {
+               ...
+            },
+            {
+                ...
+            }
+        ]
     }
 }
 ```
 
-【2】处理失败
 
-```json
-{
-    "code": 200,
-    "msg": "歌曲不存在",
-    "extend": {}
-}
-```
 
 #### 
 
@@ -818,36 +818,32 @@ api:
     "code": 100,
     "msg": "处理成功!",
     "extend": {
-        "song": {
-            "id": 6,
-            "genreId": 2,
-            "adminId": null,
-            "title": "test",
-            "language": "汉语",
-            "source": null,
-            "poster": null,
-            "author": "未知",
-            "collection": 0,
-            "status": 0,
-            "publishTime": null,
-            "offlineTime": null,
-            "createTime": null
-        }
+        "songList": [
+            {
+                "id": 2,
+                "genreId": 1,
+                "adminId": null,
+                "title": "",
+                "language": "",
+                "source": "",
+                "poster": "",
+                "author": "",
+                "collection": 0,
+                "status": 1,
+                "publishTime": null,
+                "offlineTime": null,
+                "createTime": 1629990189000
+            },
+            {
+               ...
+            },
+            {
+                ...
+            }
+        ]
     }
 }
 ```
-
-【2】处理失败
-
-```json
-{
-    "code": 200,
-    "msg": "歌曲不存在",
-    "extend": {}
-}
-```
-
-#### 
 
 ### 4. 用户
 
@@ -889,5 +885,106 @@ api:
 | avatar   | String | 否       | 头像 |
 | birth    | Date   | 否       | 生日 |
 
-### 4.3 收藏/取消收藏
+### 5. 收藏/取消收藏
+
+#### 5.1 收藏
+
+##### 请求参数
+
+>   请求网址：localhost:2001/collect/add
+>
+>   方法：GET
+
+| 名称   | 类型   | 是否必需 | 描述   |
+| :----- | :----- | :------- | :----- |
+| songId | String | 是       | 音乐id |
+| userId | String | 是       | 用户id |
+
+##### 响应元素
+
+>   说明：返回为json数据
+
+【1】处理成功
+
+```json
+{
+    "code": 100,
+    "msg": "处理成功!",
+    "extend": {}
+}
+```
+
+【2】处理失败
+
+```json
+{
+    "code": 200,
+    "msg": "音乐不存在",
+    "extend": {}
+}
+```
+
+
+
+
+#### 5.2 取消收藏
+
+##### 请求参数
+
+>   请求网址：localhost:2001/collect/delete
+>
+>   方法：GET
+
+| 名称   | 类型   | 是否必需 | 描述   |
+| :----- | :----- | :------- | :----- |
+| songId | String | 是       | 音乐id |
+| userId | String | 是       | 用户id |
+
+##### 响应元素
+
+>   说明：返回为json数据
+
+【1】处理成功
+
+```json
+{
+    "code": 100,
+    "msg": "处理成功!",
+    "extend": {}
+}
+```
+
+【2】处理失败
+
+```json
+{
+    "code": 200,
+    "msg": "处理失败！",
+    "extend": {}
+}
+```
+
+
+
+#### 5.3 展示收藏
+
+##### 请求参数
+
+>   请求网址：localhost:2001/collect/show
+>
+>   方法：GET
+
+| 名称   | 类型   | 是否必需 | 描述   |
+| :----- | :----- | :------- | :----- |
+| userId | String | 是       | 用户id |
+
+##### 响应元素
+
+>   说明：返回为json数据
+
+【1】处理成功
+
+```json
+
+```
 
