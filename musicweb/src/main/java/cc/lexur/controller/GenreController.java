@@ -38,9 +38,9 @@ public class GenreController {
     @RequestMapping("/page")
     @ResponseBody
     public Msg getPage(@RequestParam(name = "pn", defaultValue = "-1") int pn, @RequestParam(name = "size", defaultValue = "8") int size){
-        List<Genre> genre = genreService.getGenre(pn,size);
-        PageInfo pageInfo = new PageInfo(genre);
-        return Msg.success().add("pageInfo",pageInfo);
+        List<Genre> genreList = genreService.getGenre(pn,size);
+        PageInfo pageInfo = new PageInfo(genreList);
+        return Msg.success().add("genreList",genreList).add("pageInfo",pageInfo);
     }
 
     /**

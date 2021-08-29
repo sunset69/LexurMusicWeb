@@ -22,8 +22,11 @@ public class SaveMultipartFile {
      * @throws IOException
      */
     public static String save(MultipartFile multipartFile, String path) throws IOException {
-        // 保存封面
+        // 保存文件
         String filename = multipartFile.getOriginalFilename();
+        // 去除一些非法字符
+        filename = filename.replace(" ","")
+                           .replace("&","");
         //System.out.println(filename);
         // 把文件名设置成唯一值，uuid
         String uuid = UUID.randomUUID().toString().replace("-", "");

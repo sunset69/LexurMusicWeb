@@ -11,9 +11,12 @@
                 <link rel="stylesheet" href="${APP_PATH}/static/css/music.css">
                 <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-                <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<%--                <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>--%>
+<%--                <script src="${APP_PATH}/static/js/jquery-3.6.0.min.js"></script>--%>
+                <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
                 <script src="${APP_PATH}/static/bootstrap/js/bootstrap.min.js"></script>
                 <script src="${APP_PATH}/static/cplayer/cplayer.js"></script>
+                <script src="${APP_PATH}/static/js/music.js"></script>
 
             </head>
 
@@ -44,9 +47,8 @@
                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                                 aria-haspopup="true" aria-expanded="false">分类 <span
                                                     class="caret"></span></a>
-                                            <ul class="dropdown-menu">
+                                            <ul class="dropdown-menu" id="SongGenre">
                                                 <!-- 分类内容 -->
-                                                <li><a href="#">Action</a></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -62,7 +64,7 @@
 
                                     <!-- 导航条右侧 -->
                                     <ul class="nav navbar-nav navbar-right">
-                                        <li><a href="#">上传音乐</a></li>
+                                        <li><a href="javascript:;" id="song_add_modal_btn">上传音乐</a></li>
                                         <li class="dropdown">
                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                                 aria-haspopup="true" aria-expanded="false">用户 <span
@@ -158,8 +160,7 @@
                                                 <label class="col-sm-2 control-label">分类</label>
                                                 <div class="col-sm-10">
                                                     <!--打开模态框，加载分类，选择分类-->
-                                                    <select class="form-control" name="genre"
-                                                        id="inputSongGenre"></select>
+                                                    <select class="form-control" name="genre" id="inputSongGenre"></select>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -192,6 +193,118 @@
 
                 </div>
 
+            <div>
+                <script>
+
+                    // 页面加载完成执行任务
+                    $(function () {
+
+                        console.log("欢迎进入lexur-music")
+
+                        // 初始化播放器
+                        var player = new cplayer({
+                            element: document.getElementById('app'),
+                            playlist: [],
+                            big: true,
+                            width: "100%"
+                        });
+
+                        // 跳转至首页
+                        to_page(1);
+                        getSongGenre("#SongGenre");
+
+                        // 绑定事件，点击播放获取音乐信息
+                        $(".song-display").on("click", ".play", function () {
+                            var song = {};
+                            var poster = $(this).parent().siblings("img").prop("src");
+                            var index = $(this).parent().siblings(".song_info").children("span").text();
+                            var songName = $(this).parent().siblings(".song_info").children("p").text();
+                            var singer = $(this).parent().siblings(".song_info").children("small:first").text();
+                            var songLanguage = $(this).parent().siblings(".song_info").children("small:last").text();
+                            var url = $(this).parent().siblings(".song_info").children("a").prop("href");
+                            var songId = $(this).parent().siblings(".song_info").children("a").text();
+                            song = {
+                                index: index,
+                                id: songId,
+                                poster: poster,
+                                title: songName,
+                                source: url,
+                                author: singer,
+                                language: songLanguage
+                            }
+                            // console.log(song);
+                            add_to_playlist(song,player);
+                        });
+
+                        // 绑定事件，点击添加按钮弹出模态框
+                        $("#song_add_modal_btn").click(function () {
+                            // 发送ajax请求获取音乐分类
+                            getSongGenre("#inputSongGenre");
+                            // 弹出模态框
+                            $("#song_add_modal").modal({
+                                backdrop: 'static',
+                                show: true
+                            });
+                        });
+
+
+                        // 绑定事件，点击上传音乐，获取并检查数据后上传
+                        $("#upload_song_btn").click(function () {
+                            // 获取数据
+                            var inputSongName = $("#inputSongName").val();
+
+                            var inputArtist = $("#inputArtist").val();
+                            var inputSongLanguage = $("#inputSongLanguage").val();
+                            var inputSongGenre = $("#inputSongGenre").val();
+                            var inputSongFile;
+                            var inputPoster;
+                            var songFile = $("#inputSongFile")[0].files[0];
+                            var poster = $("#inputPoster")[0].files[0];
+
+                            // 封装数据
+                            var formData = new FormData();
+                            formData.append("songName", inputSongName);
+                            formData.append("artist", inputArtist);
+                            formData.append("songLanguage", inputSongLanguage);
+                            formData.append("genre", inputSongGenre);
+                            formData.append("songFile", songFile);
+                            formData.append("poster", poster);
+                            // console.log(formData);
+
+                            // 校验格式
+                            $.each(formData, function (i, item) {
+                                console.log(item);
+                            });
+                            // 提交
+                            $.ajax({
+                                url: "${APP_PATH}/uploadSong",
+                                //url: "${APP_PATH}/songUpload2",
+                                method: "POST",
+                                data: formData,
+                                datatype: "json",
+                                cache: false,
+                                processData: false,
+                                contentType: false,
+                                success: function (result) {
+                                    console.log(result);
+                                }
+                            });
+                        });
+
+                        // 绑定事件，选择文件事件
+                        $("#inputSongFile").change(function () {
+                            allowFileType = ["mp3", "wav"];
+                            checkFileType("inputSongFile", allowFileType);
+                        });
+                        $("#inputPoster").change(function () {
+                            // allowFileType = ["jpg","png","jpeg"];
+                            // checkFileType("inputPoster",allowFileType);
+                            checkFileType("inputPoster", ["jpg", "png", "jpeg"]);
+                        });
+
+                    });/*结束*/
+                </script>
+            </div>
             </body>
 
             </html>

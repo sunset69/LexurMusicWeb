@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <script src="http://localhost:2001/static/js/music.js"></script>
+</head>
+<body>
+    <form>
+        file:<input id="uploadfile" type="file">
+    </form>
+    <button id="test" onclick="f();">test</button>
+<script>
+    function f() {
+        uploadFile('#uploadfile');
+    }
+</script>
+</body>
+</html>
