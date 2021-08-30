@@ -15,7 +15,8 @@
 <%--                <script src="${APP_PATH}/static/js/jquery-3.6.0.min.js"></script>--%>
                 <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
                 <script src="${APP_PATH}/static/bootstrap/js/bootstrap.min.js"></script>
-                <script src="${APP_PATH}/static/cplayer/cplayer.js"></script>
+<%--                <script src="${APP_PATH}/static/cplayer/cplayer.js"></script>--%>
+                <script src="https://cdn.jsdelivr.net/npm/cplayer/dist/cplayer.min.js"></script>
                 <script src="${APP_PATH}/static/js/music.js"></script>
 
             </head>
@@ -180,8 +181,9 @@
                                             <div class="form-group">
                                                 <div class="col-sm-offset-2 col-sm-10">
                                                     <button class="btn btn-success" id="upload_song_btn">上传</button>
-                                                    <button class="btn btn-warning"
-                                                        onclick="$('#uploadModel').modal('hide')">取消</button>
+                                                    <!-- <button class="btn btn-warning"
+                                                        onclick="$('#uploadModel').modal('hide')">取消</button> -->
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -191,7 +193,25 @@
                         </div><!-- /.modal -->
                     </div>
 
+                    <!-- 弹出警告 -->
+                    <div class="modal fade" tabindex="-1" role="dialog" id="alertModal">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                              <h4 class="modal-title">警告</h4>
+                            </div>
+                            <div class="modal-body">
+                              <p>info</p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+                            </div>
+                          </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                      </div><!-- /.modal -->
                 </div>
+                <!-- ==================================模态框================================================= -->
 
             <div>
                 <script>
@@ -250,51 +270,62 @@
 
                         // 绑定事件，点击上传音乐，获取并检查数据后上传
                         $("#upload_song_btn").click(function () {
+
+                            var source;
+                            var poster;
+
+                            if(checkFileType("inputSongFile", ["mp3", "wav"])){
+                                // 上床文件，获取链接
+                                // source = uploadFile("#inputSongFile");
+                            }else {
+                                // 弹出警告
+                                infoModal("歌曲文件未选中或格式有问题!");
+                                return ;
+                            }
+                            if(checkFileType("inputPoster", ["jpg", "png", "jpeg"])){
+                                // poster = uploadFile("#inputPoster");
+                            }else {
+                                // 弹出警告
+                                infoModal("封面文件未选中或格式有问题!");
+                                return ;
+                            }
                             // 获取数据
                             var inputSongName = $("#inputSongName").val();
-
                             var inputArtist = $("#inputArtist").val();
                             var inputSongLanguage = $("#inputSongLanguage").val();
                             var inputSongGenre = $("#inputSongGenre").val();
-                            var inputSongFile;
-                            var inputPoster;
-                            var songFile = $("#inputSongFile")[0].files[0];
-                            var poster = $("#inputPoster")[0].files[0];
 
+                            // setTimeout('', 5000);
                             // 封装数据
-                            var formData = new FormData();
-                            formData.append("songName", inputSongName);
-                            formData.append("artist", inputArtist);
-                            formData.append("songLanguage", inputSongLanguage);
-                            formData.append("genre", inputSongGenre);
-                            formData.append("songFile", songFile);
-                            formData.append("poster", poster);
-                            // console.log(formData);
+                            var data = {
+                                title: inputSongName,
+                                author: inputArtist,
+                                language: inputSongLanguage,
+                                // admin_id: ,
+                                genre_id: inputSongGenre,
+                                source: uploadFile("#inputSongFile"),
+                                poster: uploadFile("#inputPoster")
+                            };
+                            console.log(data);
 
-                            // 校验格式
-                            $.each(formData, function (i, item) {
-                                console.log(item);
-                            });
                             // 提交
                             $.ajax({
-                                url: "${APP_PATH}/uploadSong",
-                                //url: "${APP_PATH}/songUpload2",
+                                url: "/song/addSong",
                                 method: "POST",
-                                data: formData,
-                                datatype: "json",
-                                cache: false,
-                                processData: false,
-                                contentType: false,
+                                data: data,
                                 success: function (result) {
                                     console.log(result);
+
                                 }
                             });
+
                         });
 
                         // 绑定事件，选择文件事件
                         $("#inputSongFile").change(function () {
-                            allowFileType = ["mp3", "wav"];
-                            checkFileType("inputSongFile", allowFileType);
+                            // allowFileType = ["mp3", "wav"];
+                            // checkFileType("inputSongFile", allowFileType);
+                            checkFileType("inputSongFile", ["mp3", "wav"]);
                         });
                         $("#inputPoster").change(function () {
                             // allowFileType = ["jpg","png","jpeg"];

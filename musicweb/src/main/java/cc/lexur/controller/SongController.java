@@ -87,7 +87,7 @@ public class SongController {
     public Msg addSong(@RequestParam(defaultValue = "1") int genre_id,@RequestParam(defaultValue = "0") int admin_id, @RequestParam String title, String language, @RequestParam String source, String poster, String author){
         Song song = new Song();
 
-        if (!songService.checkId(genre_id)) {
+        if (!genreService.checkId(genre_id)) {
             return Msg.fail().setMsg("分类不存在");
         }else {
             song.setGenreId(genre_id);
@@ -99,7 +99,7 @@ public class SongController {
         if (source == null || source == ""){
             return Msg.fail().setMsg("歌曲链接有问题");
         }
-        if (!userService.checkId(admin_id)){
+        if (admin_id!= 0 && !userService.checkId(admin_id)){
             return Msg.fail().setMsg("用户不存在");
         }
         if (admin_id == 0){

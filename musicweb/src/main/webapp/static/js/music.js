@@ -216,9 +216,11 @@ function checkFileType(element, typeArr) {
         }
     });
     if (isType) {
-        showInfo(element + "_info", "文件类型支持")
+        showInfo(element + "_info", "文件类型支持");
+        return true;
     } else {
         showInfo(element + "_info", "不支持");
+        return false;
     }
 }
 
@@ -237,34 +239,49 @@ function showInfo(element, info) {
  * @returns {*} 返回链接
  */
 function uploadFile(element) {
-    var url;
+    var link;
 
-    var files = $(element).prop('files');
+    var file = $(element)[0].files[0];
+    if (file == null){
+        return null;
+    }
     var data = new FormData();//必须是new FormData后台才能接收到
-    data.append('file', files[0]);// 添加文件，表单其他项也可添加
+    data.append('file', file);// 添加文件，表单其他项也可添加
 
     $.ajax({
         url: "http://localhost:2000/upload",
         method: "POST",
         data: data,
         datatype: "json",
+        async: false,
         cache: false,
         processData: false,
         contentType: false,
         success: function (result) {
             // console.log(result);
             if (result.code == 100){
-                url = result.extend.url;
-                console.log("url:"+url);
-                return url;
+                link = result.extend.url;
+                console.log("url:"+link);
             }else {
-                return null;
+                console.log("上传失败！");
             }
         },
         error: function (result) {
             console.log("upload fail");
-            return null;
         }
     });
+    console.log("返回链接："+link);
+    return link;
+}
 
+/**
+ * 弹出提示模态框
+ * @param info
+ */
+function infoModal(info) {
+    // $("#alertModal p").empty();
+    $("#alertModal p").text(info);
+    $("#alertModal").modal({
+        backdrop: true
+    });
 }

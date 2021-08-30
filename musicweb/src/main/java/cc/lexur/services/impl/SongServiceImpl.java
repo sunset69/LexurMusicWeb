@@ -89,6 +89,8 @@ public class SongServiceImpl implements SongService {
     public boolean checkId(int id) {
         Song song = songMapper.selectByPrimaryKey(id);
         if (song != null){
+            System.out.println("歌曲id存在");
+            System.out.println(song.toString());
             return true;
         }
         return false;
