@@ -5,9 +5,19 @@
 }
 .thumbnail img {
     width: 100%;
-
 }
-
+.avatar{
+    width: 10em;
+    height: 10em;
+    border: red 1px solid;
+    border-radius: 50%;
+    overflow: hidden;
+    text-align: center;
+}
+.avatar img{
+    width: 100%;
+    position: center;
+}
 /*搜索框*/
 .search-bar input {
     border: 2px solid #7BA7AB;

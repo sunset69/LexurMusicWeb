@@ -3,7 +3,8 @@
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
         <% pageContext.setAttribute("APP_PATH", request.getContextPath()); %>
-            <html>
+<%--        <% pageContext.setAttribute("MY_TEST", ); %>--%>
+<html>
 
             <head>
                 <title>Lexur-music</title>
@@ -28,7 +29,7 @@
                         <!-- 标题 -->
                         <div class="jumbotron">
                             <a href="#" id="title">
-                                <h1>音乐分享</h1>
+                                <h1>音乐分享${userInfo.mail}</h1>
                             </a>
                         </div>
                     </div>
@@ -73,6 +74,7 @@
                                             <ul class="dropdown-menu">
                                                 <li><a href="#">我的收藏</a></li>
                                                 <li><a href="#">退出</a></li>
+                                                <li><a href="#" data-toggle="modal" data-target="#userInfo">用户资料</a></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -211,6 +213,33 @@
                         </div><!-- /.modal-dialog -->
                       </div><!-- /.modal -->
                 </div>
+
+                <!-- 用户信息 -->
+                <div class="modal fade" tabindex="-1" role="dialog" id="userInfo">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">用户信息</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="avatar">
+                                    <img src="${userInfo.avatar}">
+                                </div>
+                                ID：<p>${userInfo.id}</p>
+                                昵称：<p>${userInfo.nickname}</p>
+                                邮箱：<p>${userInfo.mail}</p>
+                                电话：<p>${userInfo.phone}</p>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+                </div>
+
                 <!-- ==================================模态框================================================= -->
 
             <div>
@@ -315,7 +344,15 @@
                                 data: data,
                                 success: function (result) {
                                     console.log(result);
+                                    if (result.code == 100){
+                                        infoModal("上传成功");
+                                    }else {
+                                        infoModal("上传失败！\n"+result.msg);
+                                    }
 
+                                },
+                                error: function () {
+                                    infoModal("上传失败！");
                                 }
                             });
 

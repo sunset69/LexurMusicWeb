@@ -6,12 +6,15 @@ import cc.lexur.services.UserService;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Auther: lexur
@@ -32,12 +35,30 @@ public class UserController {
      * @param password
      * @return
      */
+    //@RequestMapping(value = "/login",method = RequestMethod.POST)
+    //public String login(@RequestParam String mail, @RequestParam String password, Model model) {
+    //    if (userService.login(mail,password)){
+    //        List<User> userList = userService.selectByMail(mail);
+    //        model.addAttribute("userInfo",userList);
+    //        model.addAttribute("test","test model");
+    //        return "music";
+    //    }
+    //    return "error";
+    //}
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public String login(@RequestParam String mail, @RequestParam String password){
+    public ModelAndView login(@RequestParam String mail, @RequestParam String password, Model model) {
+        ModelAndView mv=new ModelAndView();
         if (userService.login(mail,password)){
-            return "music";
+            List<User> userList = userService.selectByMail(mail);
+            mv.setViewName("music");
+            mv.addObject("userInfo", userList.get(0));
+            mv.addObject("msgTest",Msg.success());
+            return mv;
+        }else {
+            mv.setViewName("error");
+            return mv;
         }
-        return "error";
+
     }
 
     @RequestMapping(value = "/register",method = RequestMethod.POST)
