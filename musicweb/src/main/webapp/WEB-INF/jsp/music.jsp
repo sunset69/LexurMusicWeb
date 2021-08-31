@@ -236,7 +236,7 @@
                         // 绑定事件，点击播放获取音乐信息
                         $(".song-display").on("click", ".play", function () {
                             var song = {};
-                            var poster = $(this).parent().siblings("img").prop("src");
+                            var poster = $(this).parent().siblings(".poster").children("img").prop("src");
                             var index = $(this).parent().siblings(".song_info").children("span").text();
                             var songName = $(this).parent().siblings(".song_info").children("p").text();
                             var singer = $(this).parent().siblings(".song_info").children("small:first").text();
