@@ -23,6 +23,7 @@ function to_page(pn, size = 8) {
             build_page_nav(result);
             // 滑动到顶部
             $(Document).scrollTop($(0));
+
         }
     });
 }
@@ -37,8 +38,9 @@ function build_album(song, index) {
     // console.log(song);
     var album = '<div class="col-xs-6 col-md-3">\
                                         <div class="thumbnail">\
-                                            <img\
-                                                src="' + song.poster + '">\
+                                            <div class="poster">\
+                                                <img src="'+song.poster+'" alt="'+song.title+'">\
+                                            </div>\
                                             <div class="song_info">\
                                                 <span>' + index + '</span>\
                                                 <p class="lead song_title">' + song.title + '</p>\
@@ -284,4 +286,11 @@ function infoModal(info) {
     $("#alertModal").modal({
         backdrop: true
     });
+}
+
+function thumbnailResize() {
+    console.log("thumbnailResize");
+    var width = $(".thumbnail img").width();
+    console.log("img width:"+width);
+    $(".thumbnail img").size(width,width);
 }

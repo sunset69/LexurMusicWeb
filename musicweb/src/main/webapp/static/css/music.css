@@ -1,3 +1,12 @@
+.thumbnail .poster{
+    width: 90%;
+    height: 15em;
+    overflow: hidden;
+}
+.thumbnail img {
+    width: 100%;
+
+}
 
 /*搜索框*/
 .search-bar input {
