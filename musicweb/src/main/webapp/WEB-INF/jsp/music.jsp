@@ -73,7 +73,7 @@
                                                     class="caret"></span></a>
                                             <ul class="dropdown-menu">
                                                 <li><a href="#">我的收藏</a></li>
-                                                <li><a href="#">退出</a></li>
+                                                <li><a href="http://localhost:2001/">退出</a></li>
                                                 <li><a href="#" data-toggle="modal" data-target="#userInfo">用户资料</a></li>
                                             </ul>
                                         </li>
@@ -226,10 +226,11 @@
                                 <div class="avatar">
                                     <img src="${userInfo.avatar}">
                                 </div>
-                                ID：<p>${userInfo.id}</p>
-                                昵称：<p>${userInfo.nickname}</p>
-                                邮箱：<p>${userInfo.mail}</p>
-                                电话：<p>${userInfo.phone}</p>
+                                <hr/>
+                                ID：<strong>${userInfo.id}</strong><br/>
+                                昵称：<strong>${userInfo.nickname}</strong><br/>
+                                邮箱：<strong>${userInfo.mail}</strong><br/>
+                                电话：<strong>${userInfo.phone}</strong><br/>
 
                             </div>
                             <div class="modal-footer">

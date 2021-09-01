@@ -7,16 +7,19 @@
     width: 100%;
 }
 .avatar{
+    display: inline-block;
     width: 10em;
     height: 10em;
-    border: red 1px solid;
     border-radius: 50%;
     overflow: hidden;
-    text-align: center;
 }
 .avatar img{
     width: 100%;
     position: center;
+}
+#userInfo > div > div {
+    background-color: #8c8c8c;
+    text-align: center;
 }
 /*搜索框*/
 .search-bar input {
