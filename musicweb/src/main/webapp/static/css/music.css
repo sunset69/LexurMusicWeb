@@ -1,7 +1,9 @@
 .thumbnail .poster{
     width: 90%;
     height: 15em;
+    text-align: center;
     overflow: hidden;
+    display: inline-block;
 }
 .thumbnail img {
     width: 100%;

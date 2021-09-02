@@ -1,7 +1,6 @@
 // 定义全局变量
 
 
-
 // ==================================方法==================================
 /**
  * 跳转页面
@@ -36,24 +35,42 @@ function to_page(pn, size = 8) {
  */
 function build_album(song, index) {
     // console.log(song);
-    var album = '<div class="col-xs-6 col-md-3">\
-                                        <div class="thumbnail">\
-                                            <div class="poster">\
-                                                <img src="'+song.poster+'" alt="'+song.title+'">\
-                                            </div>\
-                                            <div class="song_info">\
-                                                <span>' + index + '</span>\
-                                                <p class="lead song_title">' + song.title + '</p>\
-                                                <small>' + song.author + '</small> - <small>' + song.language + '</small>\
-                                                <a href="' + song.source + '"  hidden>' + song.id + '</a>\
-                                            </div>\
-                                            <div>\
-                                                <button class="btn btn-success play">播放</button>\
-                                                <button class="btn btn-default collect"><svg t="1630410795907" class="icon" viewBox="0 0 1065 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2513" width="20" height="20"><path d="M1057.57377 394.491803c-8.393443-41.967213-41.967213-67.147541-83.934426-75.540983l-235.016393-41.967213L629.508197 58.754098C612.721311 25.180328 570.754098 0 528.786885 0s-75.540984 25.180328-92.327869 58.754098L327.344262 276.983607l-235.016393 41.967213c-41.967213 8.393443-75.540984 33.57377-83.934426 75.540983-8.393443 41.967213 0 83.934426 33.57377 109.114754l167.868853 159.47541-41.967214 226.622951c-8.393443 41.967213 8.393443 83.934426 41.967214 109.114754 33.57377 25.180328 75.540984 25.180328 117.508196 8.393443l218.229508-109.114754L747.016393 1007.213115c16.786885 8.393443 33.57377 8.393443 50.360656 16.786885 25.180328 0 41.967213-8.393443 67.147541-25.180328 33.57377-25.180328 50.360656-67.147541 41.967213-109.114754l-41.967213-226.622951 167.868853-159.47541c25.180328-25.180328 41.967213-67.147541 25.180327-109.114754zM293.770492 923.278689h-16.786885c-8.393443 0-16.786885 0-16.786886-8.393443-8.393443-8.393443-16.786885-16.786885-16.786885-33.573771l50.360656-251.803278v-8.393443l-184.655738-167.868852c-8.393443-8.393443-16.786885-16.786885-8.393443-33.573771 0-8.393443 16.786885-16.786885 25.180328-25.180328l260.196722-50.360655L503.606557 117.508197c8.393443-8.393443 16.786885-16.786885 25.180328-16.786886 8.393443 0 25.180328 8.393443 25.180328 16.786886L671.47541 352.52459l260.196721 41.967213c8.393443 0 25.180328 8.393443 25.180328 25.180328 0 8.393443 0 25.180328-8.393443 33.573771L772.196721 629.508197l50.360656 260.196721c0 8.393443 0 25.180328-16.786885 33.573771-8.393443 0-8.393443 8.393443-16.786885 8.393442s-8.393443 0-16.786886-8.393442L537.180328 814.163934v-16.786885L293.770492 923.278689z" p-id="2514"></path></svg></button>\
-                                            </div>\
-                                        </div>\
-                                    </div>';
-    return album;
+    var albumEle = $("<div></div>").addClass("col-xs-6 col-md-3");
+    var thumbnailEle = $("<div></div>").addClass("thumbnail text-center");
+
+    var posterEle = $("<div></div>").addClass("poster text-center");
+    var imgEle = $("<img>", {
+        src: song.poster,
+        alt: song.title,
+        title: song.title
+    }).appendTo(posterEle);
+
+    var songInfoEle = $("<div></div>").addClass("song_info");
+    var indexEle = $("<span></span>").text(index).appendTo(songInfoEle);
+    var titleEle = $("<p></p>").text(song.title).addClass("lead song_title").appendTo(songInfoEle);
+    var authorEle = $("<small></small>").text(song.author).appendTo(songInfoEle);
+    var spanEle = $("<small>-</small>").appendTo(songInfoEle);
+    var languageEle = $("<small></small>").text(song.language).appendTo(songInfoEle);
+    var sourceEle = $("<a></a>", {
+        href: song.source,
+        hidden: true,
+    }).text(song.id).appendTo(songInfoEle);
+
+    // 按钮
+    var btns = $("<div></div>");
+    var playBtn = $("<button></button>").addClass("btn btn-success btn-sm play");
+    var playSpan = $("<span></span>").addClass("glyphicon glyphicon-play");
+    playBtn.append(playSpan);
+    var collectBtn = $("<button></button>").addClass("btn btn-default btn-sm collect").attr("onclick", "toggleCollect(this,userInfo.id);");
+    // TODO 判断是否收藏
+    var collectSpan = $("<span></span>").addClass("glyphicon glyphicon-star-empty");
+    collectBtn.append(collectSpan);
+    btns.append(playBtn).append(collectBtn);
+
+    thumbnailEle.append(posterEle).append(songInfoEle).append(btns);
+    albumEle.append(thumbnailEle);
+
+    return albumEle;
 }
 
 /**
@@ -141,12 +158,24 @@ function build_page_nav(result) {
     $("#page_nav_area").append(navEle);
 }
 
+/**
+ * 初始化音乐播放器
+ */
+function initPlayer() {
+    var player = new cplayer({
+        element: document.getElementById('app'),
+        playlist: [],
+        big: true,
+        width: "100%"
+    });
+    return player;
+}
 
 /**
  * 将音乐添加至播放列表
  * @param song
  */
-function add_to_playlist(song,player) {
+function add_to_playlist(song, player) {
     item = {
         src: song.source,
         poster: song.poster,
@@ -188,6 +217,32 @@ function getSongGenre(id) {
             });
         }
     });
+}
+
+/**
+ * 获取音乐信息
+ * @param element
+ * @returns {{author, index: jQuery, language, id: jQuery, source: jQuery, title: jQuery, poster: jQuery}}
+ */
+function getSongInfo(element) {
+    var song = {};
+    var poster = $(element).parent().siblings(".poster").children("img").prop("src");
+    var index = $(element).parent().siblings(".song_info").children("span").text();
+    var songName = $(element).parent().siblings(".song_info").children("p").text();
+    var singer = $(element).parent().siblings(".song_info").children("small:first").text();
+    var songLanguage = $(element).parent().siblings(".song_info").children("small:last").text();
+    var url = $(element).parent().siblings(".song_info").children("a").prop("href");
+    var songId = $(element).parent().siblings(".song_info").children("a").text();
+    song = {
+        index: index,
+        id: songId,
+        poster: poster,
+        title: songName,
+        source: url,
+        author: singer,
+        language: songLanguage
+    }
+    return song;
 }
 
 /**
@@ -244,7 +299,7 @@ function uploadFile(element) {
     var link;
 
     var file = $(element)[0].files[0];
-    if (file == null){
+    if (file == null) {
         return null;
     }
     var data = new FormData();//必须是new FormData后台才能接收到
@@ -261,10 +316,10 @@ function uploadFile(element) {
         contentType: false,
         success: function (result) {
             // console.log(result);
-            if (result.code == 100){
+            if (result.code == 100) {
                 link = result.extend.url;
-                console.log("url:"+link);
-            }else {
+                console.log("url:" + link);
+            } else {
                 console.log("上传失败！");
             }
         },
@@ -272,7 +327,7 @@ function uploadFile(element) {
             console.log("upload fail");
         }
     });
-    console.log("返回链接："+link);
+    console.log("返回链接：" + link);
     return link;
 }
 
@@ -291,6 +346,81 @@ function infoModal(info) {
 function thumbnailResize() {
     console.log("thumbnailResize");
     var width = $(".thumbnail img").width();
-    console.log("img width:"+width);
-    $(".thumbnail img").size(width,width);
+    console.log("img width:" + width);
+    $(".thumbnail img").size(width, width);
+}
+
+/**
+ * 收藏/取消收藏
+ * @param element
+ */
+function toggleCollect(element, userInfo) {
+    $(element).children("span").toggleClass("glyphicon-star").toggleClass("glyphicon-star-empty");
+    var className = $(element).children("span").attr("class");
+    var songId = $(element).parent("div").siblings(".song_info").children("a").text();
+    var userId = getUserInfo().id;
+    if (className == "glyphicon glyphicon-star") {
+        console.log(songId + "收藏 " + className);
+        // 放松收藏请求
+        $.ajax({
+            url: "/collect/add",
+            method: "GET",
+            data: {
+                userId: userId,
+                songId: songId
+            },
+            success: function (result) {
+                if (result.code == 100) {
+                    infoModal("添加成功！\n" + result.msg);
+                } else {
+                    infoModal("失败！\n" + result.msg);
+                }
+            }
+        });
+    } else {
+        console.log("取消收藏 " + className);
+        // 发送取消收藏请求
+        $.ajax({
+            url: "/collect/delete",
+            method: "GET",
+            data: {
+                userId: userId,
+                songId: songId
+            },
+            success: function (result) {
+                if (result.code == 100) {
+                    infoModal("添加成功！\n" + result.msg);
+                } else {
+                    infoModal("失败！\n" + result.msg);
+                }
+            }
+        });
+    }
+}
+
+function togglePlay(element) {
+    $(this).children("span").toggleClass("glyphicon-play").toggleClass("glyphicon-pause");
+    var className = $(element).children("span").attr("class");
+    console.log(className);
+}
+
+/**
+ * 获取用户信息
+ * @returns {{mail, phone, nickname, id: *}}
+ */
+function getUserInfo() {
+    var userInfo;
+    var ele = $("#userInfo > div > div > div.modal-body > strong");
+    var userId = ele.eq(0).text();
+    var nickname = ele.eq(1).text();
+    var mail = ele.eq(2).text();
+    var phone = ele.eq(3).text();
+    userInfo = {
+        id: userId,
+        mail: mail,
+        nickname: nickname,
+        phone: phone
+    }
+    console.log(userInfo);
+    return userInfo;
 }
