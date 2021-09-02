@@ -80,4 +80,21 @@ public class CollectServiceImpl implements CollectService {
         
         return null;
     }
+
+    @Override
+    public boolean check(int userId, int songId) {
+        CollectExample example = new CollectExample();
+        CollectExample.Criteria criteria = example.createCriteria();
+        criteria.andUserIdEqualTo(userId);
+        criteria.andSongIdEqualTo(songId);
+        List<Collect> collects = collectMapper.selectByExample(example);
+        System.out.println("userId:"+userId+"  songId:"+songId);
+        System.out.println(collects);
+        if (collects.isEmpty()){
+            System.out.println("未收藏");
+            return false;
+        }
+        System.out.println("已收藏");
+        return true;
+    }
 }

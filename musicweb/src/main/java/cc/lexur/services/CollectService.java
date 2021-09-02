@@ -18,4 +18,6 @@ public interface CollectService {
 
     public List<Song> show(int userId);
 
+    public boolean check(int userId,int songId);
+
 }

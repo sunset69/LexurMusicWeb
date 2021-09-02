@@ -49,9 +49,9 @@ public class CollectController {
         }
 
         if (!collectService.add(userId, songId)){
-            return Msg.fail();
+            return Msg.fail().setMsg("添加收藏失败");
         }
-        return Msg.success();
+        return Msg.success().setMsg("成功添加收藏");
     }
 
     /**
@@ -69,11 +69,32 @@ public class CollectController {
         }
 
         if (!collectService.delete(userId,songId)) {
-            return Msg.fail();
+            return Msg.fail().setMsg("取消收藏失败");
         }
-        return Msg.success();
+        return Msg.success().setMsg("已取消收藏");
     }
 
+    /**
+     * 检查是否收藏
+     * @param userId
+     * @param songId
+     * @return
+     */
+    @RequestMapping("/check")
+    @ResponseBody
+    public Msg check(@RequestParam int userId,@RequestParam int songId){
+        if (collectService.check(userId,songId)){
+            return Msg.success().setMsg("已收藏");
+        }else {
+            return Msg.fail().setMsg("未收藏");
+        }
+    }
+
+    /**
+     * 展示所有收藏
+     * @param userId
+     * @return
+     */
     @RequestMapping("/show")
     @ResponseBody
     public Msg show(@RequestParam int userId){

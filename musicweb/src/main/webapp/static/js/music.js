@@ -63,8 +63,12 @@ function build_album(song, index) {
     playBtn.append(playSpan);
     var collectBtn = $("<button></button>").addClass("btn btn-default btn-sm collect").attr("onclick", "toggleCollect(this,userInfo.id);");
     // TODO 判断是否收藏
-    var collectSpan = $("<span></span>").addClass("glyphicon glyphicon-star-empty");
-    collectBtn.append(collectSpan);
+    var collectSpan = $("<span></span>").addClass("glyphicon glyphicon-star").appendTo(collectBtn);
+    // if (checkCollection(getUserInfo().id,song.id)){
+    //     var collectSpan = $("<span></span>").addClass("glyphicon glyphicon-star").appendTo(collectBtn);
+    // }else {
+    //     var collectSpan = $("<span></span>").addClass("glyphicon glyphicon-star-empty").appendTo(collectBtn);
+    // }
     btns.append(playBtn).append(collectBtn);
 
     thumbnailEle.append(posterEle).append(songInfoEle).append(btns);
@@ -282,6 +286,34 @@ function checkFileType(element, typeArr) {
 }
 
 /**
+ * 检测是否收藏
+ * @param userId
+ * @param songId
+ */
+function checkCollection(userId,songId) {
+    var settings = {
+        "url": "/collect/check",
+        data:{
+            userId: userId,
+            songId: songId
+        },
+        "method": "GET",
+        "timeout": 0,
+    };
+
+    $.ajax(settings).done(function (response) {
+        // console.log(response);
+        if (response.code == 100){
+            console.log(response.code);
+            return true;
+        }else {
+            console.log(response.code);
+            return false;
+        }
+    });
+}
+
+/**
  * 展示错误信息
  * @param element
  * @param info
@@ -421,6 +453,6 @@ function getUserInfo() {
         nickname: nickname,
         phone: phone
     }
-    console.log(userInfo);
+    // console.log(userInfo);
     return userInfo;
 }
