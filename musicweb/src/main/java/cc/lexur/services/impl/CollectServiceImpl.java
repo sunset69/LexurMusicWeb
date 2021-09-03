@@ -88,8 +88,6 @@ public class CollectServiceImpl implements CollectService {
         criteria.andUserIdEqualTo(userId);
         criteria.andSongIdEqualTo(songId);
         List<Collect> collects = collectMapper.selectByExample(example);
-        System.out.println("userId:"+userId+"  songId:"+songId);
-        System.out.println(collects);
         if (collects.isEmpty()){
             System.out.println("未收藏");
             return false;

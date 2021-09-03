@@ -28,4 +28,6 @@ public interface SongService {
 
     public List<Song> searchByGenre(String name);
 
+    public List<Song> search(String title,int genreId,String author,int pn,int size);
+
 }

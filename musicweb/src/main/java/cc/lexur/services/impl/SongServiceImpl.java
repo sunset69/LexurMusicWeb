@@ -124,4 +124,24 @@ public class SongServiceImpl implements SongService {
         List<Song> songList = songMapper.selectByExample(songExample);
         return songList;
     }
+
+    @Override
+    public List<Song> search(String title, int genreId, String author,int pn,int size) {
+        SongExample example = new SongExample();
+        SongExample.Criteria criteria = example.createCriteria();
+        if (title != "" && title != null){
+            criteria.andTitleLike("%"+title+"%");
+        }
+        if (genreId != -1){
+            criteria.andGenreIdEqualTo(genreId);
+        }
+        if (author != "" && author != null){
+            criteria.andAuthorLike("%"+author+"%");
+        }
+
+        //进行分页查询
+        PageHelper.startPage(pn, size);
+        List<Song> list = songMapper.selectByExample(example);
+        return list;
+    }
 }

@@ -1,6 +1,3 @@
-// 定义全局变量
-
-
 // ==================================方法==================================
 /**
  * 跳转页面
@@ -13,18 +10,25 @@ function to_page(pn, size = 8) {
         data: {pn: pn, size: size},
         method: "GET",
         success: function (result) {
-            console.log(result);
-            // 1. 解析并显示音乐
-            build_song_list(result);
-            // 2. 解析并显示分页信息
-            build_page_info(result);
-            // 3. 解析并显示分页条
-            build_page_nav(result);
-            // 滑动到顶部
-            $(Document).scrollTop($(0));
-
+            // console.log(result);
+            build_page(result);
         }
     });
+}
+
+/**
+ * 歌曲分页信息构建页面
+ * @param result
+ */
+function build_page(result) {
+    // 1. 解析并显示音乐
+    build_song_list(result);
+    // 2. 解析并显示分页信息
+    build_page_info(result);
+    // 3. 解析并显示分页条
+    build_page_nav(result);
+    // 滑动到顶部
+    $(Document).scrollTop($(0));
 }
 
 /**
@@ -455,4 +459,8 @@ function getUserInfo() {
     }
     // console.log(userInfo);
     return userInfo;
+}
+
+function search(title,genre) {
+
 }
