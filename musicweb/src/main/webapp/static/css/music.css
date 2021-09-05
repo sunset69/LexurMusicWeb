@@ -1,9 +1,11 @@
 .thumbnail .poster{
     width: 90%;
     height: 15em;
-    text-align: center;
+    margin: auto;
     overflow: hidden;
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .thumbnail img {
     width: 100%;
@@ -24,31 +26,32 @@
     text-align: center;
 }
 /*搜索框*/
-.search-bar input {
-    border: 2px solid #7BA7AB;
-    /*border-radius: 5px;*/
-    /*border-bottom-left-radius: 5px;*/
-    /*border-top-left-radius: 5px;*/
-    border-radius: 5px 0 0 5px;
-    background: #F9F0DA;
-    color: #9E9C9C;
-    outline: none;
-    width: 100%;
-    height: 42px;
-    padding-left: 13px;
-    padding-right:46px;
-    border-right: none;
+
+#search_title{
+    width: 50%;
+    height: 3em;
 }
+#search_author{
+    width: 25%;
+    height: 3em;
+}
+#search_genre{
+    width: 20%;
+    height: 3em;
+}
+
 .search-bar button {
     background: #7BA7AB;
     border: 2px solid #7BA7AB;
-    border-radius: 0 5px 5px 0;
+    border-radius: 5px;
+    /*border-radius: 0 5px 5px 0;*/
     border-left: none;
     outline: none;
     height: 42px;
     width: 42px;
     cursor: pointer;
     position: absolute;
+    margin-left: 5px;
 }
 
 /*播放列表按钮*/
@@ -59,3 +62,9 @@
     z-index: 999;
 }
 
+.album_btn button{
+    width: 3em;
+    height: 2em;
+    margin-left: 3px;
+    margin-right: 3px;
+}

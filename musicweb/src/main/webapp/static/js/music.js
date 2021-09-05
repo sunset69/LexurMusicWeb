@@ -61,19 +61,20 @@ function build_album(song, index) {
     }).text(song.id).appendTo(songInfoEle);
 
     // 按钮
-    var btns = $("<div></div>");
+    var btns = $("<div></div>").addClass("album_btn");
     var playBtn = $("<button></button>").addClass("btn btn-success btn-sm play");
     var playSpan = $("<span></span>").addClass("glyphicon glyphicon-play");
     playBtn.append(playSpan);
-    var collectBtn = $("<button></button>").addClass("btn btn-default btn-sm collect").attr("onclick", "toggleCollect(this,userInfo.id);");
-    // TODO 判断是否收藏
-    var collectSpan = $("<span></span>").addClass("glyphicon glyphicon-star").appendTo(collectBtn);
-    // if (checkCollection(getUserInfo().id,song.id)){
-    //     var collectSpan = $("<span></span>").addClass("glyphicon glyphicon-star").appendTo(collectBtn);
-    // }else {
-    //     var collectSpan = $("<span></span>").addClass("glyphicon glyphicon-star-empty").appendTo(collectBtn);
-    // }
+    // var collectBtn = $("<button></button>").addClass("btn btn-default btn-sm collect").attr("onclick", "toggleCollect(this,userInfo.id);");
+    var collectBtn = $("<button></button>").addClass("btn btn-default btn-sm collect");
+    var collectSpan = $("<span></span>").addClass("glyphicon glyphicon-plus").appendTo(collectBtn);
+
     btns.append(playBtn).append(collectBtn);
+    var downEle = $("<button></button>",{
+        href: song.source,
+        download: song.title
+    }).addClass("btn btn-default").append($("<span></span>").addClass("glyphicon glyphicon-download"));
+    btns.append(downEle);
 
     thumbnailEle.append(posterEle).append(songInfoEle).append(btns);
     albumEle.append(thumbnailEle);
@@ -461,6 +462,49 @@ function getUserInfo() {
     return userInfo;
 }
 
-function search(title,genre) {
+function getSearchData() {
+    var data = {}
+    if (title != null && title != ""){
+        data.append("title",title);
+    }
+    if (genreId != null && genreId != ""){
+        data.append("genreId",genreId);
+    }
+    if (pn != null && pn != ""){
+        data.append("pn",pn);
+    }
+    if (size != null && size != ""){
+        data.append("size",size);
+    }
+    console.log(data);
 
+}
+
+function search() {
+    // 获取搜索数据
+   var title = $("#search_title").val();
+   var genreId = $("#search_genre").val();
+   var author = $("#search_author").val();
+    // 封装数据
+    var data = {}
+    if (title != null && title != ""){
+        data.title = title;
+    }
+    if (author != null && author != ""){
+        data.author = author;
+    }
+    if (genreId != null && genreId != ""){
+        data.genreId = genreId;
+    }
+    console.log(data);
+    if (!isSearchDataNull(data)){
+        $("#search_title").attr("placeholder","请输入查询信息！！！");
+    }
+}
+
+function isSearchDataNull(data) {
+    if (data.genreId == -1 && data.title == null && data.author == null){
+        return false;
+    }
+    return true;
 }

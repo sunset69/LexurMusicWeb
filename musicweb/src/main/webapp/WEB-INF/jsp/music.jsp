@@ -58,11 +58,14 @@
                     </ul>
 
                     <!-- 搜索框 -->
-                    <form class="navbar-form navbar-left search-bar">
-                        <input type="text" placeholder="请输入您要搜索的内容...">
-                        <button type="submit">
-                                            <span class="glyphicon glyphicon glyphicon-search"
-                                                  aria-hidden="true"></span>
+                    <form action="javascript:;" class="navbar-form navbar-left search-bar">
+                        <input type="text" placeholder="请输入歌名" id="search_title" class="form-control">
+                        <input type="text" placeholder="请输入歌手" id="search_author" class="form-control">
+                        <select id="search_genre" class="form-control">
+                            <option value="-1" selected>分类选择</option>
+                        </select>
+                        <button onclick="javascript:;" id="search_btn">
+                            <span class="glyphicon glyphicon glyphicon-search" aria-hidden="true"></span>
                         </button>
                     </form>
 
@@ -249,7 +252,6 @@
 
 <div>
     <script>
-
         // 页面加载完成执行任务
         $(function () {
 
@@ -262,6 +264,7 @@
             // 跳转至首页
             to_page(1);
             getSongGenre("#SongGenre");
+            getSongGenre("#search_genre");
 
             // 绑定事件，点击播放获取音乐信息
             $(".song-display").on("click", ".play", function () {
@@ -279,7 +282,6 @@
                     show: true
                 });
             });
-
 
             // 绑定事件，点击上传音乐，获取并检查数据后上传
             $("#upload_song_btn").click(function () {
@@ -351,11 +353,17 @@
             });
 
             // 收藏
-            $("button.collect").click(function () {
-                console.log("hello");
-                $(this).children("span").toggleClass("glyphicon-star").toggleClass("glyphicon-star-empty");
-                console.log($(this).children());
+            // $("button.collect").click(function () {
+            //     console.log("hello");
+            //     $(this).children("span").toggleClass("glyphicon-star").toggleClass("glyphicon-star-empty");
+            //     console.log($(this).children());
+            // });
+
+            $("#search_btn").click(function () {
+                console.log("搜索");
+                search();
             });
+
         });/*结束*/
     </script>
 </div>
