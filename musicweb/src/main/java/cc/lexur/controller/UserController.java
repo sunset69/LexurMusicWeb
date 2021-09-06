@@ -3,6 +3,7 @@ package cc.lexur.controller;
 import cc.lexur.pojo.Msg;
 import cc.lexur.pojo.User;
 import cc.lexur.services.UserService;
+import com.github.pagehelper.PageInfo;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -75,6 +76,14 @@ public class UserController {
             return Msg.fail().setMsg("密码错误");
         }
         return Msg.success();
+    }
+
+    @RequestMapping("/page")
+    @ResponseBody
+    public Msg getPage(@RequestParam(name = "pn", defaultValue = "0") int pn, @RequestParam(name = "size", defaultValue = "8") int size){
+        List<User> list = userService.getUserList(pn, size);
+        PageInfo<User> pageInfo = new PageInfo<>(list);
+        return Msg.success().add("pageInfo",pageInfo);
     }
 
 }

@@ -40,7 +40,31 @@
 
     <!-- 用户管理 -->
     <div class="row" id="user_page">
-        <p>user</p>
+        <table class="table table-striped table-hover">
+            <tr>
+                <th>id</th>
+                <th>mail</th>
+                <th>password</th>
+                <th>nickname</th>
+                <th>avatar</th>
+                <th>locked</th>
+                <th>birthday</th>
+                <th>操作</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>123@qq.com</td>
+                <td>123</td>
+                <td>zhang</td>
+                <td>...</td>
+                <td>Y</td>
+                <td>2020-1-1</td>
+                <td>
+                    <button>修改</button>
+                    <button>删除</button>
+                </td>
+            </tr>
+        </table>
     </div>
     <!-- 音乐管理 -->
     <div class="row hidden" id="song_page">
@@ -58,11 +82,11 @@
             // 切换导航栏
             $(".nav-tabs li").click(function () {
                 console.log($(this).children("a").text());
-                var index = $(this).attr("index");
-                showPage(index);
+                showPage($(this).attr("index"));
                 $(this).addClass("active").siblings("li").removeClass("active");
             });
 
+            to_page(1);
 
         });
     </script>

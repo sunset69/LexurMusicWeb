@@ -1,3 +1,7 @@
+/**
+ * 切换页面
+ * @param index
+ */
 function showPage(index) {
     console.log(index);
     if (index == 1){
@@ -13,5 +17,22 @@ function showPage(index) {
         $("#song_page").addClass("hidden");
         $("#genre_page").removeClass("hidden");
     }
+}
+
+function to_page(index) {
+    $.ajax({
+        url: "/user"
+    });
+
+}
+
+function build_table_info() {
+
+}
+
+function build_page_info() {
+
+}
+function build_page_nav() {
 
 }
