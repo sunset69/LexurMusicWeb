@@ -41,7 +41,7 @@
             <div class="container-fluid">
                 <!-- 回归主页 -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Lexur-music</a>
+                    <a class="navbar-brand" href="javascript:;" onclick="to_page();">Lexur-music</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -262,7 +262,7 @@
             var player = initPlayer();
 
             // 跳转至首页
-            to_page(1);
+            to_page();
             getSongGenre("#SongGenre");
             getSongGenre("#search_genre");
 

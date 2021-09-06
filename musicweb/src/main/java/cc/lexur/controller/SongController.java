@@ -222,13 +222,13 @@ public class SongController {
     @RequestMapping("/search")
     @ResponseBody
     public Msg search(String title,@RequestParam(defaultValue = "-1") int genreId, String author,@RequestParam(defaultValue = "0") int pn,@RequestParam(defaultValue = "8") int size){
-        System.out.println(title+" "+genreId+" "+author+" "+pn+" "+size);
+        System.out.println("title:"+title+" genreId:"+genreId+" author:"+author+" pn:"+pn+" size:"+size);
         if ((title == null || title == "") && genreId == -1 && (author == null || author == "")){
             return Msg.fail();
         }
         List<Song> songList = songService.search(title, genreId, author, pn, size);
         PageInfo pageInfo = new PageInfo(songList);
-        return Msg.success().add("pageIndo",pageInfo);
+        return Msg.success().add("pageInfo",pageInfo);
     }
 }
 

@@ -4,14 +4,25 @@
  * @param pn
  * @param size
  */
-function to_page(pn, size = 8) {
+// function to_page(pn, size = 8,url = "/song/page") {
+//     $.ajax({
+//         url: url,
+//         data: {pn: pn, size: size},
+//         method: "GET",
+//         success: function (result) {
+//             // console.log(result);
+//             build_page(result,url);
+//         }
+//     });
+// }
+function to_page(url = "/song/page",data = {pn:1,size:8}) {
     $.ajax({
-        url: "/song/page",
-        data: {pn: pn, size: size},
+        url: url,
+        data: data,
         method: "GET",
         success: function (result) {
             // console.log(result);
-            build_page(result);
+            build_page(result,url,data);
         }
     });
 }
@@ -20,13 +31,16 @@ function to_page(pn, size = 8) {
  * 歌曲分页信息构建页面
  * @param result
  */
-function build_page(result) {
+function build_page(result,url,data) {
+    console.log(result)
+    console.log(url);
+    console.log(data);
     // 1. 解析并显示音乐
     build_song_list(result);
     // 2. 解析并显示分页信息
     build_page_info(result);
     // 3. 解析并显示分页条
-    build_page_nav(result);
+    build_page_nav(result,url,data);
     // 滑动到顶部
     $(Document).scrollTop($(0));
 }
@@ -110,58 +124,72 @@ function build_page_info(result) {
  * 解析并显示分页条
  * @param result
  */
-function build_page_nav(result) {
-    $("#page_nav_area").empty();
+function build_page_nav(result,url,data) {
+    console.log(data);
+    $("#page_nav_area").empty();// 清空
+
+    // 首页与前一页
     var ul = $("<ul></ul>").addClass("pagination");
-    var firstPageLi = $("<li></li>").append($("<a></a>").append("首页").attr("href", "#"));
+    var firstPageLi = $("<li></li>").append($("<a></a>").append("首页").attr("href", "javascript:;"));
     var prePageLi = $("<li></li>").append($("<a></a>").append("&laquo;"));
     if (result.extend.pageInfo.hasPreviousPage == false) {
+        // 第一页
         firstPageLi.addClass("disabled");
         prePageLi.addClass("disabled");
     }
     // 添加点击事件
     firstPageLi.click(function () {
-        to_page(1);
+        var firstpageData = data;
+        firstpageData.pn = 1;
+        to_page(url,firstpageData);
     });
     prePageLi.click(function () {
-        to_page(result.extend.pageInfo.pageNum - 1);
+        var prePageData = data;
+        prePageData.pn = result.extend.pageInfo.pageNum - 1;
+        to_page(url,prePageData);
     });
 
+    // 下一页与尾页
     var nextPageLi = $("<li></li>").append($("<a></a>").append("&raquo;"));
-    var lastPageLi = $("<li></li>").append($("<a></a>").append("末页").attr("href", "#"));
+    var lastPageLi = $("<li></li>").append($("<a></a>").append("末页").attr("href", "javascript:;"));
     if (result.extend.pageInfo.hasNextPage == false) {
+        // 最后一页
         nextPageLi.addClass("disabled");
         lastPageLi.addClass("disabled");
     }
     // 添加点击事件
     nextPageLi.click(function () {
-        to_page(result.extend.pageInfo.pageNum + 1);
+        var nextPageData = data;
+        nextPageData.pn = result.extend.pageInfo.pageNum + 1;
+        to_page(url,nextPageData);
     });
     lastPageLi.click(function () {
-        to_page(result.extend.pageInfo.pages);
-
+        var lastPageData = data;
+        lastPageData.pn = result.extend.pageInfo.pages;
+        to_page(url,lastPageData);
     });
 
+    /**
+     * 组合分页条
+     */
     // 添加首页和前一页
     ul.append(firstPageLi).append(prePageLi);
-
     // 遍历添加页码提示
     $.each(result.extend.pageInfo.navigatepageNums, function (index, item) {
-
         var numPageLi = $("<li></li>").append($("<a></a>").append(item));
         // 选中页高亮
         if (result.extend.pageInfo.pageNum == item) {
             numPageLi.addClass("active");
         }
         numPageLi.click(function () {
-            to_page(index + 1);
+            var numPageData = data;
+            numPageData.pn = index+1;
+            to_page(url,numPageData);
         });
         ul.append(numPageLi);
     });
-
     // 添加下一页与末页
     ul.append(nextPageLi).append(lastPageLi);
-
     // 把ul加入到nav元素
     var navEle = $("<nav></nav>").append(ul);
     $("#page_nav_area").append(navEle);
@@ -487,24 +515,34 @@ function search() {
    var author = $("#search_author").val();
     // 封装数据
     var data = {}
-    if (title != null && title != ""){
-        data.title = title;
-    }
-    if (author != null && author != ""){
-        data.author = author;
-    }
-    if (genreId != null && genreId != ""){
-        data.genreId = genreId;
-    }
+    // if (title != null && title != ""){
+    //     data.title = title;
+    // }
+    // if (author != null && author != ""){
+    //     data.author = author;
+    // }
+    // if (genreId != null && genreId != ""){
+    //     data.genreId = genreId;
+    // }
+    data.title = title;
+    data.author = author;
+    data.genreId = genreId;
     console.log(data);
-    if (!isSearchDataNull(data)){
-        $("#search_title").attr("placeholder","请输入查询信息！！！");
-    }
-}
 
-function isSearchDataNull(data) {
-    if (data.genreId == -1 && data.title == null && data.author == null){
-        return false;
-    }
-    return true;
+    // 请求分页数据
+    $.ajax({
+        url: "/song/search",
+        data: data,
+        method: "GET",
+        success: function (result) {
+            console.log(result);
+            // build_page(result,"/song/search/");
+            data.pn = 1;
+            data.size = 8;
+            to_page("/song/search",data);
+        },
+        error: function () {
+            infoModal("搜索失败！");
+        }
+    });
 }
