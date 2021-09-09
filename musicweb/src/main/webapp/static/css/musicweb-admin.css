@@ -1,0 +1,31 @@
+.table>tbody >tr> td /*设置表格文字左右和上下居中对齐*/
+{
+    font-size: 1.6em;
+    vertical-align: middle;
+}
+.deleted_user{
+    background-color: grey;
+}
+button{
+    margin-left: 3px;
+}
+.table > thead > tr > td.deleted,
+.table > tbody > tr > td.deleted,
+.table > tfoot > tr > td.deleted,
+.table > thead > tr > th.deleted,
+.table > tbody > tr > th.deleted,
+.table > tfoot > tr > th.deleted,
+.table > thead > tr.deleted > td,
+.table > tbody > tr.deleted > td,
+.table > tfoot > tr.deleted > td,
+.table > tfoot > tr.deleted > th {
+    background-color: darkgrey;
+}
+table{
+    table-layout:fixed;
+}
+.long_text{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

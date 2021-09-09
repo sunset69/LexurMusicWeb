@@ -97,7 +97,7 @@
         <!-- 分页文字信息 -->
         <div class="col-md-6" id="page_info_area"></div>
         <!-- 分页条信息 -->
-        <div class="col-md-9" id="page_nav_area"></div>
+        <div class="col-md-9 col-md-offset-2 text-center" id="page_nav_area"></div>
     </div>
 
     <div class="row">

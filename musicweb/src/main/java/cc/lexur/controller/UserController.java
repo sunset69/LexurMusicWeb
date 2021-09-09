@@ -78,6 +78,12 @@ public class UserController {
         return Msg.success();
     }
 
+    /**
+     * 获取用户信息
+     * @param pn
+     * @param size
+     * @return
+     */
     @RequestMapping("/page")
     @ResponseBody
     public Msg getPage(@RequestParam(name = "pn", defaultValue = "0") int pn, @RequestParam(name = "size", defaultValue = "8") int size){

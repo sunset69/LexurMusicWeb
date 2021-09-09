@@ -32,9 +32,9 @@ function to_page(url = "/song/page",data = {pn:1,size:8}) {
  * @param result
  */
 function build_page(result,url,data) {
-    console.log(result)
-    console.log(url);
-    console.log(data);
+    // console.log(result)
+    // console.log(url);
+    // console.log(data);
     // 1. 解析并显示音乐
     build_song_list(result);
     // 2. 解析并显示分页信息
