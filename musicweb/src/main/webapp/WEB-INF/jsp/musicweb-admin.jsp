@@ -88,20 +88,7 @@
     </div>
 
     <div class="all_modal">
-        <!-- 提示模态框 -->
-        <div class="modal fade" tabindex="-1" role="dialog" id="info_modal">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">提示信息</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>One fine body&hellip;</p>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+
 
         <!-- 用户信息 -->
         <div class="modal fade" tabindex="-1" role="dialog" id="user_info">
@@ -114,6 +101,10 @@
                     </div>
                     <div class="modal-body">
                         <form>
+                            <div class="form-group">
+                                <label>ID</label>
+                                <input type="text" class="form-control" id="modifyUserIdForm" placeholder="Email">
+                            </div>
                             <div class="form-group">
                                 <label>邮箱</label>
                                 <input type="email" class="form-control" id="modifyMailForm" placeholder="Email">
@@ -232,8 +223,12 @@
                     <div class="modal-body">
                         <form>
                             <div class="form-group">
+                                <label>ID</label>
+                                <input type="text" class="form-control" id="modifyGenreIdForm" disabled>
+                            </div>
+                            <div class="form-group">
                                 <label>名称</label>
-                                <input type="email" class="form-control" id="modifyNameForm" placeholder="Name">
+                                <input type="email" class="form-control" id="modifyGenreNameForm" placeholder="Name">
                             </div>
                             <div class="form-group">
                                 <label>描述</label>
@@ -243,7 +238,23 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-success">提交</button>
+                        <button type="button" class="btn btn-success" id="submit_genre">提交</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+
+        <!-- 提示模态框 -->
+        <div class="modal" tabindex="-1" role="dialog" id="info_modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">提示信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>One fine body&hellip;</p>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -256,6 +267,10 @@
         $(function () {
             console.log("欢迎进入控制台！");
 
+            var selectedUser;
+            var selectedSong;
+            var selectedGenre;
+
             // 切换导航栏
             $(".nav-tabs li").click(function () {
                 // console.log($(this).children("a").text());
@@ -263,42 +278,65 @@
                 $(this).addClass("active").siblings("li").removeClass("active");
             });
 
-            to_page("/user/page",{pn:1,size:8},1);
-            to_page("/song/page",{pn:1,size:8},2);
-            to_page("/genre/page",{pn:1,size:8},3);
+            // 加载页面
+            var PAGESIZE = {
+                pn: 1,
+                size: 8
+            }
+            to_page("/user/page",PAGESIZE,1);
+            to_page("/song/page",PAGESIZE,2);
+            to_page("/genre/page",PAGESIZE,3);
 
             // 用户删除与修改按钮事件
             $("#user_table").on("click","button",function () {
                 // console.log($(this).text());
-                var user = getUserInfo(this);
+                // var user = getUserInfo(this);
+                selectedUser = getUserInfo(this);
                 if ($(this).hasClass("delete")){
                     // console.log("delete");
-                    delete_user(user.id);
+                    delete_user(selectedUser.id);
                 }else if ($(this).hasClass("modify")){
                     console.log("modify");
+                    init_userInfo_modal(selectedUser);
                     $("#user_info").modal("show");
-                    init_userInfo_modal(user);
                 }
             });
             $("#song_table").on("click","button",function () {
                 console.log("song操作")
-                var song = getSongInfo(this);
+                // var song = getSongInfo(this);
+                selectedSong = getSongInfo(this);
                 if ($(this).hasClass("delete")){
                     console.log("delete");
                 }else if ($(this).hasClass("modify")){
                     console.log("modify");
+                    init_songInfo_modal(selectedSong);
                     $("#song_info").modal("show");
                 }
             });
             $("#genre_table").on("click","button",function () {
                 console.log("genre操作");
-                var genre = getGenreInfo(this);
+                // var genre = getGenreInfo(this);
+                selectedGenre = getGenreInfo(this);
                 if ($(this).hasClass("delete")){
                     console.log("delete");
                 }else if ($(this).hasClass("modify")){
                     console.log("modify");
-                    $("#genre_info").modal("show");
+                    init_genreInfo_modal(selectedGenre);
+                    $("#genre_info").modal({
+                        backdrop: "static",
+                        keyboard: false
+                    });
+
                 }
+            });
+            $("#submit_genre").click(function () {
+                console.log(selectedGenre);
+                var modifyGenre = get_modify_genreInfo();
+                // TODO 检查数据
+
+                $("#genre_info").modal("hide");
+                modify_genre(modifyGenre);
+                to_page("/genre/page",PAGESIZE,3);
             });
 
         });

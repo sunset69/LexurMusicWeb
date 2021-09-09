@@ -374,12 +374,14 @@ function init_userInfo_modal(user){
     $("#modifyPhoneForm").val(user.phone);
 }
 
-function init_songIndo_modal() {
+function init_songInfo_modal(song) {
 
 }
 
-function init_genreInfo_modal() {
-
+function init_genreInfo_modal(genre) {
+    $("#modifyGenreIdForm").val(genre.id);
+    $("#modifyGenreNameForm").val(genre.name);
+    $("#modifyDescriptionForm").val(genre.description);
 }
 
 
@@ -411,23 +413,62 @@ function delete_user(id) {
     });
 }
 
-function delete_song() {
+function delete_song(id) {
 
 }
 
-function delete_genre() {
+function delete_genre(id) {
 
 }
 
-
-function modify_user() {
-
-}
-
-function modify_song() {
+function get_modify_userInfo() {
 
 }
 
-function modify_genre() {
+function modify_user(user) {
 
+}
+
+function get_modify_songInfo() {
+
+}
+
+function modify_song(song) {
+
+}
+
+function get_modify_genreInfo() {
+    var id = $("#modifyGenreIdForm").val();
+    var name = $("modifyGenreNameForm").val();
+    var description = $("#modifyDescriptionForm").val();
+    var genre = {};
+    genre.id = id;
+    genre.name = name;
+    genre.description = description;
+    return genre;
+}
+
+function modify_genre(genre) {
+    if (genre.id == null || genre.id == ""){
+        info_modal("无分类id");
+        return false;
+    }
+    $.ajax({
+        url: "/genre/updateGenre",
+        method: "GET",
+        data: genre,
+        success: function (result) {
+            if (result.code == 100){
+                info_modal(result.msg);
+                return true;
+            }else {
+                info_modal(result.msg);
+                return false;
+            }
+        },
+        error: function () {
+            info_modal("连接服务器失败");
+            return false;
+        }
+    });
 }
