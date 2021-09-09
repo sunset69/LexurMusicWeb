@@ -282,6 +282,7 @@
             });
             $("#song_table").on("click","button",function () {
                 console.log("song操作")
+                var song = getSongInfo(this);
                 if ($(this).hasClass("delete")){
                     console.log("delete");
                 }else if ($(this).hasClass("modify")){
@@ -291,7 +292,7 @@
             });
             $("#genre_table").on("click","button",function () {
                 console.log("genre操作");
-                // TODO 获取数据
+                var genre = getGenreInfo(this);
                 if ($(this).hasClass("delete")){
                     console.log("delete");
                 }else if ($(this).hasClass("modify")){

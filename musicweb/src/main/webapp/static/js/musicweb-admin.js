@@ -1,4 +1,12 @@
 /**
+ * 展示提示信息
+ * @param info
+ */
+function info_modal(info) {
+    $("#info_modal .modal-body p").text(info);
+    $("#info_modal").modal("show");
+}
+/**
  * 切换页面
  * @param index
  */
@@ -316,6 +324,65 @@ function getUserInfo(element) {
     return user;
 }
 
+function getSongInfo(element) {
+    var items = $(element).parent().parent().children();
+    var id = items.eq(0).text();
+    var title = items.eq(1).text();
+    var author = items.eq(2).text();
+    var language = items.eq(3).text();
+    var genreId = items.eq(4).text();
+    var source = items.eq(5).text();
+    var poster = items.eq(6).text();
+    var status = items.eq(7).text();
+
+    var song = {};
+    song.id = id;
+    song.title = title;
+    song.author = author;
+    song.language = language;
+    song.genreId = genreId;
+    song.source = source;
+    song.poster = poster;
+    song.status = status;
+    console.log(song);
+    return song;
+}
+
+function getGenreInfo(element) {
+    var items = $(element).parent().parent().children();
+    var id = items.eq(0).text();
+    var name = items.eq(1).text();
+    var description = items.eq(2).text();
+
+    var genre = {};
+    genre.id = id;
+    genre.name = name;
+    genre.description = description;
+    console.log(genre);
+    return genre;
+}
+
+
+/**
+ * 将修改界面信息填入
+ * @param user
+ */
+function init_userInfo_modal(user){
+    $("#modifyMailForm").val(user.mail);
+    $("#modifyNicknameForm").val(user.nickname);
+    $("#modifyPasswordForm").val(user.password);
+    $("#modifyPhoneForm").val(user.phone);
+}
+
+function init_songIndo_modal() {
+
+}
+
+function init_genreInfo_modal() {
+
+}
+
+
 /**
  * 删除用户
  * @param id
@@ -344,26 +411,23 @@ function delete_user(id) {
     });
 }
 
+function delete_song() {
+
+}
+
+function delete_genre() {
+
+}
+
+
 function modify_user() {
 
 }
 
-/**
- * 将修改界面信息填入
- * @param user
- */
-function init_userInfo_modal(user){
-    $("#modifyMailForm").val(user.mail);
-    $("#modifyNicknameForm").val(user.nickname);
-    $("#modifyPasswordForm").val(user.password);
-    $("#modifyPhoneForm").val(user.phone);
+function modify_song() {
+
 }
 
-/**
- * 展示提示信息
- * @param info
- */
-function info_modal(info) {
-    $("#info_modal .modal-body p").text(info);
-    $("#info_modal").modal("show");
+function modify_genre() {
+
 }
