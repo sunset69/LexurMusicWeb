@@ -97,13 +97,13 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title">用户信息</h4>
+                        <h4 class="modal-title">用户信息修改</h4>
                     </div>
                     <div class="modal-body">
                         <form>
                             <div class="form-group">
                                 <label>ID</label>
-                                <input type="text" class="form-control" id="modifyUserIdForm" placeholder="Email">
+                                <input type="text" class="form-control" id="modifyUserIdForm" disabled>
                             </div>
                             <div class="form-group">
                                 <label>邮箱</label>
@@ -144,62 +144,40 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="音乐修改">Modal title</h4>
+                        <h4 class="modal-title">音乐信息修改</h4>
                     </div>
                     <div class="modal-body">
 
-                        <!-- 上传音乐表单-->
-                        <form class="form-horizontal" id="upload" action="javascript:;" method="post"
-                              enctype="multipart/form-data">
+                        <form>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">歌名</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputSongName"
-                                           placeholder="歌名" required>
-                                </div>
+                                <label>ID</label>
+                                <input type="text" class="form-control" id="modifySongIdForm" disabled>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">歌手</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputArtist"
-                                           placeholder="歌手" required>
-                                </div>
+                                <label>歌名</label>
+                                <input type="text" class="form-control" id="modifySongTitleForm" placeholder="歌名">
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">语言</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="inputSongLanguage"
-                                           placeholder="语言" value="未知">
-                                </div>
+                                <label>歌手</label>
+                                <input type="text" class="form-control" id="modifySongAuthorForm" placeholder="歌手">
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">分类</label>
-                                <div class="col-sm-10">
-                                    <!--打开模态框，加载分类，选择分类-->
-                                    <select class="form-control" name="genre" id="inputSongGenre"></select>
-                                </div>
+                                <label>语言</label>
+                                <input type="text" class="form-control" id="modifySongLanguageForm"
+                                       placeholder="语言" value="未知">
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">上传歌曲</label>
-                                <div class="col-sm-10">
-                                    <input type="file" id="inputSongFile" required>
-                                    <small id="inputSongFile_info"></small>
-                                </div>
+                                <label>分类</label>
+                                <select class="form-control" name="genre" id="modifySongGenreForm"></select>
+                            </div>
+                            <!-- 将图片上传至图片服务器，获取链接后注册用户 -->
+                            <div class="form-group">
+                                <label>上传歌曲</label>
+                                <input type="file" id="modifySongSourceForm" required>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">上传封面</label>
-                                <div class="col-sm-10">
-                                    <input type="file" id="inputPoster">
-                                    <small id="inputPoster_info"></small>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-10">
-                                    <button class="btn btn-success" id="upload_song_btn">上传</button>
-                                    <!-- <button class="btn btn-warning"
-                                        onclick="$('#uploadModel').modal('hide')">取消</button> -->
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
-                                </div>
+                                <label>上传封面</label>
+                                <input type="file" id="modifySongPosterForm" required>
                             </div>
                         </form>
 
@@ -228,7 +206,7 @@
                             </div>
                             <div class="form-group">
                                 <label>名称</label>
-                                <input type="email" class="form-control" id="modifyGenreNameForm" placeholder="Name">
+                                <input type="email" class="form-control" id="modifyGenreNameForm" placeholder="分类名称">
                             </div>
                             <div class="form-group">
                                 <label>描述</label>
@@ -254,7 +232,7 @@
                         <h4 class="modal-title">提示信息</h4>
                     </div>
                     <div class="modal-body">
-                        <p>One fine body&hellip;</p>
+                        <p>info</p>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -283,9 +261,12 @@
                 pn: 1,
                 size: 8
             }
-            to_page("/user/page",PAGESIZE,1);
-            to_page("/song/page",PAGESIZE,2);
-            to_page("/genre/page",PAGESIZE,3);
+            var USERPAGE = "/user/page";
+            var SONGPAGE = "/song/page";
+            var GENREPAGE = "/genre/page";
+            to_page(USERPAGE,PAGESIZE,1);
+            to_page(SONGPAGE,PAGESIZE,2);
+            to_page(GENREPAGE,PAGESIZE,3);
 
             // 用户删除与修改按钮事件
             $("#user_table").on("click","button",function () {
@@ -306,9 +287,10 @@
                 // var song = getSongInfo(this);
                 selectedSong = getSongInfo(this);
                 if ($(this).hasClass("delete")){
-                    console.log("delete");
+                    console.log("delete song");
+                    delete_song(selectedSong.id);
                 }else if ($(this).hasClass("modify")){
-                    console.log("modify");
+                    console.log("modify song");
                     init_songInfo_modal(selectedSong);
                     $("#song_info").modal("show");
                 }
@@ -318,9 +300,11 @@
                 // var genre = getGenreInfo(this);
                 selectedGenre = getGenreInfo(this);
                 if ($(this).hasClass("delete")){
-                    console.log("delete");
+                    console.log("delete genre");
+                    delete_genre(selectedGenre.id);
+                    to_page(GENREPAGE,PAGESIZE,3);
                 }else if ($(this).hasClass("modify")){
-                    console.log("modify");
+                    console.log("modify genre");
                     init_genreInfo_modal(selectedGenre);
                     $("#genre_info").modal({
                         backdrop: "static",

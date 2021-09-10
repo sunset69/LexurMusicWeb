@@ -34,10 +34,12 @@ function showPage(index) {
  * @param index
  */
 function to_page(url,data,index) {
+    console.log("加载页面:"+index+" url"+url);
     $.ajax({
         url: url,
         data: data,
         method: "GET",
+        async: false,
         success: function (result) {
             // console.log(result);
             build_page(result,url,data,index);
@@ -147,10 +149,13 @@ function song_table(result) {
         $("<td></td>").text(item.author).appendTo(songItem);
         $("<td></td>").text(item.language).appendTo(songItem);
         $("<td></td>").text(item.genreId).appendTo(songItem);
-        var source = item.source.substring(item.source.lastIndexOf('/')+1);
+        var sourceName = item.source.substring(item.source.lastIndexOf('/')+1);
+        var source = $("<a></a>").text(sourceName).attr("href",item.source);
         $("<td></td>").html(source).appendTo(songItem).addClass("long_text").width("5rem");
-        var poster = item.poster.substring(item.poster.lastIndexOf('/')+1);
-        $("<td></td>").text(poster).appendTo(songItem).addClass("long_text").width("5px");
+        var posterName = item.poster.substring(item.poster.lastIndexOf('/')+1);
+        // var poster = $("<a></a>").text(posterName).attr("href",item.poster);
+        var poster = $("<img/>").attr("src",item.poster).attr("title",posterName).height("1.6em");
+        $("<td></td>").html(poster).appendTo(songItem).addClass("long_text").width("5px");
         $("<td></td>").text(item.status).appendTo(songItem);
         var modifyBtn = $("<button></button>").text("修改").addClass("btn btn-success").addClass("modify");
         var deleteBtn = $("<button></button>").text("删除").addClass("btn btn-danger").addClass("delete");
@@ -331,8 +336,8 @@ function getSongInfo(element) {
     var author = items.eq(2).text();
     var language = items.eq(3).text();
     var genreId = items.eq(4).text();
-    var source = items.eq(5).text();
-    var poster = items.eq(6).text();
+    var source = items.eq(5).children("a").attr("href");
+    var poster = items.eq(6).children("img").attr("src");
     var status = items.eq(7).text();
 
     var song = {};
@@ -368,6 +373,8 @@ function getGenreInfo(element) {
  * @param user
  */
 function init_userInfo_modal(user){
+    console.log(user);
+    $("#modifyUserIdForm").val(user.id);
     $("#modifyMailForm").val(user.mail);
     $("#modifyNicknameForm").val(user.nickname);
     $("#modifyPasswordForm").val(user.password);
@@ -375,7 +382,13 @@ function init_userInfo_modal(user){
 }
 
 function init_songInfo_modal(song) {
-
+   $("#modifySongIdForm").val(song.id);
+   $("#modifySongTitleForm").val(song.title);
+   $("#modifySongAuthorForm").val(song.author);
+   $("#modifySongLanguageForm").val(song.language);
+   // $("#modifySongGenreForm").val(song.genreId);
+   // $("#modifySongSourceForm").val(song.source);
+   // $("#modifySongPosterForm").val(song.poster);
 }
 
 function init_genreInfo_modal(genre) {
@@ -414,11 +427,55 @@ function delete_user(id) {
 }
 
 function delete_song(id) {
-
+    if (id == null){
+        console.info("无ID");
+        return false;
+    }
+    $.ajax({
+        url: "/song/deleteSong",
+        method: "GET",
+        data: {
+            id: id
+        },
+        success: function (result) {
+            if (result.code == 100){
+                info_modal(result.msg);
+                to_page("/song/page",{pn:1,size:8},2);
+                return true;
+            }else {
+                info_modal(result.msg);
+                return false;
+            }
+        },
+        error: function () {
+            info_modal("连接服务器失败!");
+            return false;
+        }
+    });
 }
 
 function delete_genre(id) {
-
+    if (id == null){
+        return false;
+    }
+    $.ajax({
+        url: "/genre/deleteGenre",
+        method: "GET",
+        data: {id: id},
+        success: function (result) {
+            if (result.code == 100){
+                info_modal(result.msg);
+                return true;
+            }else {
+                console.info(result.m);
+                return false;
+            }
+        },
+        error: function () {
+                info_modal("连接服务器失败");
+                return false;
+        }
+    });
 }
 
 function get_modify_userInfo() {
