@@ -18,6 +18,7 @@
             crossorigin="anonymous"></script>
     <script src="${APP_PATH}/static/bootstrap/js/bootstrap.min.js"></script>
     <script src="${APP_PATH}/static/js/musicweb-admin.js"></script>
+    <script src="${APP_PATH}/static/js/utils.js"></script>
 </head>
 <body>
 <div class="container">
@@ -122,6 +123,16 @@
                                 <label>手机</label>
                                 <input type="tel" class="form-control" id="modifyPhoneForm" placeholder="手机号码">
                             </div>
+                            <div class="form-group">
+                                <label>状态:
+                                <input type="checkbox" id="modifyLockedForm" value="Y"> 是否被禁用
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>出生日期</label>
+                                <input type="date" class="form-control" id="modifyBirthForm" placeholder="手机号码">
+                            </div>
+
                             <!-- 将图片上传至图片服务器，获取链接后注册用户 -->
                             <div class="form-group">
                                 <label>头像</label>
@@ -131,7 +142,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button id="user_info_submit" class="btn btn-success">提交</button>
+                        <button id="submit_user_modify" class="btn btn-success">提交</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
                     </div>
                 </div><!-- /.modal-content -->
@@ -184,7 +195,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-success">提交</button>
+                        <button type="button" class="btn btn-success" id="submit_song_modify">提交</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -216,7 +227,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-success" id="submit_genre">提交</button>
+                        <button type="button" class="btn btn-success" id="submit_genre_modify">提交</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -243,7 +254,21 @@
     <!-- js代码 -->
     <script>
         $(function () {
-            console.log("欢迎进入控制台！");
+            // console.log("欢迎进入控制台！");
+            // console.log("                   //\n" +
+            //         "       \\\\         //\n" +
+            //         "        \\\\       //\n" +
+            //         "##DDDDDDDDDDDDDDDDDDDDDD##\n" +
+            //         "## DDDDDDDDDDDDDDDDDDDD ## \n" +
+            //         "## hh                hh ##\n" +
+            //         "## hh    //    \\\\    hh ##\n" +
+            //         "## hh   //      \\\\   hh ##\n" +
+            //         "## hh                hh ##\n" +
+            //         "## hh      wwww      hh ##\n" +
+            //         "## hh                hh ##\n" +
+            //         "## MMMMMMMMMMMMMMMMMMMM ##\n" +
+            //         "##MMMMMMMMMMMMMMMMMMMMMM##\n" +
+            //         "    \\/            \\/\n");
 
             var selectedUser;
             var selectedSong;
@@ -277,11 +302,18 @@
                     // console.log("delete");
                     delete_user(selectedUser.id);
                 }else if ($(this).hasClass("modify")){
-                    console.log("modify");
+                    // console.log("modify");
                     init_userInfo_modal(selectedUser);
-                    $("#user_info").modal("show");
+                    $("#user_info").modal({
+                        dropdown: "static",
+                        keyboard: false
+                    });
                 }
             });
+            $("#submit_user_modify").click(function () {
+                get_modify_userInfo();
+            });
+
             $("#song_table").on("click","button",function () {
                 console.log("song操作")
                 // var song = getSongInfo(this);
@@ -291,10 +323,18 @@
                     delete_song(selectedSong.id);
                 }else if ($(this).hasClass("modify")){
                     console.log("modify song");
+                    // loadGenre("#modifySongGenreForm");
                     init_songInfo_modal(selectedSong);
-                    $("#song_info").modal("show");
+                    $("#song_info").modal({
+                        dropdown: "static",
+                        keyboard: false
+                    });
                 }
             });
+            $("#submit_song_modify").click(function () {
+                get_modify_songInfo();
+            });
+
             $("#genre_table").on("click","button",function () {
                 console.log("genre操作");
                 // var genre = getGenreInfo(this);
@@ -313,8 +353,8 @@
 
                 }
             });
-            $("#submit_genre").click(function () {
-                console.log(selectedGenre);
+            $("#submit_genre_modify").click(function () {
+                // console.log(selectedGenre);
                 var modifyGenre = get_modify_genreInfo();
                 // TODO 检查数据
 

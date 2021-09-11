@@ -34,12 +34,11 @@ function showPage(index) {
  * @param index
  */
 function to_page(url,data,index) {
-    console.log("加载页面:"+index+" url"+url);
+    // console.log("加载页面:"+index+" url"+url);
     $.ajax({
         url: url,
         data: data,
         method: "GET",
-        async: false,
         success: function (result) {
             // console.log(result);
             build_page(result,url,data,index);
@@ -325,7 +324,7 @@ function getUserInfo(element) {
     user.birth = birth;
     user.phone = phone;
 
-    console.log(user);
+    // console.log(user);
     return user;
 }
 
@@ -349,7 +348,7 @@ function getSongInfo(element) {
     song.source = source;
     song.poster = poster;
     song.status = status;
-    console.log(song);
+    // console.log(song);
     return song;
 }
 
@@ -363,7 +362,7 @@ function getGenreInfo(element) {
     genre.id = id;
     genre.name = name;
     genre.description = description;
-    console.log(genre);
+    // console.log(genre);
     return genre;
 }
 
@@ -373,22 +372,29 @@ function getGenreInfo(element) {
  * @param user
  */
 function init_userInfo_modal(user){
-    console.log(user);
+    // console.log(user);
     $("#modifyUserIdForm").val(user.id);
     $("#modifyMailForm").val(user.mail);
     $("#modifyNicknameForm").val(user.nickname);
     $("#modifyPasswordForm").val(user.password);
+    // $("#modifyStatusForm").prop("checked",(user.status == "Y")?true:false);
+    // console.log((user.locked == "Y")?true:false);
+    console.log("user status:"+user.locked);
+    $("#modifyStatusForm").prop("checked",(user.locked == "Y")?true:false);
+
+    // $("#modifyStatusForm").;
+    $("#modifyBirthForm").val(user.birth);
     $("#modifyPhoneForm").val(user.phone);
 }
 
 function init_songInfo_modal(song) {
-   $("#modifySongIdForm").val(song.id);
-   $("#modifySongTitleForm").val(song.title);
-   $("#modifySongAuthorForm").val(song.author);
-   $("#modifySongLanguageForm").val(song.language);
-   // $("#modifySongGenreForm").val(song.genreId);
-   // $("#modifySongSourceForm").val(song.source);
-   // $("#modifySongPosterForm").val(song.poster);
+    $("#modifySongIdForm").val(song.id);
+    $("#modifySongTitleForm").val(song.title);
+    $("#modifySongAuthorForm").val(song.author);
+    $("#modifySongLanguageForm").val(song.language);
+    loadGenre("#modifySongGenreForm",song.genreId);
+    // $("#modifySongSourceForm").val(song.source);
+    // $("#modifySongPosterForm").val(song.poster);
 }
 
 function init_genreInfo_modal(genre) {
@@ -478,20 +484,80 @@ function delete_genre(id) {
     });
 }
 
+// 获取修改信息
+
 function get_modify_userInfo() {
+    // var user = new FormData();
+    var user = {};
+    user.id = $("#modifyUserIdForm").val();
+    var mail = $("#modifyMailForm").val();
+    if(mail !== null && mail != ""){
+        user.mail = mail;
+    }
+    var password = $("#modifyPasswordForm").val();
+    if(password != null && password != ""){
+        user.password = password;
+    }
+    var nickname = $("#modifyNicknameForm").val();
+    if (nickname != null && nickname != ""){
+        user.nickname = nickname;
+    }
+    var locked = $("#modifyLockedForm").prop("checked")?"Y":"N";
+    if (locked != null && locked != ""){
+        user.locked = locked;
+    }
+    var birth = $("#modifyBirthForm").val();
+    if (birth != null && birth != ""){
+        user.birth = birth;
+    }
+    var phone = $("#modifyPhoneForm").val();
+    if (phone != null && phone != ""){
+        user.phone = phone;
+    }
 
-}
+    // 上传头像头像并获取链接
+    var file = $("#modifycAvatarForm")[0].files[0];
+    if (file != null){
+        var avatarUrl = uploadFileAndGetUrl(file);
+        user.avatar = avatarUrl;
+    }
 
-function modify_user(user) {
-
+    // console.log(user);
+    return user;
 }
 
 function get_modify_songInfo() {
-
-}
-
-function modify_song(song) {
-
+    var song = {};
+    song.id = $("#modifySongIdForm").val();
+    var title = $("#modifySongTitleForm").val();
+    if (title != null && title != ""){
+        song.title = title;
+    }
+    var author = $("#modifySongAuthorForm").val();
+    if(author!=null && author!=""){
+        song.author = author;
+    }
+    var language = $("#modifySongLanguageForm").val();
+    if(language!=null && language!=""){
+        song.language = language;
+    }
+    var genreId = $("#modifyGenreIdForm").val();
+    if(genreId!=null && genreId!=""){
+        song.genreId = genreId;
+    }
+    var source = $("#modifySongSourceForm")[0].files[0];
+    if(source!=null && source!=""){
+        sourceUrl = uploadFileAndGetUrl(source);
+        song.source = sourceUrl;
+    }
+    var poster = $("#modifySongPosterForm")[0].files[0];
+    if(poster!=null && poster!=""){
+        var posterUrl = uploadFileAndGetUrl(poster);
+        song.poster = posterUrl;
+    }
+    // TODO 分类加载与获取
+    console.log(song);
+    return song;
 }
 
 function get_modify_genreInfo() {
@@ -504,6 +570,18 @@ function get_modify_genreInfo() {
     genre.description = description;
     return genre;
 }
+
+// 修改信息
+
+function modify_user(user) {
+
+}
+
+
+function modify_song(song) {
+
+}
+
 
 function modify_genre(genre) {
     if (genre.id == null || genre.id == ""){
