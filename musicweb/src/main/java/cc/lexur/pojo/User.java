@@ -1,5 +1,7 @@
 package cc.lexur.pojo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class User {
@@ -17,6 +19,10 @@ public class User {
 
     private String locked = "N";
 
+
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date birth;
+
     @Override
     public String toString() {
         return "User{" +
@@ -30,8 +36,6 @@ public class User {
                 ", birth=" + birth +
                 '}';
     }
-
-    private Date birth;
 
     public Integer getId() {
         return id;

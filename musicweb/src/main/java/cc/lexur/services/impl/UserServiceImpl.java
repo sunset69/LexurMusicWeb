@@ -103,9 +103,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean updateUser(User record) {
-        if (record.getId() == null || record.getId() < 0){
-            return false;
-        }
         User user = userMapper.selectByPrimaryKey(record.getId());
         if (user == null){
             return false;

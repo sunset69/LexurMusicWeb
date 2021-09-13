@@ -177,10 +177,6 @@
                                 <input type="text" class="form-control" id="modifySongLanguageForm"
                                        placeholder="语言" value="未知">
                             </div>
-                            <div class="form-group">
-                                <label>分类</label>
-                                <select class="form-control" name="genre" id="modifySongGenreForm"></select>
-                            </div>
                             <!-- 将图片上传至图片服务器，获取链接后注册用户 -->
                             <div class="form-group">
                                 <label>上传歌曲</label>
@@ -189,6 +185,19 @@
                             <div class="form-group">
                                 <label>上传封面</label>
                                 <input type="file" id="modifySongPosterForm" required>
+                            </div>
+                            <div class="form-group">
+                                <label>分类</label>
+                                <select class="form-control" name="genre" id="modifySongGenreForm"></select>
+                            </div>
+                            <div class="form-group">
+                                <label>歌曲状态
+                                    <select class="form-control" id="modifySongStatus">
+                                        <option value="0">未发布</option>
+                                        <option value="1">已发布</option>
+                                        <option value="2">已下线</option>
+                                    </select>
+                                </label>
                             </div>
                         </form>
 
@@ -311,7 +320,8 @@
                 }
             });
             $("#submit_user_modify").click(function () {
-                get_modify_userInfo();
+                var userInfo = get_modify_userInfo();
+                modify_user(userInfo);
             });
 
             $("#song_table").on("click","button",function () {
@@ -332,7 +342,9 @@
                 }
             });
             $("#submit_song_modify").click(function () {
-                get_modify_songInfo();
+                var modifySong = get_modify_songInfo();
+                modify_song(modifySong);
+                to_page(USERPAGE,PAGESIZE,1);
             });
 
             $("#genre_table").on("click","button",function () {

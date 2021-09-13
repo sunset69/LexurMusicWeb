@@ -8,10 +8,7 @@ import cc.lexur.services.UserService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -119,43 +116,52 @@ public class AdminController {
         return Msg.success().add("deleteUser",user);
     }
 
-    @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+    //@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+    //@ResponseBody
+    //public Msg updateUser(@RequestParam int id, String  mail, String password, String nickname, String phone, String avatar, Date birth, boolean locked){
+    //    System.out.println("update user"+id);
+    //    // 封装user
+    //    User user = new User();
+    //    user.setId(id);
+    //    if (mail != null && mail != ""){
+    //        user.setMail(mail);
+    //    }
+    //    if (password!=null && password != ""){
+    //        user.setPassword(password);
+    //    }
+    //    if (nickname!= null&&nickname!=""){
+    //        user.setNickname(nickname);
+    //    }
+    //    if (phone!=null&&phone!=""){
+    //        user.setPhone(phone);
+    //    }
+    //    if (avatar!= null&&avatar!=""){
+    //        user.setAvatar(avatar);
+    //    }
+    //    if (birth!=null){
+    //        user.setBirth(birth);
+    //    }
+    //    //if (locked)
+    //
+    //    System.out.println(user);
+    //
+    //    if(!userService.updateUser(user)){
+    //        return Msg.fail();
+    //    }
+    //
+    //    return Msg.success().add("user",user);
+    //}
+
+    @RequestMapping(value = "updateUser",method = RequestMethod.POST)
     @ResponseBody
-    public Msg updateUser(@RequestParam int id, String  mail, String password, String nickname, String phone, String avatar, Date birth, Boolean locked){
-        // 封装user
-        User user = new User();
-        user.setId(id);
-        if (mail != null && mail != ""){
-            user.setMail(mail);
+    public Msg updateUser(@ModelAttribute User user){
+        System.out.println(user);
+        if (user.getId() == null){
+            return Msg.fail().setMsg("无ID");
         }
-        if (password!=null && password != ""){
-            user.setPassword(password);
+        if(userService.updateUser(user)){
+            return Msg.success();
         }
-        if (nickname!= null&&nickname!=""){
-            user.setNickname(nickname);
-        }
-        if (phone!=null&&phone!=""){
-            user.setPhone(phone);
-        }
-        if (avatar!= null&&avatar!=""){
-            user.setAvatar(avatar);
-        }
-        if (birth!=null){
-            user.setBirth(birth);
-        }
-        if (locked != null){
-            if (locked){
-                user.setLocked("Y");
-            }else {
-                user.setLocked("N");
-            }
-        }
-        System.out.println(user.toString());
-
-        if(!userService.updateUser(user)){
-            return Msg.fail();
-        }
-
-        return Msg.success().add("user",user);
+        return Msg.fail().setMsg("更新数据失败");
     }
 }

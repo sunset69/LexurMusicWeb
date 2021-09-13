@@ -1,13 +1,13 @@
 .table>tbody >tr> td /*设置表格文字左右和上下居中对齐*/
 {
-    font-size: 1.6em;
-    vertical-align: middle;
+    /*font-size: 1.6em;*/
+    /*vertical-align: middle;*/
 }
 .deleted_user{
     background-color: grey;
 }
 button{
-    margin-left: 3px;
+    margin-left: 1px;
 }
 .table > thead > tr > td.deleted,
 .table > tbody > tr > td.deleted,
@@ -22,7 +22,7 @@ button{
     background-color: darkgrey;
 }
 table{
-    table-layout:fixed;
+    /*table-layout:fixed;*/
 }
 .long_text{
     overflow: hidden;

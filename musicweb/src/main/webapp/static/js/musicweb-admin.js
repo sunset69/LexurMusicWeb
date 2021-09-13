@@ -377,12 +377,14 @@ function init_userInfo_modal(user){
     $("#modifyMailForm").val(user.mail);
     $("#modifyNicknameForm").val(user.nickname);
     $("#modifyPasswordForm").val(user.password);
-    // $("#modifyStatusForm").prop("checked",(user.status == "Y")?true:false);
-    // console.log((user.locked == "Y")?true:false);
     console.log("user status:"+user.locked);
-    $("#modifyStatusForm").prop("checked",(user.locked == "Y")?true:false);
+    if (user.locked == "Y"){
+        $("#modifyLockedForm").prop("checked",true);
+    }else if (user.locked == "N"){
+        $("#modifyLockedForm").prop("checked",false);
+    }
+    // console.log("user locked:"+$("#"))
 
-    // $("#modifyStatusForm").;
     $("#modifyBirthForm").val(user.birth);
     $("#modifyPhoneForm").val(user.phone);
 }
@@ -393,6 +395,7 @@ function init_songInfo_modal(song) {
     $("#modifySongAuthorForm").val(song.author);
     $("#modifySongLanguageForm").val(song.language);
     loadGenre("#modifySongGenreForm",song.genreId);
+    $("#modifySongStatus").find("option[text="+song.status+"]").attr("selected",true);
     // $("#modifySongSourceForm").val(song.source);
     // $("#modifySongPosterForm").val(song.poster);
 }
@@ -522,7 +525,7 @@ function get_modify_userInfo() {
         user.avatar = avatarUrl;
     }
 
-    // console.log(user);
+    console.log(user);
     return user;
 }
 
@@ -541,7 +544,7 @@ function get_modify_songInfo() {
     if(language!=null && language!=""){
         song.language = language;
     }
-    var genreId = $("#modifyGenreIdForm").val();
+    var genreId = $("#modifySongGenreForm").val();
     if(genreId!=null && genreId!=""){
         song.genreId = genreId;
     }
@@ -555,7 +558,6 @@ function get_modify_songInfo() {
         var posterUrl = uploadFileAndGetUrl(poster);
         song.poster = posterUrl;
     }
-    // TODO 分类加载与获取
     console.log(song);
     return song;
 }
@@ -574,17 +576,61 @@ function get_modify_genreInfo() {
 // 修改信息
 
 function modify_user(user) {
-
+    console.log("修改用户：");
+    console.log(user);
+    if (user.id == null || user.id == undefined){
+        info_modal("ID出错");
+        return;
+    }
+    $.ajax({
+        url: "/admin/updateUser",
+        method: "POST",
+        dataType: "json",
+        data: user,
+        success: function (result) {
+            if (result.code == 100){
+                info_modal(result.msg);
+                to_page("/user/page",{pn:1,size:8},1);
+                return true;
+            }else {
+                info_modal(result.msg);
+                return false;
+            }
+        },
+        error: function (result) {
+            console.log(result);
+            info_modal("连接服务器失败");
+        }
+    });
 }
-
 
 function modify_song(song) {
+    if (song.id == null || song.id == undefined){
+        info_modal("ID出错");
+        return;
+    }
+    $.ajax({
+        url: "/song/updateSong",
+        method: "POST",
+        data: song,
+        success: function (result) {
+            if (result.code == 100){
+                info_modal(result.msg);
+                return true;
+            }else {
+                info_modal(result.msg);
+                return false;
+            }
+        },
+        error: function () {
+            info_modal("连接服务器失败");
+        }
+    });
 
 }
 
-
 function modify_genre(genre) {
-    if (genre.id == null || genre.id == ""){
+    if (genre.id == null || genre.id == "" || genre.id == undefined){
         info_modal("无分类id");
         return false;
     }
