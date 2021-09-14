@@ -3,7 +3,6 @@ package cc.lexur.services.impl;
 import cc.lexur.mapper.GenreMapper;
 import cc.lexur.pojo.Genre;
 import cc.lexur.pojo.GenreExample;
-import cc.lexur.pojo.User;
 import cc.lexur.services.GenreService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,5 +76,11 @@ public class GenreServiceImpl implements GenreService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public Genre getGenreById(int id) {
+        Genre genre = genreMapper.selectByPrimaryKey(id);
+        return genre;
     }
 }

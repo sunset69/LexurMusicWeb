@@ -65,8 +65,7 @@ function uploadFileAndGetUrl(file) {
             // console.log(result);
             if (result.code == 100) {
                 link = result.extend.url;
-                console.log("上传成功");
-                // console.log("url:" + link);
+                console.log("上传成功:"+link);
             } else {
                 console.log("上传失败！");
             }
@@ -75,7 +74,7 @@ function uploadFileAndGetUrl(file) {
             console.log("upload fail");
         }
     });
-    console.log("返回链接：" + link);
+    // console.log("返回链接：" + link);
     return link;
 }
 
@@ -85,22 +84,40 @@ function uploadFileAndGetUrl(file) {
  * @param index 默认选择的genreId
  */
 function loadGenre(element,index = 1) {
-
     $.ajax({
         url: "/genre/page",
         method: "GET",
         success: function (result) {
-            console.log(result);
-            // 获取分类信息
-            // result.extend.genre
-            // 显示下拉列表
-            // $("#inputSongGenre").
+            // console.log(result);
             $(element).empty();
             $.each(result.extend.genreList, function () {
                 var optionEle = $("<option></option>").append(this.name).val(this.id);
                 optionEle.appendTo(element);
             });
             $(element+" option[value="+index+"]").attr("selected", true);
+        }
+    });
+}
+
+/**
+ * 通过id获取分类信息
+ * @param id
+ */
+function getGenreById(id) {
+    $.ajax({
+        url: "/genre/getGenre",
+        method: "GET",
+        data: {id:id},
+        success:function (result) {
+            // console.log(result);
+            if (result.code == 100){
+                return result.extend.genre;
+            }else {
+                return null;
+            }
+        },
+        error: function () {
+            return null;
         }
     });
 }

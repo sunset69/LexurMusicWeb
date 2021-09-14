@@ -296,7 +296,7 @@
                 size: 8
             }
             var USERPAGE = "/user/page";
-            var SONGPAGE = "/song/page";
+            var SONGPAGE = "/song/allPage";
             var GENREPAGE = "/genre/page";
             to_page(USERPAGE,PAGESIZE,1);
             to_page(SONGPAGE,PAGESIZE,2);
@@ -325,15 +325,11 @@
             });
 
             $("#song_table").on("click","button",function () {
-                console.log("song操作")
-                // var song = getSongInfo(this);
                 selectedSong = getSongInfo(this);
                 if ($(this).hasClass("delete")){
                     console.log("delete song");
                     delete_song(selectedSong.id);
                 }else if ($(this).hasClass("modify")){
-                    console.log("modify song");
-                    // loadGenre("#modifySongGenreForm");
                     init_songInfo_modal(selectedSong);
                     $("#song_info").modal({
                         dropdown: "static",
@@ -344,7 +340,6 @@
             $("#submit_song_modify").click(function () {
                 var modifySong = get_modify_songInfo();
                 modify_song(modifySong);
-                to_page(USERPAGE,PAGESIZE,1);
             });
 
             $("#genre_table").on("click","button",function () {

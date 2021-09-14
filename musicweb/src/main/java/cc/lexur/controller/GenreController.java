@@ -103,5 +103,15 @@ public class GenreController {
         return Msg.success();
     }
 
+    @RequestMapping("/getGenre")
+    @ResponseBody
+    public Msg getGenre(@RequestParam int id){
+        Genre genre = genreService.getGenreById(id);
+        if (genre == null){
+            return Msg.fail().setMsg("分类不存在");
+        }else {
+            return Msg.success().add("genre",genre);
+        }
+    }
 
 }

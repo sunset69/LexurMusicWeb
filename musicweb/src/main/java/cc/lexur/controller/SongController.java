@@ -14,10 +14,7 @@ import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -144,55 +141,68 @@ public class SongController {
      * @param status
      * @return
      */
-    @RequestMapping(value = "/updateSong",method = RequestMethod.POST)
+    //@RequestMapping(value = "/updateSong",method = RequestMethod.POST)
+    //@ResponseBody
+    //public Msg updateSong(@RequestParam(required = true,defaultValue = "-1") int id,@RequestParam(defaultValue = "-1") int genre_id,String title, String language,String source, String poster, String author,@RequestParam(defaultValue = "-1") int status){
+    //    Song song = new Song();
+    //
+    //    if (!songService.checkId(id)){
+    //        return Msg.fail().setMsg("歌曲不存在");
+    //    }else {
+    //        song.setId(id);
+    //    }
+    //
+    //    if (!genreService.checkId(genre_id)){
+    //        return Msg.fail().setMsg("分类ID不存在");
+    //    }else {
+    //        song.setGenreId(genre_id);
+    //    }
+    //
+    //    if (title != null && title != ""){
+    //        song.setTitle(title);
+    //    }
+    //
+    //    if (language != null && language != ""){
+    //        song.setLanguage(language);
+    //    }
+    //
+    //    if (source != null && source != ""){
+    //        song.setSource(source);
+    //    }
+    //
+    //    if (poster != null && poster != ""){
+    //        song.setPoster(poster);
+    //    }
+    //
+    //    if (author != null && author != ""){
+    //        song.setAuthor(author);
+    //    }
+    //
+    //    if (status != -1){
+    //        song.setStatus(status);
+    //    }else {
+    //        song.setStatus(null);
+    //    }
+    //    //songService.updateSong(song);
+    //
+    //    System.out.println(song.toString());
+    //    if(!songService.updateSong(song)){
+    //        return Msg.fail().setMsg("用户不存在");
+    //    }
+    //    return Msg.success().add("song",song);
+    //}
+
+    @RequestMapping("/updateSong")
     @ResponseBody
-    public Msg updateSong(@RequestParam(required = true,defaultValue = "-1") int id,@RequestParam(defaultValue = "-1") int genre_id,String title, String language,String source, String poster, String author,@RequestParam(defaultValue = "-1") int status){
-        Song song = new Song();
-
-        if (!songService.checkId(id)){
-            return Msg.fail().setMsg("歌曲不存在");
-        }else {
-            song.setId(id);
+    public Msg updateSong(@ModelAttribute Song song){
+        System.out.println(song);
+        if (song.getId() == null){
+            return Msg.fail().setMsg("ID错误");
         }
-
-        if (!genreService.checkId(genre_id)){
-            return Msg.fail().setMsg("分类ID不存在");
-        }else {
-            song.setGenreId(genre_id);
+        if(songService.updateSong(song)){
+            return Msg.success().setMsg("更新完成");
         }
-
-        if (title != null && title != ""){
-            song.setTitle(title);
-        }
-
-        if (language != null && language != ""){
-            song.setLanguage(language);
-        }
-
-        if (source != null && source != ""){
-            song.setSource(source);
-        }
-
-        if (poster != null && poster != ""){
-            song.setPoster(poster);
-        }
-
-        if (author != null && author != ""){
-            song.setAuthor(author);
-        }
-
-        if (status != -1){
-            song.setStatus(status);
-        }else {
-            song.setStatus(null);
-        }
-        //songService.updateSong(song);
-
-        System.out.println(song.toString());
-        if(!songService.updateSong(song)){
-            return Msg.fail().setMsg("用户不存在");
-        }
-        return Msg.success().add("song",song);
+        return Msg.fail().setMsg("更新失败");
     }
 
     /**

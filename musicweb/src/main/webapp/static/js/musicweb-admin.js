@@ -147,7 +147,17 @@ function song_table(result) {
         $("<td></td>").text(item.title).appendTo(songItem);
         $("<td></td>").text(item.author).appendTo(songItem);
         $("<td></td>").text(item.language).appendTo(songItem);
+        // var genre = getGenreById(item.genreId);
+        // console.log(genre);
+        // if (genre != null){
+        //     $("<td></td>").text(item.genreId).append($("<span></span>").text(genre.name)).appendTo(songItem);
+        // }else {
+        //     $("<td></td>").text(item.genreId).append($("<span></span>").text("未知")).appendTo(songItem);
+        // }
+
         $("<td></td>").text(item.genreId).appendTo(songItem);
+
+
         var sourceName = item.source.substring(item.source.lastIndexOf('/')+1);
         var source = $("<a></a>").text(sourceName).attr("href",item.source);
         $("<td></td>").html(source).appendTo(songItem).addClass("long_text").width("5rem");
@@ -377,14 +387,11 @@ function init_userInfo_modal(user){
     $("#modifyMailForm").val(user.mail);
     $("#modifyNicknameForm").val(user.nickname);
     $("#modifyPasswordForm").val(user.password);
-    console.log("user status:"+user.locked);
     if (user.locked == "Y"){
         $("#modifyLockedForm").prop("checked",true);
     }else if (user.locked == "N"){
         $("#modifyLockedForm").prop("checked",false);
     }
-    // console.log("user locked:"+$("#"))
-
     $("#modifyBirthForm").val(user.birth);
     $("#modifyPhoneForm").val(user.phone);
 }
@@ -395,9 +402,8 @@ function init_songInfo_modal(song) {
     $("#modifySongAuthorForm").val(song.author);
     $("#modifySongLanguageForm").val(song.language);
     loadGenre("#modifySongGenreForm",song.genreId);
-    $("#modifySongStatus").find("option[text="+song.status+"]").attr("selected",true);
-    // $("#modifySongSourceForm").val(song.source);
-    // $("#modifySongPosterForm").val(song.poster);
+    // $("#modifySongStatus"+" option[value="+song.status+"]").attr("selected", true);
+    $("#modifySongStatus option[value= "+song.status+"]").attr("selected", true);
 }
 
 function init_genreInfo_modal(genre) {
@@ -558,6 +564,8 @@ function get_modify_songInfo() {
         var posterUrl = uploadFileAndGetUrl(poster);
         song.poster = posterUrl;
     }
+    var status = $("#modifySongStatus").val();
+    song.status = status;
     console.log(song);
     return song;
 }
@@ -605,6 +613,9 @@ function modify_user(user) {
 }
 
 function modify_song(song) {
+    console.log("修改音乐：");
+    console.log(song);
+
     if (song.id == null || song.id == undefined){
         info_modal("ID出错");
         return;
@@ -616,6 +627,7 @@ function modify_song(song) {
         success: function (result) {
             if (result.code == 100){
                 info_modal(result.msg);
+                to_page("/song/allPage",{pn:1,size:8},2)
                 return true;
             }else {
                 info_modal(result.msg);
