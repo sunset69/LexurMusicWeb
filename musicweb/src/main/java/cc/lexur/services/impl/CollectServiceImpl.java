@@ -9,8 +9,6 @@ import cc.lexur.services.CollectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.security.auth.login.CredentialException;
-import javax.sound.midi.Soundbank;
 import java.util.List;
 
 /**
@@ -76,9 +74,12 @@ public class CollectServiceImpl implements CollectService {
     }
 
     @Override
-    public List<Song> show(int userId) {
-        
-        return null;
+    public List<Collect> getCollectPage(int userId) {
+        CollectExample example = new CollectExample();
+        CollectExample.Criteria criteria = example.createCriteria();
+        criteria.andUserIdEqualTo(userId);
+        List<Collect> list = collectMapper.selectByExample(example);
+        return list;
     }
 
     @Override

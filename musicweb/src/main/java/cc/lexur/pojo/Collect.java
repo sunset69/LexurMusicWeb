@@ -7,6 +7,15 @@ public class Collect {
 
     private Integer userId;
 
+    @Override
+    public String toString() {
+        return "Collect{" +
+                "id=" + id +
+                ", songId=" + songId +
+                ", userId=" + userId +
+                '}';
+    }
+
     public Long getId() {
         return id;
     }

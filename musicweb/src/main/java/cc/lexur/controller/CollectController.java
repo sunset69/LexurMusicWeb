@@ -1,15 +1,19 @@
 package cc.lexur.controller;
 
-import cc.lexur.mapper.UserMapper;
+import cc.lexur.pojo.Collect;
 import cc.lexur.pojo.Msg;
+import cc.lexur.pojo.Song;
 import cc.lexur.services.CollectService;
 import cc.lexur.services.SongService;
 import cc.lexur.services.UserService;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * @Auther: lexur
@@ -95,14 +99,16 @@ public class CollectController {
      * @param userId
      * @return
      */
-    @RequestMapping("/show")
+    @RequestMapping("/page")
     @ResponseBody
-    public Msg show(@RequestParam int userId){
+    public Msg getPage(@RequestParam int userId){
         if (!userService.checkId(userId)){
             return Msg.fail().setMsg("用户不存在");
         }
-        collectService.show(userId);
-        return Msg.success();
+        List<Collect> list = collectService.getCollectPage(userId);
+        System.out.println(list);
+        PageInfo pageInfo = new PageInfo(list);
+        return Msg.success().add("pageInfo",pageInfo);
     }
 
 }
