@@ -7,6 +7,7 @@ public class Collect {
 
     private Integer userId;
 
+
     @Override
     public String toString() {
         return "Collect{" +
@@ -15,6 +16,7 @@ public class Collect {
                 ", userId=" + userId +
                 '}';
     }
+
 
     public Long getId() {
         return id;

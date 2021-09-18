@@ -121,4 +121,17 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+    @Override
+    public boolean checkMail(String mail) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andMailEqualTo(mail);
+        List<User> userList = userMapper.selectByExample(example);
+        if (userList.isEmpty()){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
 }

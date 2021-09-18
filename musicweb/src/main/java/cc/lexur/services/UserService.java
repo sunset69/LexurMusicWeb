@@ -28,4 +28,6 @@ public interface UserService {
 
     public boolean checkId(int id);
 
+    public boolean checkMail(String mail);
+
 }

@@ -6,6 +6,7 @@ import cc.lexur.pojo.Collect;
 import cc.lexur.pojo.CollectExample;
 import cc.lexur.pojo.Song;
 import cc.lexur.services.CollectService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -95,5 +96,14 @@ public class CollectServiceImpl implements CollectService {
         }
         System.out.println("已收藏");
         return true;
+    }
+
+    @Override
+    public List<Song> getCollectedSong(int userId,int pn,int size) {
+        //PageHelper.startPage(pn,size);
+        PageHelper.startPage(pn, size);
+        List<Song> collectedSong = collectMapper.getCollectedSong(userId);
+        System.out.println(collectedSong);
+        return collectedSong;
     }
 }

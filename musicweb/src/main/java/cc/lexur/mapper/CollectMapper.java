@@ -3,9 +3,14 @@ package cc.lexur.mapper;
 import cc.lexur.pojo.Collect;
 import cc.lexur.pojo.CollectExample;
 import java.util.List;
+
+import cc.lexur.pojo.Song;
 import org.apache.ibatis.annotations.Param;
 
 public interface CollectMapper {
+
+    List<Song> getCollectedSong(int userId);
+
     long countByExample(CollectExample example);
 
     int deleteByExample(CollectExample example);

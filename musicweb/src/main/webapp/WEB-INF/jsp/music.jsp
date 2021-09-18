@@ -12,13 +12,10 @@
     <link rel="stylesheet" href="${APP_PATH}/static/css/music.css">
     <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <%--                <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>--%>
-    <%--                <script src="${APP_PATH}/static/js/jquery-3.6.0.min.js"></script>--%>
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"
             integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
             crossorigin="anonymous"></script>
     <script src="${APP_PATH}/static/bootstrap/js/bootstrap.min.js"></script>
-    <%--                <script src="${APP_PATH}/static/cplayer/cplayer.js"></script>--%>
     <script src="https://cdn.jsdelivr.net/npm/cplayer/dist/cplayer.min.js"></script>
     <script src="${APP_PATH}/static/js/music.js"></script>
 
@@ -30,14 +27,14 @@
     <div class="row">
         <!-- 标题 -->
         <div class="jumbotron">
-            <a href="#" id="title">
-                <h1>音乐分享${userInfo.mail}</h1>
+            <a href="javascript:;" id="title">
+                <h1>音乐分享</h1>
             </a>
         </div>
     </div>
 
     <div class="row">
-        <nav class="navbar navbar-default">
+        <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid">
                 <!-- 回归主页 -->
                 <div class="navbar-header">
@@ -48,7 +45,7 @@
                     <!-- 导航条左侧 -->
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">分类 <span
                                     class="caret"></span></a>
                             <ul class="dropdown-menu" id="SongGenre">
@@ -73,13 +70,13 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="javascript:;" id="song_add_modal_btn">上传音乐</a></li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">用户 <span
                                     class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">我的收藏</a></li>
+                                <li><a href="javascript:;" id="myCollect_btn">我的收藏</a></li>
                                 <li><a href="http://localhost:2001/">退出</a></li>
-                                <li><a href="#" data-toggle="modal" data-target="#userInfo">用户资料</a></li>
+                                <li><a href="javascript:;" data-toggle="modal" data-target="#userInfo">用户资料</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -113,8 +110,8 @@
     </div>
 
     <!-- ==================================模态框================================================= -->
+    <!-- 1. 播放器 -->
     <div class="all-modal">
-        <!-- 1. 播放器 -->
         <div class="modal fade" tabindex="-1" role="dialog" id="playerModel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -207,14 +204,14 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">警告</h4>
+                    <h4 class="modal-title">提示</h4>
                 </div>
                 <div class="modal-body">
                     <p>info</p>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
-                </div>
+<%--                <div class="modal-footer">--%>
+<%--                    <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>--%>
+<%--                </div>--%>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
@@ -352,17 +349,27 @@
                 checkFileType("inputPoster", ["jpg", "png", "jpeg"]);
             });
 
-            // 收藏
-            // $("button.collect").click(function () {
-            //     console.log("hello");
-            //     $(this).children("span").toggleClass("glyphicon-star").toggleClass("glyphicon-star-empty");
-            //     console.log($(this).children());
-            // });
+
 
             $("#search_btn").click(function () {
                 console.log("搜索");
                 search();
             });
+
+            // 展示收藏
+            $("#myCollect_btn").click(function () {
+                $(".jumbotron a h1").text("我的收藏");
+                to_page("/collect/collectedSong",{
+                    userId: userInfo.id,
+                    pn: 1,
+                    size: 8
+                });
+            });
+            // 收藏
+            $("#song-display").on("click",".collect",function () {
+                var song = getSongInfo(this);
+                collect(userInfo.id,song.id);
+            })
 
         });/*结束*/
     </script>

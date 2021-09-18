@@ -92,4 +92,12 @@ public class UserController {
         return Msg.success().add("pageInfo",pageInfo);
     }
 
+    @RequestMapping("/checkMail")
+    @ResponseBody
+    public Msg checkMail(@RequestParam String mail){
+        if (userService.checkMail(mail)){
+            return Msg.success().setMsg("邮箱可用");
+        }
+        return Msg.fail().setMsg("邮箱重复");
+    }
 }

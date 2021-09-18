@@ -39,6 +39,11 @@ function checkUrl(url) {
     return retCheck(ret,url)?true:false;
 }
 
+function checkPhone(phone) {
+    var ret = new RegExp(/^1[34578]\d{9}$/);
+    return retCheck(ret,phone)?true:false;
+}
+
 /**
  * 上传文件并获取链接
  * @param file
@@ -118,6 +123,30 @@ function getGenreById(id) {
         },
         error: function () {
             return null;
+        }
+    });
+}
+
+function checkUserMailRepeat(mail,callback) {
+    if (mail == null){
+        return;
+    }
+    $.ajax({
+        url: "/user/checkMail",
+        method: "GET",
+        data: {
+            mail: mail
+        },
+        success: function (result) {
+            if (result.code == 100 ){
+                console.log("邮箱可用");
+                return callback();
+            }else {
+                console.log("邮箱不可用");
+            }
+        },
+        error: function () {
+            console.log("连接服务器失败");
         }
     });
 }

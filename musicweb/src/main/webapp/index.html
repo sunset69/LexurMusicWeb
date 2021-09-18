@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="./static/css/index.css">
     <script src="./static/js/jquery-3.6.0.min.js"></script>
     <script src="./static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./static/js/utils.js"></script>
     <script src="./static/js/index.js"></script>
 </head>
 
@@ -55,12 +56,22 @@
 
                         <form>
                             <div class="form-group">
+                                <label>头像</label>
+                                <div class="center">
+                                    <label id="preAvatar" class="center">
+                                        <img src="" alt="" >
+                                    </label>
+                                    <input type="file" class="form-control" id="registercAvatarForm"
+                                           accept=".png, .jpg, .jpeg">
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label>邮箱</label>
                                 <input type="email" class="form-control" id="registerMailForm" placeholder="Email">
                             </div>
                             <div class="form-group">
                                 <label>昵称</label>
-                                <input type="email" class="form-control" id="registerNicknameForm" placeholder="Email">
+                                <input type="text" class="form-control" id="registerNicknameForm" placeholder="昵称">
                             </div>
                             <div class="form-group">
                                 <label>密码</label>
@@ -72,15 +83,20 @@
                                 <input type="tel" class="form-control" id="registerPhoneForm" placeholder="手机号码">
                             </div>
                             <!-- 将图片上传至图片服务器，获取链接后注册用户 -->
-                            <div class="form-group">
-                                <label>头像</label>
-                                <input type="file" class="form-control" id="registercAvatarForm"
-                                    accept=".png, .jpg, .jpeg">
-                            </div>
+<!--                            <div class="form-group">-->
+<!--                                <label>头像</label>-->
+<!--                                <label id="preAvatar">-->
+<!--                                    <img src="" alt="">-->
+<!--                                </label>-->
+<!--                                <input type="file" class="form-control" id="registercAvatarForm"-->
+<!--                                    accept=".png, .jpg, .jpeg">-->
+<!--                            </div>-->
+
+                        </form>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success">注册</button>
+                        <button type="button" class="btn btn-success" id="registerBtn">注册</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
                     </div>
                 </div><!-- /.modal-content -->
@@ -88,6 +104,41 @@
         </div><!-- /.modal -->
 
     </div>
+    <script>
+        $(function () {
+            $("#registercAvatarForm").change(function(){
+                var _URL = window.URL || window.webkitURL;
+                var file, img;
+                if ((file = this.files[0])) {
+                    img = new Image();
+                    img.onload = function() {
+                        $('#preAvatar>img').attr('src', this.src);
+                    };
+                    img.src = _URL.createObjectURL(file);
+                }
+            });
+
+        $("#registerBtn").click(function () {
+            console.log("hello");
+            var usr = getUserInfo();
+            registerUser(usr);
+        });
+
+        $("#registerMailForm").blur(function () {
+            var mail = $(this).val();
+            console.log(mail);
+            if(checkMail(mail)){
+                console.log("邮箱格式正确");
+                var hello = () => {
+                    console.log("hello");
+                };
+                checkUserMailRepeat(mail,hello);
+            }else {
+                console.log("邮箱格式错误");
+            }
+        });
+        });
+    </script>
 </body>
 
 </html>

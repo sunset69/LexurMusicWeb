@@ -125,7 +125,7 @@ function build_page_info(result) {
  * @param result
  */
 function build_page_nav(result,url,data) {
-    console.log(data);
+    // console.log(data);
     $("#page_nav_area").empty();// 清空
 
     // 首页与前一页
@@ -144,9 +144,11 @@ function build_page_nav(result,url,data) {
         to_page(url,firstpageData);
     });
     prePageLi.click(function () {
-        var prePageData = data;
-        prePageData.pn = result.extend.pageInfo.pageNum - 1;
-        to_page(url,prePageData);
+        if (!$(this).hasClass("disabled")){
+            var prePageData = data;
+            prePageData.pn = result.extend.pageInfo.pageNum - 1;
+            to_page(url,prePageData);
+        }
     });
 
     // 下一页与尾页
@@ -154,14 +156,17 @@ function build_page_nav(result,url,data) {
     var lastPageLi = $("<li></li>").append($("<a></a>").append("末页").attr("href", "javascript:;"));
     if (result.extend.pageInfo.hasNextPage == false) {
         // 最后一页
-        nextPageLi.addClass("disabled");
-        lastPageLi.addClass("disabled");
+        nextPageLi.addClass("disabled").attr('href', 'javascript:;');
+        lastPageLi.addClass("disabled").attr('href', 'javascript:;');
     }
     // 添加点击事件
     nextPageLi.click(function () {
-        var nextPageData = data;
-        nextPageData.pn = result.extend.pageInfo.pageNum + 1;
-        to_page(url,nextPageData);
+        if (!$(this).hasClass("disabled")) {
+            console.log("clicked next");
+            var nextPageData = data;
+            nextPageData.pn = result.extend.pageInfo.pageNum + 1;
+            to_page(url, nextPageData);
+        }
     });
     lastPageLi.click(function () {
         var lastPageData = data;
@@ -225,7 +230,7 @@ function add_to_playlist(song, player) {
     var result = player.add(item);
     // console.log("add return:"+result);
     // player.playlist.splice(player.nowplaypoint,0,item);
-    console.log(player.playlist);
+    // console.log(player.playlist);
     player.to(player.playlist.length);
     // player.play();
 
@@ -240,7 +245,7 @@ function getSongGenre(id) {
         url: "/genre/page",
         method: "GET",
         success: function (result) {
-            console.log(result);
+            // console.log(result);
             // 获取分类信息
             // result.extend.genre
             // 显示下拉列表
@@ -280,17 +285,6 @@ function getSongInfo(element) {
         language: songLanguage
     }
     return song;
-}
-
-/**
- * 获取歌曲id
- * @param id
- */
-function get_form_data(id) {
-    let data = $("#" + id).val();
-    if (data == null) {
-        console.log()
-    }
 }
 
 /**
@@ -337,10 +331,10 @@ function checkCollection(userId,songId) {
     $.ajax(settings).done(function (response) {
         // console.log(response);
         if (response.code == 100){
-            console.log(response.code);
+            // console.log(response.code);
             return true;
         }else {
-            console.log(response.code);
+            // console.log(response.code);
             return false;
         }
     });
@@ -383,7 +377,7 @@ function uploadFile(element) {
             // console.log(result);
             if (result.code == 100) {
                 link = result.extend.url;
-                console.log("url:" + link);
+                // console.log("url:" + link);
             } else {
                 console.log("上传失败！");
             }
@@ -509,6 +503,7 @@ function getSearchData() {
 }
 
 function search() {
+    $(".jumbotron h1").text("搜索结果");
     // 获取搜索数据
    var title = $("#search_title").val();
    var genreId = $("#search_genre").val();
@@ -535,7 +530,7 @@ function search() {
         data: data,
         method: "GET",
         success: function (result) {
-            console.log(result);
+            // console.log(result);
             // build_page(result,"/song/search/");
             data.pn = 1;
             data.size = 8;
@@ -545,4 +540,39 @@ function search() {
             infoModal("搜索失败！");
         }
     });
+}
+
+// 添加收藏量
+function addSongCollection(songId) {
+    console.log(songId+":添加收藏量");
+}
+
+function collect(userId,songId) {
+    //收藏歌曲
+    $.ajax({
+        url: "/collect/add",
+        method: "GET",
+        data: {
+            userId: userId,
+            songId: songId
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.code == 100){
+                console.log("ready");
+                addSongCollection(songId);
+                infoModal(result.msg);
+                return true;
+            }else {
+                infoModal(result.msg);
+                return false;
+            }
+        },
+        error: function () {
+            // console.log("连接服务器失败");
+            infoModal("连接服务器失败");
+            return false;
+        }
+    });
+
 }

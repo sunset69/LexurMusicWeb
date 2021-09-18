@@ -1,6 +1,7 @@
 package cc.lexur.services;
 
 import cc.lexur.pojo.Collect;
+import cc.lexur.pojo.Song;
 
 import java.util.List;
 
@@ -19,5 +20,7 @@ public interface CollectService {
     public List<Collect> getCollectPage(int userId);
 
     public boolean check(int userId,int songId);
+
+    public List<Song> getCollectedSong(int userId,int pn,int size);
 
 }

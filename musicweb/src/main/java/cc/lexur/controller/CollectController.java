@@ -53,7 +53,7 @@ public class CollectController {
         }
 
         if (!collectService.add(userId, songId)){
-            return Msg.fail().setMsg("添加收藏失败");
+            return Msg.fail().setMsg("重复收藏");
         }
         return Msg.success().setMsg("成功添加收藏");
     }
@@ -111,4 +111,12 @@ public class CollectController {
         return Msg.success().add("pageInfo",pageInfo);
     }
 
+    @RequestMapping("/collectedSong")
+    @ResponseBody
+    public Msg getColletedSong(@RequestParam int userId,@RequestParam(defaultValue = "1") int pn,@RequestParam(defaultValue = "8") int size){
+        List<Song> songList = collectService.getCollectedSong(userId, pn, size);
+        PageInfo pageInfo = new PageInfo(songList);
+        System.out.println(pageInfo);
+        return Msg.success().add("pageInfo",pageInfo);
+    }
 }
