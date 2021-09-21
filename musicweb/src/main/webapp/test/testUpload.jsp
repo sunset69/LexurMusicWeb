@@ -18,11 +18,19 @@
 <script>
     $(function () {
         console.log("hello");
-        user = {
-            mail: "123@qq.com",
-            password: "123"
+        // user = {
+        //     mail: "123@qq.com",
+        //     password: "123"
+        // }
+        // uploadUser(user,alertInfo);
+
+        var song = {
+            title: "testsong",
+            author: "未知",
+            poster: "www.baidu.com",
+            source: "www.baidu.com"
         }
-        uploadUser(user,alertInfo);
+        uploadSong(song,alertInfo);
     });
 </script>
 </body>
