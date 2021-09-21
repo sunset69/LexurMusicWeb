@@ -50,6 +50,7 @@ function checkPhone(phone) {
  * @returns {null|*}
  */
 function uploadFileAndGetUrl(file) {
+    var fileInfo;
     var link;
     if (file == null) {
         return null;
@@ -67,9 +68,11 @@ function uploadFileAndGetUrl(file) {
         processData: false,
         contentType: false,
         success: function (result) {
-            // console.log(result);
+            console.log("上传成功")
+            console.log(result);
             if (result.code == 100) {
-                link = result.extend.url;
+                fileInfo = result.extend.fileInfo;
+                link = fileInfo.url;
                 console.log("上传成功:"+link);
             } else {
                 console.log("上传失败！");
@@ -80,6 +83,7 @@ function uploadFileAndGetUrl(file) {
         }
     });
     // console.log("返回链接：" + link);
+    // console.log(fileInfo);
     return link;
 }
 
@@ -149,4 +153,66 @@ function checkUserMailRepeat(mail,callback) {
             console.log("连接服务器失败");
         }
     });
+}
+
+function uploadSong(song,callback) {
+    $.ajax({
+        url: "/song/addSong",
+        method: "POST",
+        data: song,
+        success: function (result) {
+            console.log(result);
+            if (result.code == 100){
+                return callback("上传成功");
+            }else {
+                return callback(result.msg);
+            }
+        },
+        error: function () {
+            return callback("连接服务器失败");
+        }
+    });
+}
+
+function uploadUser(user,callback) {
+    $.ajax({
+        url: "/admin/addUser",
+        method: "POST",
+        data: user,
+        success: function (result) {
+            console.log(result);
+            if (result.code == 100){
+                return callback("上传成功");
+            }else {
+                return callback(result.msg);
+            }
+        },
+        error: function () {
+            return callback("连接服务器失败");
+        }
+    });
+}
+
+function uploadGenre(genre,callback) {
+    $.ajax({
+        url: "/genre/addGenre",
+        method: "POST",
+        data: genre,
+        success: function (result) {
+            console.log(result);
+            if (result.code == 100){
+                return callback("上传成功");
+            }else {
+                return callback(result.msg);
+            }
+        },
+        error: function () {
+            return callback("连接服务器失败");
+        }
+    });
+}
+
+
+function alertInfo(info) {
+    console.log("模态框提示"+info);
 }
