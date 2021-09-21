@@ -215,4 +215,12 @@ function uploadGenre(genre,callback) {
 
 function alertInfo(info) {
     console.log("模态框提示"+info);
+    if ($("#alert_modal").length == 0){
+        // 创建模态框
+        var alertModal = $('<div class="fade modal"role=dialog id=alert_modal tabindex=-1><div class=modal-dialog role=document><div class=modal-content><div class=modal-header><h4 class=modal-title>提示信息</h4></div><div class=modal-body><p>信息</div></div></div></div>');
+        alertModal.appendTo("body");
+        console.log("添加模态框");
+    }
+    $("#alert_modal p").text(info);
+    $("#alert_modal").modal('show');
 }
