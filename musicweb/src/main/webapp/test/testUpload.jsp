@@ -24,13 +24,19 @@
         // }
         // uploadUser(user,alertInfo);
 
-        var song = {
-            title: "testsong",
-            author: "未知",
-            poster: "www.baidu.com",
-            source: "www.baidu.com"
+        // var song = {
+        //     title: "testsong",
+        //     author: "未知",
+        //     poster: "www.baidu.com",
+        //     source: "www.baidu.com"
+        // }
+        // uploadSong(song,alertInfo);
+
+        var genre = {
+            name: "test",
+            description: "test"
         }
-        uploadSong(song,alertInfo);
+        uploadGenre(genre,alertInfo);
     });
 </script>
 </body>
