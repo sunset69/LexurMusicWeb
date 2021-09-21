@@ -33,10 +33,15 @@
 
     <!-- 导航栏 -->
     <div class="row">
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs navbar-left">
             <li role="presentation" class="active" index="1"><a href="#">用户管理</a></li>
             <li role="presentation" index="2"><a href="#">音乐管理</a></li>
             <li role="presentation" index="3"><a href="#">分类管理</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="javascript:;">上传用户</a></li>
+            <li><a href="javascript:;">上传音乐</a></li>
+            <li><a href="javascript:;">上传分类</a></li>
         </ul>
     </div>
 

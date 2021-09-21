@@ -19,6 +19,12 @@
     <script src="/static/js/utils.js"></script>
 </head>
 <body>
+
+<form action="javascript:;">
+    <input type="file" name="" id="file">
+    <button id="upload">上传</button>
+</form>
+
 <div class="allmodal">
     <div class="modal fade" tabindex="-1" role="dialog" id="alert_modal">
         <div class="modal-dialog" role="document">
@@ -36,6 +42,20 @@
 <script>
     $(function () {
         console.log("hello");
+
+        $("#upload").click(function () {
+            console.log("hello");
+            var file = $("#file")[0].files[0];
+            var url = uploadFileAndGetUrl(file);
+            console.log(url);
+        });
+
+
+
+
+
+
+
         // user = {
         //     mail: "123@qq.com",
         //     password: "123"
@@ -55,7 +75,9 @@
         //     description: "test"
         // }
         // uploadGenre(genre,alertInfo);
-        alertInfo("test");
+
+        // alertInfo("test");
+
     });
 </script>
 </body>

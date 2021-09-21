@@ -1,3 +1,7 @@
+var user;
+function initUser(userInfo) {
+    user = userInfo;
+}
 // ==================================方法==================================
 /**
  * 跳转页面
@@ -79,16 +83,23 @@ function build_album(song, index) {
     var playBtn = $("<button></button>").addClass("btn btn-success btn-sm play");
     var playSpan = $("<span></span>").addClass("glyphicon glyphicon-play");
     playBtn.append(playSpan);
-    // var collectBtn = $("<button></button>").addClass("btn btn-default btn-sm collect").attr("onclick", "toggleCollect(this,userInfo.id);");
+
     var collectBtn = $("<button></button>").addClass("btn btn-default btn-sm collect");
     var collectSpan = $("<span></span>").addClass("glyphicon glyphicon-plus").appendTo(collectBtn);
 
-    btns.append(playBtn).append(collectBtn);
     var downEle = $("<button></button>",{
         href: song.source,
         download: song.title
     }).addClass("btn btn-default").append($("<span></span>").addClass("glyphicon glyphicon-download"));
-    btns.append(downEle);
+
+    var cancelCollectBtn = $("<button></button>").addClass("btn btn-default btn-sm").bind('click',function () {
+        cancelCollect(user.id,song.id)
+    });
+    var cancelCollectSpan = $("<span></span>").addClass("glyphicon glyphicon-remove-circle");
+    cancelCollectBtn.append(cancelCollectSpan);
+
+
+    btns.append(playBtn).append(downEle).append(collectBtn).append(cancelCollectBtn);
 
     thumbnailEle.append(posterEle).append(songInfoEle).append(btns);
     albumEle.append(thumbnailEle);
@@ -575,4 +586,30 @@ function collect(userId,songId) {
         }
     });
 
+}
+
+function cancelCollect(userId,songId) {
+    $.ajax({
+        url: "/collect/delete",
+        method: "GET",
+        data: {
+            userId: userId,
+            songId: songId
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.code == 100){
+                addSongCollection(songId);
+                infoModal(result.msg);
+                return true;
+            }else {
+                infoModal(result.msg);
+                return false;
+            }
+        },
+        error: function () {
+            infoModal("连接服务器失败");
+            return false;
+        }
+    });
 }

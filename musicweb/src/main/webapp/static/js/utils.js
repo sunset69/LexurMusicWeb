@@ -49,42 +49,75 @@ function checkPhone(phone) {
  * @param file
  * @returns {null|*}
  */
+// function uploadFileAndGetUrl(file) {
+//     console.log("uploadFileAndGetUrl");
+//     var fileInfo;
+//     var link;
+//     if (file == null) {
+//         return null;
+//     }
+//     var data = new FormData();//必须是new FormData后台才能接收到
+//     data.append('file', file);// 添加文件，表单其他项也可添加
+//
+//     $.ajax({
+//         url: "http://localhost:2000/upload",
+//         method: "POST",
+//         data: data,
+//         datatype: "json",
+//         async: false,
+//         cache: false,
+//         processData: false,
+//         contentType: false,
+//         success: function (result) {
+//             console.log("上传成功")
+//             console.log(result);
+//             if (result.code == 100) {
+//                 fileInfo = result.extend.fileInfo;
+//                 link = fileInfo.url;
+//                 console.log("上传成功:"+link);
+//             } else {
+//                 console.log("上传失败！");
+//             }
+//         },
+//         error: function (result) {
+//             console.log("upload fail");
+//         }
+//     });
+//     // console.log("返回链接：" + link);
+//     // console.log(fileInfo);
+//     return link;
+// }
 function uploadFileAndGetUrl(file) {
-    var fileInfo;
-    var link;
-    if (file == null) {
+    var url = null;
+    if (file == null){
+        console.log("文件为空");
         return null;
-    }
-    var data = new FormData();//必须是new FormData后台才能接收到
-    data.append('file', file);// 添加文件，表单其他项也可添加
-
-    $.ajax({
-        url: "http://localhost:2000/upload",
-        method: "POST",
-        data: data,
-        datatype: "json",
-        async: false,
-        cache: false,
-        processData: false,
-        contentType: false,
-        success: function (result) {
-            console.log("上传成功")
-            console.log(result);
-            if (result.code == 100) {
-                fileInfo = result.extend.fileInfo;
-                link = fileInfo.url;
-                console.log("上传成功:"+link);
-            } else {
-                console.log("上传失败！");
+    }else {
+        var data = new FormData();
+        data.append("file",file);
+        $.ajax({
+            url: "http://localhost:2000/upload",
+            method: "POST",
+            data: data,
+            async: false,
+            datatype: "json",
+            async: false,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                console.log(result);
+                if (result.code == 100){
+                    url = result.extend.fileInfo.url;
+                    console.log("上传成功:"+url);
+                }
+            },
+            error: function () {
+                console.log("连接服务器失败");
             }
-        },
-        error: function (result) {
-            console.log("upload fail");
-        }
-    });
-    // console.log("返回链接：" + link);
-    // console.log(fileInfo);
-    return link;
+        });
+        return url;
+    }
 }
 
 /**
@@ -213,6 +246,10 @@ function uploadGenre(genre,callback) {
 }
 
 
+/**
+ * 提示模态框
+ * @param info
+ */
 function alertInfo(info) {
     console.log("模态框提示"+info);
     if ($("#alert_modal").length == 0){

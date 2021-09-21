@@ -18,14 +18,15 @@
     <script src="${APP_PATH}/static/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/cplayer/dist/cplayer.min.js"></script>
     <script src="${APP_PATH}/static/js/music.js"></script>
+    <script src="${APP_PATH}/static/js/utils.js"></script>
 
 </head>
 
 <body>
 <div class="container">
 
+    <!-- 标题 -->
     <div class="row">
-        <!-- 标题 -->
         <div class="jumbotron">
             <a href="javascript:;" id="title">
                 <h1>音乐分享</h1>
@@ -33,6 +34,7 @@
         </div>
     </div>
 
+    <!-- 导航栏 -->
     <div class="row">
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid">
@@ -43,16 +45,16 @@
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <!-- 导航条左侧 -->
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-haspopup="true" aria-expanded="false">分类 <span
-                                    class="caret"></span></a>
-                            <ul class="dropdown-menu" id="SongGenre">
-                                <!-- 分类内容 -->
-                            </ul>
-                        </li>
-                    </ul>
+<%--                    <ul class="nav navbar-nav">--%>
+<%--                        <li class="dropdown">--%>
+<%--                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button"--%>
+<%--                               aria-haspopup="true" aria-expanded="false">分类 <span--%>
+<%--                                    class="caret"></span></a>--%>
+<%--                            <ul class="dropdown-menu" id="SongGenre">--%>
+<%--                                <!-- 分类内容 -->--%>
+<%--                            </ul>--%>
+<%--                        </li>--%>
+<%--                    </ul>--%>
 
                     <!-- 搜索框 -->
                     <form action="javascript:;" class="navbar-form navbar-left search-bar">
@@ -75,8 +77,8 @@
                                     class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="javascript:;" id="myCollect_btn">我的收藏</a></li>
-                                <li><a href="http://localhost:2001/">退出</a></li>
                                 <li><a href="javascript:;" data-toggle="modal" data-target="#userInfo">用户资料</a></li>
+                                <li><a href="http://localhost:2001/">退出</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -85,11 +87,12 @@
         </nav>
     </div>
 
+    <!-- 音乐展示 -->
     <div class="row">
-        <!-- 音乐展示 -->
         <div class="col-md-12 song-display text-center" id="song-display"></div>
     </div>
 
+    <!-- 分页条 -->
     <div class="row">
         <!-- 分页文字信息 -->
         <div class="col-md-6" id="page_info_area"></div>
@@ -97,8 +100,8 @@
         <div class="col-md-9 col-md-offset-2 text-center" id="page_nav_area"></div>
     </div>
 
+    <!-- 显示音乐播放器按钮 -->
     <div class="row">
-        <!-- 显示音乐播放器按钮 -->
         <button type="button" data-toggle="modal" data-target="#playerModel" id="show_player">
             <svg t="1628118182057" class="icon" viewBox="0 0 1024 1024" version="1.1"
                  xmlns="http://www.w3.org/2000/svg" p-id="3780" width="50" height="50">
@@ -112,6 +115,7 @@
     <!-- ==================================模态框================================================= -->
     <!-- 1. 播放器 -->
     <div class="all-modal">
+        <!-- 播放器 -->
         <div class="modal fade" tabindex="-1" role="dialog" id="playerModel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -254,6 +258,7 @@
 
             console.log("欢迎进入lexur-music");
             var userInfo = getUserInfo();
+            initUser(userInfo);
 
             // 初始化播放器
             var player = initPlayer();
@@ -287,7 +292,7 @@
                 var poster;
 
                 if (checkFileType("inputSongFile", ["mp3", "wav"])) {
-                    // 上床文件，获取链接
+                    // 上传文件，获取链接
                     // source = uploadFile("#inputSongFile");
                 } else {
                     // 弹出警告
@@ -306,38 +311,31 @@
                 var inputArtist = $("#inputArtist").val();
                 var inputSongLanguage = $("#inputSongLanguage").val();
                 var inputSongGenre = $("#inputSongGenre").val();
-
-                // setTimeout('', 5000);
+                var inputSoure = $("#inputSongFile")[0].files[0];
+                var inputPoster = $("#inputPoster")[0].files[0];
+                var source = uploadFileAndGetUrl(inputSoure);
+                var poster = uploadFileAndGetUrl(inputPoster);
                 // 封装数据
-                var data = {
+                var song = {
                     title: inputSongName,
                     author: inputArtist,
                     language: inputSongLanguage,
-                    // admin_id: ,
                     genre_id: inputSongGenre,
-                    source: uploadFile("#inputSongFile"),
-                    poster: uploadFile("#inputPoster")
+                    source: source,
+                    poster: poster
                 };
-                console.log(data);
-
-                // 提交
-                $.ajax({
-                    url: "/song/addSong",
-                    method: "POST",
-                    data: data,
-                    success: function (result) {
-                        console.log(result);
-                        if (result.code == 100) {
-                            infoModal("上传成功");
-                        } else {
-                            infoModal("上传失败！\n" + result.msg);
-                        }
-
-                    },
-                    error: function () {
-                        infoModal("上传失败！");
-                    }
-                });
+                console.log(song);
+                if (song.title == null){
+                    alertInfo("请填写歌名");
+                    return;
+                }
+                if (song.source == null || song.source == ""){
+                    alertInfo("请上传歌曲");
+                    return;
+                }
+                // 上传文件
+                uploadSong(song,alertInfo);
+                to_page();
 
             });
 
@@ -350,7 +348,7 @@
             });
 
 
-
+            // 搜索
             $("#search_btn").click(function () {
                 console.log("搜索");
                 search();
