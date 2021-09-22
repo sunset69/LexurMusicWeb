@@ -705,6 +705,7 @@ function checkAddSong() {
         alertInfo("请选择并上传歌曲")
         return false;
     }
+    return true;
 }
 
 function checkAddGenre() {
@@ -714,6 +715,7 @@ function checkAddGenre() {
         alertInfo("请填写分类名");
         return false;
     }
+    return true;
 }
 
 // === 获取添加数据 ===
