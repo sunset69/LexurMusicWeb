@@ -468,6 +468,7 @@
                     });
                 }
             });
+
             $("#submit_user_modify").click(function () {
                 var userInfo = get_modify_userInfo();
                 modify_user(userInfo);
@@ -486,6 +487,7 @@
                     });
                 }
             });
+
             $("#submit_song_modify").click(function () {
                 var modifySong = get_modify_songInfo();
                 modify_song(modifySong);
@@ -509,6 +511,7 @@
 
                 }
             });
+
             $("#submit_genre_modify").click(function () {
                 // console.log(selectedGenre);
                 var modifyGenre = get_modify_genreInfo();

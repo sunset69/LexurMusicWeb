@@ -455,7 +455,7 @@ function delete_song(id) {
         success: function (result) {
             if (result.code == 100){
                 info_modal(result.msg);
-                to_page("/song/page",{pn:1,size:8},2);
+                to_page("/song/allPage",{pn:1,size:8},2);
                 return true;
             }else {
                 info_modal(result.msg);
