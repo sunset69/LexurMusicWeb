@@ -395,7 +395,7 @@
                             </div>
                             <div class="form-group">
                                 <label>描述</label>
-                                <input type="text" class="form-control" id="genreDescForm" placeholder="昵称">
+                                <input type="text" class="form-control" id="genreDescForm" placeholder="分类描述">
                             </div>
                         </form>
                     </div>
