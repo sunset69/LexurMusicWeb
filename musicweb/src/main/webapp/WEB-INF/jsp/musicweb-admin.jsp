@@ -39,9 +39,9 @@
             <li role="presentation" index="3"><a href="#">分类管理</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="javascript:;">上传用户</a></li>
-            <li><a href="javascript:;">上传音乐</a></li>
-            <li><a href="javascript:;">上传分类</a></li>
+            <li><a href="javascript:;" id="add_user">上传用户</a></li>
+            <li><a href="javascript:;" id="add_song">上传音乐</a></li>
+            <li><a href="javascript:;" id="add_genre">上传分类</a></li>
         </ul>
     </div>
 
@@ -263,6 +263,150 @@
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
+        <!-- 添加用户 -->
+        <div class="modal fade" id="user_add_modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">上传用户</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <form>
+                            <div class="form-group">
+                                <label>头像</label>
+                                <div class="center">
+                                    <label id="preAvatar" class="center">
+                                        <img src="" alt="" >
+                                    </label>
+                                    <input type="file" class="form-control" id="registercAvatarForm"
+                                           accept="image/*">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>邮箱</label>
+                                <input type="email" class="form-control" id="registerMailForm" placeholder="Email">
+                            </div>
+                            <div class="form-group">
+                                <label>昵称</label>
+                                <input type="text" class="form-control" id="registerNicknameForm" placeholder="昵称">
+                            </div>
+                            <div class="form-group">
+                                <label>密码</label>
+                                <input type="password" class="form-control" id="registerPasswordForm"
+                                       placeholder="密码至少6位">
+                            </div>
+                            <div class="form-group">
+                                <label>手机</label>
+                                <input type="tel" class="form-control" id="registerPhoneForm" placeholder="手机号码">
+                            </div>
+                        </form>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="upload_user_btn">上传</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <!-- 添加音乐 -->
+        <div class="modal fade" tabindex="-1" role="dialog" id="song_add_modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">上传音乐</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!-- 上传音乐表单-->
+                        <form class="form-horizontal" id="upload" action="javascript:;" method="post"
+                              enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">歌名</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="inputSongName"
+                                           placeholder="歌名" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">歌手</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="inputArtist"
+                                           placeholder="歌手" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">语言</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="inputSongLanguage"
+                                           placeholder="语言" value="未知">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">分类</label>
+                                <div class="col-sm-10">
+                                    <!--打开模态框，加载分类，选择分类-->
+                                    <select class="form-control" name="genre" id="inputSongGenre"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">上传歌曲</label>
+                                <div class="col-sm-10">
+                                    <input type="file" id="inputSongFile" required accept="audio/*">
+                                    <small id="inputSongFile_info"></small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">上传封面</label>
+                                <div class="col-sm-10">
+                                    <input type="file" id="inputPoster" accept="image/*">
+                                    <small id="inputPoster_info"></small>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" id="upload_song_btn">添加</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <!-- 添加分类 -->
+        <div class="modal fade" id="genre_add_modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">上传分类</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label>名称</label>
+                                <input type="text" class="form-control" id="genreNameForm" placeholder="昵称">
+                            </div>
+                            <div class="form-group">
+                                <label>描述</label>
+                                <input type="text" class="form-control" id="genreDescForm" placeholder="昵称">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="upload_genre_btn">添加</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
     </div>
 
     <!-- js代码 -->
@@ -373,6 +517,79 @@
                 $("#genre_info").modal("hide");
                 modify_genre(modifyGenre);
                 to_page("/genre/page",PAGESIZE,3);
+            });
+
+            // 添加用户
+            $("#registercAvatarForm").change(function(){
+                var _URL = window.URL || window.webkitURL;
+                var file, img;
+                if ((file = this.files[0])) {
+                    img = new Image();
+                    img.onload = function() {
+                        $('#preAvatar>img').attr('src', this.src);
+                    };
+                    img.src = _URL.createObjectURL(file);
+                }
+            });
+
+            $("#add_user").click(function () {
+                console.log("添加用户");
+                $("#user_add_modal").modal({backdrop: "static"});
+            });
+
+            $("#upload_user_btn").click(function () {
+                // 检查数据
+                if(checkAddUser()) return;
+                // 获取数据
+                var user = getAddUserInfo();
+                // 上传数据
+                var result = uploadUser(user,alertInfo);
+                // 刷新页面
+                if (result){
+                    console.log("上传成功刷新页面");
+                    to_page(USERPAGE,PAGESIZE,1);
+                }
+            });
+
+            // 添加歌曲
+            $("#add_song").click(function () {
+                console.log("添加音乐");
+                loadGenre("#inputSongGenre")
+                $("#song_add_modal").modal({backdrop: "static"});
+            });
+
+            $("#upload_song_btn").click(function () {
+                // 检查数据
+                if(!checkAddSong()) return;
+                // 获取数据
+                var song = getAddSongInfo();
+                // 上传数据
+                var result = uploadSong(song,alertInfo);
+                // 刷新页面
+                if (result){
+                    console.log("上传成功刷新页面");
+                    to_page(SONGPAGE,PAGESIZE,2);
+                }
+            });
+
+            // 添加分类
+            $("#add_genre").click(function () {
+                console.log("添加分类");
+                $("#genre_add_modal").modal({backdrop: "static"});
+            });
+
+            $("#upload_genre_btn").click(function () {
+                // 检查数据
+                if(checkAddGenre()) return;
+                // 获取数据
+                var genre = getAddGenreInfo();
+                // 上传数据
+                var result = uploadGenre(genre,alertInfo);
+                // 刷新页面
+                if (result){
+                    console.log("上传成功刷新页面");
+                    to_page(GENREPAGE,PAGESIZE,3);
+                }
             });
 
         });

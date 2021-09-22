@@ -166,7 +166,7 @@ function getGenreById(id) {
 
 function checkUserMailRepeat(mail,callback) {
     if (mail == null){
-        return;
+        return false;
     }
     $.ajax({
         url: "/user/checkMail",
@@ -177,13 +177,17 @@ function checkUserMailRepeat(mail,callback) {
         success: function (result) {
             if (result.code == 100 ){
                 console.log("邮箱可用");
-                return callback();
+                return true;
             }else {
                 console.log("邮箱不可用");
+                callback("邮箱重复，不可用");
+                return false;
             }
         },
         error: function () {
             console.log("连接服务器失败");
+            callback("连接服务器失败");
+            return false;
         }
     });
 }
@@ -196,13 +200,16 @@ function uploadSong(song,callback) {
         success: function (result) {
             console.log(result);
             if (result.code == 100){
-                return callback("上传成功");
+                callback("上传成功");
+                return true;
             }else {
-                return callback(result.msg);
+                callback(result.msg);
+                return false;
             }
         },
         error: function () {
-            return callback("连接服务器失败");
+            callback("连接服务器失败");
+            return false;
         }
     });
 }
@@ -215,13 +222,16 @@ function uploadUser(user,callback) {
         success: function (result) {
             console.log(result);
             if (result.code == 100){
-                return callback("上传成功");
+                callback("上传成功");
+                return true;
             }else {
-                return callback(result.msg);
+                callback(result.msg);
+                return false;
             }
         },
         error: function () {
-            return callback("连接服务器失败");
+            callback("连接服务器失败");
+            return false;
         }
     });
 }
@@ -234,13 +244,16 @@ function uploadGenre(genre,callback) {
         success: function (result) {
             console.log(result);
             if (result.code == 100){
-                return callback("上传成功");
+                callback("上传成功");
+                return true;
             }else {
-                return callback(result.msg);
+                callback(result.msg);
+                return false;
             }
         },
         error: function () {
-            return callback("连接服务器失败");
+            callback("连接服务器失败");
+            return false;
         }
     });
 }
@@ -251,7 +264,7 @@ function uploadGenre(genre,callback) {
  * @param info
  */
 function alertInfo(info) {
-    console.log("模态框提示"+info);
+    // console.log("模态框提示"+info);
     if ($("#alert_modal").length == 0){
         // 创建模态框
         var alertModal = $('<div class="fade modal"role=dialog id=alert_modal tabindex=-1><div class=modal-dialog role=document><div class=modal-content><div class=modal-header><h4 class=modal-title>提示信息</h4></div><div class=modal-body><p>信息</div></div></div></div>');

@@ -665,3 +665,100 @@ function modify_genre(genre) {
         }
     });
 }
+
+// === 检查添加数据 ===
+function checkAddUser(){
+    // 检查用户名
+    var mail = $("#registerMailForm").val();
+    if (mail == null || mail == ""){
+        alertInfo("请输入邮箱");
+        return false;
+    }
+    if(!checkMail(mail)){
+        alertInfo("邮箱格式有错误");
+        return false;
+    }
+
+    if(!checkUserMailRepeat(mail,alertInfo)){
+        return false;
+    }
+
+    // 检查密码
+    var password = $("#registerPasswordForm").val();
+    if (password == null || password == ""){
+        alertInfo("请填写密码");
+        return false;
+    }
+}
+
+function checkAddSong() {
+    // 检查歌名
+    var title = $("#inputSongName").val();
+    if (title == null || title == ""){
+        alertInfo("请填写歌曲名称");
+        return false;
+    }
+
+    // 检查歌曲来源
+    var source = $("#inputSongFile")[0].files[0];
+    if (source == null){
+        alertInfo("请选择并上传歌曲")
+        return false;
+    }
+}
+
+function checkAddGenre() {
+    // 检查分类名
+    var name = $("#genreNameForm").val();
+    if(name == null || name == ""){
+        alertInfo("请填写分类名");
+        return false;
+    }
+}
+
+// === 获取添加数据 ===
+
+function getAddUserInfo() {
+    var user = {};
+    var avatarFile = $("#registercAvatarForm")[0].files[0];
+    if (avatarFile != null){
+        var avatarUrl = uploadFileAndGetUrl(avatarFile);
+        user.avatar = avatarUrl;
+    }
+    user.mail = $("#registerMailForm").val();
+    user.password = $("#registerPasswordForm").val();
+    user.nickname = $("#registerNicknameForm").val();
+    user.phone = $("#registerPhoneForm").val();
+    console.log(user);
+    return user;
+}
+
+function getAddSongInfo() {
+    var inputSongName = $("#inputSongName").val();
+    var inputArtist = $("#inputArtist").val();
+    var inputSongLanguage = $("#inputSongLanguage").val();
+    var inputSongGenre = $("#inputSongGenre").val();
+    var inputSoure = $("#inputSongFile")[0].files[0];
+    var inputPoster = $("#inputPoster")[0].files[0];
+    var source = uploadFileAndGetUrl(inputSoure);
+    var poster = uploadFileAndGetUrl(inputPoster);
+    // 封装数据
+    var song = {
+        title: inputSongName,
+        author: inputArtist,
+        language: inputSongLanguage,
+        genre_id: inputSongGenre,
+        source: source,
+        poster: poster
+    };
+    console.log(song);
+    return song;
+}
+
+function getAddGenreInfo() {
+    var genre = {};
+    genre.name = $("#genreNameForm").val();
+    genre.description = $("#genreDescForm").val();
+    console.log(genre);
+    return genre;
+}

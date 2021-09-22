@@ -29,3 +29,17 @@ table{
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+#preAvatar{
+    width: 5em;
+    height: 5em;
+    overflow: hidden;
+    border: 1px grey solid;
+    border-radius: 50%;
+    display: inline-block;
+}
+#preAvatar img{
+    width: 100%;
+}
+.center{
+    text-align: center;
+}
