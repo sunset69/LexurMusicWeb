@@ -68,3 +68,12 @@
     margin-left: 3px;
     margin-right: 3px;
 }
+
+.jumbotron {
+    background-image: url("/static/img/title_cover.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+.jumbotron>h1{
+    color: white;
+}

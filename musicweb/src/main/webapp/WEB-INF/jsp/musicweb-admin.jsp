@@ -42,6 +42,7 @@
             <li><a href="javascript:;" id="add_user">上传用户</a></li>
             <li><a href="javascript:;" id="add_song">上传音乐</a></li>
             <li><a href="javascript:;" id="add_genre">上传分类</a></li>
+            <li><a href="/" >退出</a></li>
         </ul>
     </div>
 

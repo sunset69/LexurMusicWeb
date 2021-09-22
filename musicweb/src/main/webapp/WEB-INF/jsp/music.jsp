@@ -12,13 +12,15 @@
     <link rel="stylesheet" href="${APP_PATH}/static/css/music.css">
     <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"
-            integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
-            crossorigin="anonymous"></script>
+<%--    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"--%>
+<%--            integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"--%>
+<%--            crossorigin="anonymous"></script>--%>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/2.2.3/jquery.js"></script>
     <script src="${APP_PATH}/static/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/cplayer/dist/cplayer.min.js"></script>
     <script src="${APP_PATH}/static/js/music.js"></script>
     <script src="${APP_PATH}/static/js/utils.js"></script>
+
 
 </head>
 
@@ -28,9 +30,9 @@
     <!-- 标题 -->
     <div class="row">
         <div class="jumbotron">
-            <a href="javascript:;" id="title">
-                <h1>音乐分享</h1>
-            </a>
+<%--            <a href="javascript:;" id="title">--%>
+                <h1>Lexur Music</h1>
+<%--            </a>--%>
         </div>
     </div>
 
@@ -256,6 +258,9 @@
     <script>
         // 页面加载完成执行任务
         $(function () {
+            // $('body img').error(function(){
+            //     $(this).attr('src',"/static/img/fail.jpg");
+            // });
 
             console.log("欢迎进入lexur-music");
             var userInfo = getUserInfo();
@@ -368,7 +373,9 @@
             $("#song-display").on("click",".collect",function () {
                 var song = getSongInfo(this);
                 collect(userInfo.id,song.id);
-            })
+            });
+
+
 
         });/*结束*/
     </script>
