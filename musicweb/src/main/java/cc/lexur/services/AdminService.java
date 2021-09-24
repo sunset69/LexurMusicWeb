@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
  */
 public interface AdminService {
 
+    // 登录
     public boolean login(String username, String password);
 
+    // 检查管理员id是存在
     public boolean checkId(int id);
 }

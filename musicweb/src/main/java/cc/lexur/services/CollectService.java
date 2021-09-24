@@ -13,14 +13,19 @@ import java.util.List;
  */
 public interface CollectService {
 
-    public boolean add(int userId,int songId);
+    // 获取收藏列表,并返回音乐信息
+    public List<Song> getCollectedSong(int userId,int pn,int size);
 
-    public boolean delete(int userId,int songId);
-
+    //获取分类信息
     public List<Collect> getCollectPage(int userId);
 
-    public boolean check(int userId,int songId);
+    // 添加收藏
+    public boolean add(int userId,int songId);
 
-    public List<Song> getCollectedSong(int userId,int pn,int size);
+    // 删除分类
+    public boolean delete(int userId,int songId);
+
+    // 检查收藏
+    public boolean check(int userId,int songId);
 
 }
