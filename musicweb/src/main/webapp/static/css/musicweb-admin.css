@@ -1,7 +1,12 @@
-.table>tbody >tr> td /*设置表格文字左右和上下居中对齐*/
-{
-    /*font-size: 1.6em;*/
-    /*vertical-align: middle;*/
+body{
+    background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
+}
+.jumbotron{
+    background-image: url("/static/img/admin-cover.jpg");
+    background-position: center;
+}
+.jumbotron h1{
+    color: white;
 }
 .deleted_user{
     background-color: grey;
@@ -21,9 +26,6 @@ button{
 .table > tfoot > tr.deleted > th {
     background-color: darkgrey;
 }
-table{
-    /*table-layout:fixed;*/
-}
 .long_text{
     overflow: hidden;
     text-overflow: ellipsis;
@@ -42,4 +44,7 @@ table{
 }
 .center{
     text-align: center;
+}
+.modal{
+    background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
 }

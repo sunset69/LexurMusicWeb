@@ -11,7 +11,6 @@
     <title>控制台</title>
     <link rel="stylesheet" href="${APP_PATH}/static/bootstrap/css/bootstrap.css">
     <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="${APP_PATH}/static/css/musicweb-admin.css">
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"
             integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
@@ -19,15 +18,14 @@
     <script src="${APP_PATH}/static/bootstrap/js/bootstrap.min.js"></script>
     <script src="${APP_PATH}/static/js/musicweb-admin.js"></script>
     <script src="${APP_PATH}/static/js/utils.js"></script>
+    <link rel="stylesheet" href="${APP_PATH}/static/css/musicweb-admin.css">
 </head>
 <body>
 <div class="container">
     <!-- 标题 -->
     <div class="row">
         <div class="jumbotron">
-            <a href="#" id="title">
-                <h1>音乐分享-控制台</h1>
-            </a>
+            <h1 class="text-center">Lexur music 控制台</h1>
         </div>
     </div>
 
@@ -42,7 +40,7 @@
             <li><a href="javascript:;" id="add_user">上传用户</a></li>
             <li><a href="javascript:;" id="add_song">上传音乐</a></li>
             <li><a href="javascript:;" id="add_genre">上传分类</a></li>
-            <li><a href="/" >退出</a></li>
+            <li><a href="/">退出</a></li>
         </ul>
     </div>
 
@@ -102,7 +100,8 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span>
                         </button>
                         <h4 class="modal-title">用户信息修改</h4>
                     </div>
@@ -131,7 +130,7 @@
                             </div>
                             <div class="form-group">
                                 <label>状态:
-                                <input type="checkbox" id="modifyLockedForm" value="Y"> 是否被禁用
+                                    <input type="checkbox" id="modifyLockedForm" value="Y"> 是否被禁用
                                 </label>
                             </div>
                             <div class="form-group">
@@ -160,7 +159,8 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">音乐信息修改</h4>
                     </div>
                     <div class="modal-body">
@@ -221,7 +221,8 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                         <h4 class="分类修改">Modal title</h4>
                     </div>
                     <div class="modal-body">
@@ -254,7 +255,8 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">提示信息</h4>
                     </div>
                     <div class="modal-body">
@@ -280,7 +282,7 @@
                                 <label>头像</label>
                                 <div class="center">
                                     <label id="preAvatar" class="center">
-                                        <img src="" alt="" >
+                                        <img src="" alt="">
                                     </label>
                                     <input type="file" class="form-control" id="registercAvatarForm"
                                            accept="image/*">
@@ -448,19 +450,19 @@
             var USERPAGE = "/user/page";
             var SONGPAGE = "/song/allPage";
             var GENREPAGE = "/genre/page";
-            to_page(USERPAGE,PAGESIZE,1);
-            to_page(SONGPAGE,PAGESIZE,2);
-            to_page(GENREPAGE,PAGESIZE,3);
+            to_page(USERPAGE, PAGESIZE, 1);
+            to_page(SONGPAGE, PAGESIZE, 2);
+            to_page(GENREPAGE, PAGESIZE, 3);
 
             // 用户删除与修改按钮事件
-            $("#user_table").on("click","button",function () {
+            $("#user_table").on("click", "button", function () {
                 // console.log($(this).text());
                 // var user = getUserInfo(this);
                 selectedUser = getUserInfo(this);
-                if ($(this).hasClass("delete")){
+                if ($(this).hasClass("delete")) {
                     // console.log("delete");
                     delete_user(selectedUser.id);
-                }else if ($(this).hasClass("modify")){
+                } else if ($(this).hasClass("modify")) {
                     // console.log("modify");
                     init_userInfo_modal(selectedUser);
                     $("#user_info").modal({
@@ -475,12 +477,12 @@
                 modify_user(userInfo);
             });
 
-            $("#song_table").on("click","button",function () {
+            $("#song_table").on("click", "button", function () {
                 selectedSong = getSongInfo(this);
-                if ($(this).hasClass("delete")){
+                if ($(this).hasClass("delete")) {
                     console.log("delete song");
                     delete_song(selectedSong.id);
-                }else if ($(this).hasClass("modify")){
+                } else if ($(this).hasClass("modify")) {
                     init_songInfo_modal(selectedSong);
                     $("#song_info").modal({
                         dropdown: "static",
@@ -494,15 +496,15 @@
                 modify_song(modifySong);
             });
 
-            $("#genre_table").on("click","button",function () {
+            $("#genre_table").on("click", "button", function () {
                 console.log("genre操作");
                 // var genre = getGenreInfo(this);
                 selectedGenre = getGenreInfo(this);
-                if ($(this).hasClass("delete")){
+                if ($(this).hasClass("delete")) {
                     console.log("delete genre");
                     delete_genre(selectedGenre.id);
-                    to_page(GENREPAGE,PAGESIZE,3);
-                }else if ($(this).hasClass("modify")){
+                    to_page(GENREPAGE, PAGESIZE, 3);
+                } else if ($(this).hasClass("modify")) {
                     console.log("modify genre");
                     init_genreInfo_modal(selectedGenre);
                     $("#genre_info").modal({
@@ -520,16 +522,16 @@
 
                 $("#genre_info").modal("hide");
                 modify_genre(modifyGenre);
-                to_page("/genre/page",PAGESIZE,3);
+                to_page("/genre/page", PAGESIZE, 3);
             });
 
             // 添加用户
-            $("#registercAvatarForm").change(function(){
+            $("#registercAvatarForm").change(function () {
                 var _URL = window.URL || window.webkitURL;
                 var file, img;
                 if ((file = this.files[0])) {
                     img = new Image();
-                    img.onload = function() {
+                    img.onload = function () {
                         $('#preAvatar>img').attr('src', this.src);
                     };
                     img.src = _URL.createObjectURL(file);
@@ -543,15 +545,15 @@
 
             $("#upload_user_btn").click(function () {
                 // 检查数据
-                if(checkAddUser()) return;
+                if (checkAddUser()) return;
                 // 获取数据
                 var user = getAddUserInfo();
                 // 上传数据
-                var result = uploadUser(user,alertInfo);
+                var result = uploadUser(user, alertInfo);
                 // 刷新页面
-                if (result){
+                if (result) {
                     console.log("上传成功刷新页面");
-                    to_page(USERPAGE,PAGESIZE,1);
+                    to_page(USERPAGE, PAGESIZE, 1);
                 }
             });
 
@@ -564,15 +566,15 @@
 
             $("#upload_song_btn").click(function () {
                 // 检查数据
-                if(!checkAddSong()) return;
+                if (!checkAddSong()) return;
                 // 获取数据
                 var song = getAddSongInfo();
                 // 上传数据
-                var result = uploadSong(song,alertInfo);
+                var result = uploadSong(song, alertInfo);
                 // 刷新页面
-                if (result){
+                if (result) {
                     console.log("上传成功刷新页面");
-                    to_page(SONGPAGE,PAGESIZE,2);
+                    to_page(SONGPAGE, PAGESIZE, 2);
                 }
             });
 
@@ -584,15 +586,15 @@
 
             $("#upload_genre_btn").click(function () {
                 // 检查数据
-                if(checkAddGenre()) return;
+                if (checkAddGenre()) return;
                 // 获取数据
                 var genre = getAddGenreInfo();
                 // 上传数据
-                var result = uploadGenre(genre,alertInfo);
+                var result = uploadGenre(genre, alertInfo);
                 // 刷新页面
-                if (result){
+                if (result) {
                     console.log("上传成功刷新页面");
-                    to_page(GENREPAGE,PAGESIZE,3);
+                    to_page(GENREPAGE, PAGESIZE, 3);
                 }
             });
 

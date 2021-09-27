@@ -7,19 +7,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>控制台</title>
     <link rel="stylesheet" href="./static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/admin.css">
 </head>
 
 <body>
 <div class="container">
+    <!-- 标题 -->
     <div class="row">
         <div class="col-md-3 h1">lexur-music</div>
     </div>
+
+    <!-- 切换用户登录 -->
     <div class="row">
         <div class="col-md-1 col-md-offset-11"><a href="index.html">用户登录</a></div>
     </div>
+
+    <!-- 控制台登录 -->
     <div class="row">
-        <div class="col-md-4 col-md-offset-4">
-            <h1 class="center">控制台</h1>
+        <div class="col-md-4 col-md-offset-4" id="main">
+            <h1 class="text-center">控制台</h1>
             <form action="/admin/login" method="post">
                 <div class="form-group">
                     <label>账号</label>
