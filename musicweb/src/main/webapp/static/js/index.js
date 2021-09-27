@@ -1,4 +1,4 @@
-function show_register_modal(){
+function show_register_modal() {
     $("#registerModal").modal({
         backdrop: 'static'
     });
@@ -7,7 +7,7 @@ function show_register_modal(){
 function getUserInfo() {
     var user = {};
     var avatarFile = $("#registercAvatarForm")[0].files[0];
-    if (avatarFile != null){
+    if (avatarFile != null) {
         var avatarUrl = uploadFileAndGetUrl(avatarFile);
         user.avatar = avatarUrl;
     }
@@ -20,11 +20,11 @@ function getUserInfo() {
 }
 
 function registerUser(user) {
-    if (user.mail == null || user.mail == ""){
+    if (user.mail == null || user.mail == "") {
         console.log("账户不能为空");
         return false;
     }
-    if (user.password == null || user.password == ""){
+    if (user.password == null || user.password == "") {
         console.log("密码不能为空");
         return false;
     }

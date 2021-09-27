@@ -1,7 +1,14 @@
-.center{
+body {
+    width: 100vw;
+    height: 100vh;
+    background-image: linear-gradient(120deg, #a6c0fe 0%, #f68084 100%);
+}
+
+.center {
     text-align: center;
 }
-#preAvatar{
+
+#preAvatar {
     width: 5em;
     height: 5em;
     overflow: hidden;
@@ -9,9 +16,17 @@
     border-radius: 50%;
     display: inline-block;
 }
-#preAvatar img{
+
+#preAvatar img {
     width: 100%;
 }
-#registercAvatarForm{
+
+#registercAvatarForm {
     display: inline-block;
+}
+
+#main {
+    background-color: #fff;
+    padding: 3em;
+    border-radius: 5px;
 }
