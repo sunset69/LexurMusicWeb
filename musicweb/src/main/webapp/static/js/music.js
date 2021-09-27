@@ -62,7 +62,7 @@ function build_album(song, index) {
 
     var posterEle = $("<div></div>").addClass("poster text-center");
     var imgEle = $("<img>", {
-        src: (song.poster == null)?song.poster:"/static/img/fail.jpg",
+        src: song.poster,
         alt: song.title,
         title: song.title,
         onerror: 'this.src="/static/img/fail.jpg"'

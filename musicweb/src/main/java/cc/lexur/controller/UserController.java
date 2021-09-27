@@ -36,16 +36,6 @@ public class UserController {
      * @param password
      * @return
      */
-    //@RequestMapping(value = "/login",method = RequestMethod.POST)
-    //public String login(@RequestParam String mail, @RequestParam String password, Model model) {
-    //    if (userService.login(mail,password)){
-    //        List<User> userList = userService.selectByMail(mail);
-    //        model.addAttribute("userInfo",userList);
-    //        model.addAttribute("test","test model");
-    //        return "music";
-    //    }
-    //    return "error";
-    //}
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public ModelAndView login(@RequestParam String mail, @RequestParam String password, Model model) {
         ModelAndView mv=new ModelAndView();
