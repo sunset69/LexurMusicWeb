@@ -37,25 +37,28 @@
     <div class="row">
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid">
-                <!-- 回归主页 -->
+                <!-- 1.回归主页 -->
                 <div class="navbar-header">
                     <a class="navbar-brand" href="javascript:;" onclick="to_page();">Lexur-music</a>
                 </div>
 
+                <!-- 2.搜索框 -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <!-- 搜索框 -->
                     <form action="javascript:;" class="navbar-form navbar-left search-bar">
                         <input type="text" placeholder="请输入歌名" id="search_title" class="form-control">
                         <input type="text" placeholder="请输入歌手" id="search_author" class="form-control">
                         <select id="search_genre" class="form-control">
                             <option value="-1" selected>分类选择</option>
                         </select>
-                        <button onclick="javascript:;" id="search_btn">
+<%--                        <button onclick="javascript:;" id="search_btn">--%>
+<%--                            <span class="glyphicon glyphicon glyphicon-search" aria-hidden="true"></span>--%>
+<%--                        </button>--%>
+                        <div class="btn text-center" id="search_btn">
                             <span class="glyphicon glyphicon glyphicon-search" aria-hidden="true"></span>
-                        </button>
+                        </div>
                     </form>
 
-                    <!-- 导航条右侧 -->
+                    <!-- 3.导航条右侧 -->
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="javascript:;" id="song_add_modal_btn">上传音乐</a></li>
                         <li class="dropdown">

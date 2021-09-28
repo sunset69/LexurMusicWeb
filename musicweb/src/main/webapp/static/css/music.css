@@ -50,18 +50,15 @@ body{
     height: 3em;
 }
 
-.search-bar button {
-    background: #7BA7AB;
-    border: 2px solid #7BA7AB;
-    border-radius: 5px;
-    /*border-radius: 0 5px 5px 0;*/
-    border-left: none;
-    outline: none;
-    height: 42px;
-    width: 42px;
-    cursor: pointer;
+.search-bar #search_btn {
+    background: #bde3f6;
+    height: 3em;
     position: absolute;
-    margin-left: 5px;
+    margin-left: 3px;
+}
+#search_btn span{
+    font-size: 2em;
+    color: white;
 }
 
 /*播放列表按钮*/
@@ -83,6 +80,7 @@ body{
     background-image: url("/static/img/title_cover.png");
     background-repeat: no-repeat;
     background-size: 100%;
+    margin-top: 5em;
 }
 .jumbotron>h1{
     color: white;
@@ -93,3 +91,9 @@ body{
 #song_add_modal{
     background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
 }
+/*#search_btn{*/
+/*    display: inline-block;*/
+/*    height: 3em;*/
+/*    text-align: center;*/
+/*    border: 1px red solid;*/
+/*}*/
