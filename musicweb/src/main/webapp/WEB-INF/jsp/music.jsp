@@ -11,9 +11,6 @@
     <link rel="stylesheet" href="${APP_PATH}/static/css/music.css">
     <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <%--    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"--%>
-    <%--            integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"--%>
-    <%--            crossorigin="anonymous"></script>--%>
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/2.2.3/jquery.js"></script>
     <script src="${APP_PATH}/static/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/cplayer/dist/cplayer.min.js"></script>
@@ -338,7 +335,7 @@
 
         // 展示收藏
         $("#myCollect_btn").click(function () {
-            $(".jumbotron a h1").text("我的收藏");
+            $(".jumbotron h1").text("我的收藏");
             to_page("/collect/collectedSong", {
                 userId: userInfo.id,
                 pn: 1,

@@ -88,7 +88,7 @@ function build_album(song, index) {
     var collectBtn = $("<button></button>").addClass("btn btn-default btn-sm collect");
     var collectSpan = $("<span></span>").addClass("glyphicon glyphicon-plus").appendTo(collectBtn);
 
-    var downEle = $("<button></button>",{
+    var downEle = $("<a></a>",{
         href: song.source,
         download: song.title
     }).addClass("btn btn-default").append($("<span></span>").addClass("glyphicon glyphicon-download"));
