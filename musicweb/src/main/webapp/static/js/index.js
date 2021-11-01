@@ -21,11 +21,13 @@ function getUserInfo() {
 
 function registerUser(user) {
     if (user.mail == null || user.mail == "") {
-        console.log("账户不能为空");
+        // console.log("账户不能为空");
+        alertInfo("账户不能为空");
         return false;
     }
     if (user.password == null || user.password == "") {
-        console.log("密码不能为空");
+        // console.log("密码不能为空");
+        alertInfo("密码不能为空");
         return false;
     }
 
@@ -35,9 +37,17 @@ function registerUser(user) {
         data: user,
         success: function (result) {
             console.log(result);
+            if (result.code == 100){
+                alertInfo("注册成功");
+            }else if (result.code == 200 ){
+                alertInfo("注册失败\n"+result.msg);
+            }else {
+                alertInfo("注册失败!");
+            }
         },
         error: function () {
-            console.log("连接服务器失败");
+            // console.log("连接服务器失败");
+            alertInfo("连接服务器失败");
         }
     });
 }

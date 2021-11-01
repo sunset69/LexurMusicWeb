@@ -126,13 +126,11 @@
             var mail = $(this).val();
             console.log(mail);
             if (checkMail(mail)) {
-                console.log("邮箱格式正确");
-                var hello = () => {
-                    console.log("hello");
-                };
-                checkUserMailRepeat(mail, hello);
+                // console.log("邮箱格式正确");
+                checkUserMailRepeat(mail, alertInfo);
             } else {
-                console.log("邮箱格式错误");
+                // console.log("邮箱格式错误");
+                alertInfo("邮箱格式错误");
             }
         });
     });

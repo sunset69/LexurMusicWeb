@@ -39,6 +39,11 @@ function checkUrl(url) {
     return retCheck(ret,url)?true:false;
 }
 
+/**
+ * 检查电话
+ * @param phone
+ * @returns {boolean}
+ */
 function checkPhone(phone) {
     var ret = new RegExp(/^1[34578]\d{9}$/);
     return retCheck(ret,phone)?true:false;
@@ -164,6 +169,12 @@ function getGenreById(id) {
     });
 }
 
+/**
+ * 检查邮箱重复
+ * @param mail
+ * @param callback
+ * @returns {boolean}
+ */
 function checkUserMailRepeat(mail,callback) {
     if (mail == null){
         return false;
@@ -192,6 +203,11 @@ function checkUserMailRepeat(mail,callback) {
     });
 }
 
+/**
+ * 上传音乐
+ * @param song
+ * @param callback
+ */
 function uploadSong(song,callback) {
     $.ajax({
         url: "/song/addSong",
@@ -214,6 +230,11 @@ function uploadSong(song,callback) {
     });
 }
 
+/**
+ * 上传用户
+ * @param user
+ * @param callback
+ */
 function uploadUser(user,callback) {
     $.ajax({
         url: "/admin/addUser",
@@ -236,6 +257,11 @@ function uploadUser(user,callback) {
     });
 }
 
+/**
+ * 上传分类
+ * @param genre
+ * @param callback
+ */
 function uploadGenre(genre,callback) {
     $.ajax({
         url: "/genre/addGenre",
