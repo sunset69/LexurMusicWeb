@@ -94,7 +94,7 @@ function build_album(song, index) {
     }).addClass("btn btn-default").append($("<span></span>").addClass("glyphicon glyphicon-download"));
 
     var cancelCollectBtn = $("<button></button>").addClass("btn btn-default btn-sm").bind('click',function () {
-        cancelCollect(user.id,song.id)
+        cancelCollect(user.id,song.id);
     });
     var cancelCollectSpan = $("<span></span>").addClass("glyphicon glyphicon-remove-circle");
     cancelCollectBtn.append(cancelCollectSpan);

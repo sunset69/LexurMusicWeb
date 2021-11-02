@@ -348,6 +348,15 @@
             collect(userInfo.id, song.id);
         });
 
+        $("#song-display").on("click",".album_btn button:last-child",function () {
+            // console.log("aaa")
+            to_page("/collect/collectedSong", {
+                userId: userInfo.id,
+                pn: 1,
+                size: 8
+            })
+        });
+        // $("#")
 
     });/*结束*/
 </script>
