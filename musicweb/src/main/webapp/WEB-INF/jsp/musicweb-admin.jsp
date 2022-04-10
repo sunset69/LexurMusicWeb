@@ -37,7 +37,7 @@
             <li role="presentation" index="3"><a href="#">分类管理</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="javascript:;" id="add_user">上传用户</a></li>
+            <li><a href="javascript:;" id="add_user">添加用户</a></li>
             <li><a href="javascript:;" id="add_song">上传音乐</a></li>
             <li><a href="javascript:;" id="add_genre">上传分类</a></li>
             <li><a href="/">退出</a></li>
