@@ -8,7 +8,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="fileServer" />
         <module name="musicweb" />
-        <module name="mappers" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
